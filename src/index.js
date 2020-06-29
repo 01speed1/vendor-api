@@ -18,6 +18,7 @@ baseIO.origins("*:*");
 // Andres es gei
 //  jajajajaj
 
+
 const privateIO = baseIO.of("/private");
 
 // esto es un cambio para el repo

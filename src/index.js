@@ -13,13 +13,7 @@ const server = http.createServer(app);
 const baseIO = io(server);
 baseIO.origins("*:*");
 
-// esto es otro cambio
-// Afh's change
-// Andres es gei
-
 const privateIO = baseIO.of("/private");
-
-// esto es un cambio para el repo
 
 const athorizacion = require("./middlewares/athorizacionSocket");
 

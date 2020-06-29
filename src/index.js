@@ -14,6 +14,7 @@ const baseIO = io(server);
 baseIO.origins("*:*");
 
 // esto es otro cambio
+// Afh's change
 
 const privateIO = baseIO.of("/private");
 

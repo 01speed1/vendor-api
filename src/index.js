@@ -13,6 +13,8 @@ const server = http.createServer(app);
 const baseIO = io(server);
 baseIO.origins("*:*");
 
+// esto es otro cambio
+
 const privateIO = baseIO.of("/private");
 
 // esto es un cambio para el repo

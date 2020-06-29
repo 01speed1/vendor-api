@@ -13,10 +13,10 @@ const server = http.createServer(app);
 const baseIO = io(server);
 baseIO.origins("*:*");
 
-// est es el cambio de wuini
 // esto es otro cambio
 // Afh's change
-// Afh's change2
+// Andres es gei
+//  jajajajaj
 
 const privateIO = baseIO.of("/private");
 

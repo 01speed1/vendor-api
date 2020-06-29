@@ -15,6 +15,8 @@ baseIO.origins("*:*");
 
 const privateIO = baseIO.of("/private");
 
+// esto es un cambio para el repo
+
 const athorizacion = require("./middlewares/athorizacionSocket");
 
 privateIO.use(athorizacion);

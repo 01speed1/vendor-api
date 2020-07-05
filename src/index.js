@@ -13,15 +13,7 @@ const server = http.createServer(app);
 const baseIO = io(server);
 baseIO.origins("*:*");
 
-// esto es otro cambio
-// Afh's change
-// Andres es gei
-//  jajajajaj
-
-
 const privateIO = baseIO.of("/private");
-
-// esto es un cambio para el repo
 
 const athorizacion = require("./middlewares/athorizacionSocket");
 
@@ -35,3 +27,4 @@ require("./sockets");
 app.get("/", (r, s) => s.json({ winiie: "ok" }));
 
 server.listen(process.env.PORT, () => console.log(`Socket Server`));
+

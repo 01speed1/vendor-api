@@ -41,4 +41,9 @@ privateIO.on("connection", client => {
       .then(order => response({ ok: true, removed: _id }))
       .catch(error => response({ ok: false, error }));
   });
+  client.on("disconnect", () => {
+    console.log("a user disconnet from orders sockets");
+  });
 });
+
+//

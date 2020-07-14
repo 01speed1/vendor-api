@@ -9,6 +9,7 @@ const {
 
 io.on("connection", client => {
   client.on("get a user", (parameters, response) => {
+    console.log(parameters);
     getUser(parameters)
       .then(user => response({ ok: true, user }))
       .catch(error => response({ ok: false, error }));

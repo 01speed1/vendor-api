@@ -1,4 +1,4 @@
-const { io } = require("../../index");
+const { io } = require("../../app");
 const {
   getAllUsers,
   getUser,

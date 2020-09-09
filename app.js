@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const io = require("socket.io");
 const http = require("http");
@@ -26,4 +28,6 @@ require("./sockets");
 
 app.get("/", (r, s) => s.json({ winiie: "ok" }));
 
-server.listen(process.env.PORT, () => console.log(`Socket Server`));
+const port = process.env.NODE_PORT || 8080
+
+server.listen(port, () => console.log(`Socket Server runnig in ${port}`));

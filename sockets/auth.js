@@ -1,4 +1,4 @@
-const { io } = require("../index");
+const { io } = require("../app");
 
 const { userRegister } = require("../libs/register");
 const { userSession } = require("../libs/session");

@@ -7,4 +7,4 @@ var stateSchema = Schema({
   modified: { type: Date, default: Date.now() }
 });
 
-module.exports = mongoose.model("Account", stateSchema);
+module.exports = mongoose.model("State", stateSchema);

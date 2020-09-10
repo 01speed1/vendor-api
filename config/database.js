@@ -1,17 +1,20 @@
 const mongoose = require("mongoose");
+const { DatabaseURLBuilder } = require("../libs/URLBuilder");
 
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
-  autoIndex: true, //this is the code I added that solved it all
+  autoIndex: true,
   keepAlive: true,
   poolSize: 10,
   bufferMaxEntries: 0,
   connectTimeoutMS: 10000,
   socketTimeoutMS: 45000,
-  family: 4, // Use IPv4, skip trying IPv6
+  family: 4,
   useFindAndModify: false,
   useUnifiedTopology: true
 };
 
-module.exports = mongoose.connect(process.env.URL_DB, options);
+const dabaseUrl = DatabaseURLBuilder()
+
+module.exports = mongoose.connect(dabaseUrl, options);

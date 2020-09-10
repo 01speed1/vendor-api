@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "test": "jest test/ --watch --runInBand --detectOpenHandles",
+    "mode:test": "sh bash/start_test_mode.sh",
+    "mode:dev:back": "sh bash/start_dev_mode.sh"
   },
   "dependencies": {
     "cors": "2.8.5",
@@ -14,10 +16,13 @@
     "mongoose-beautiful-unique-validation": "7.1.1",
     "react-notification-system": "0.4.0",
     "socket.io": "2.3.0",
-    "socketio-jwt": "4.6.2"
+    "socketio-jwt": "4.6.2",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
-    "nodemon": "1.18.4"
+    "nodemon": "1.18.4",
+    "axios": "^0.20.0",
+    "jest": "24.9.0"
   },
   "keywords": []
 }

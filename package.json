@@ -4,25 +4,26 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest test/ --watch --runInBand --detectOpenHandles",
+    "test": "jest test/ --watch --runInBand --detectOpenHandles --unhandled-rejections=strict",
     "mode:test": "sh bash/start_test_mode.sh",
     "mode:dev:back": "sh bash/start_dev_mode.sh"
   },
   "dependencies": {
     "cors": "2.8.5",
+    "dotenv": "^8.2.0",
     "express": "4.17.1",
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.9.19",
     "mongoose-beautiful-unique-validation": "7.1.1",
     "react-notification-system": "0.4.0",
     "socket.io": "2.3.0",
-    "socketio-jwt": "4.6.2",
-    "dotenv": "^8.2.0"
+    "socketio-jwt": "4.6.2"
   },
   "devDependencies": {
-    "nodemon": "1.18.4",
     "axios": "^0.20.0",
-    "jest": "24.9.0"
+    "faker": "^5.1.0",
+    "jest": "24.9.0",
+    "nodemon": "1.18.4"
   },
   "keywords": []
 }

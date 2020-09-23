@@ -9,6 +9,7 @@ const uniqueValidator = (Model, field, value) => {
   return new Promise(async (resolve, reject) => {
     const response = await Model.find({ [field]: value }).exec();
     resolve(response.length <= 0);
+    reject(response.length > 0)
   });
 };
 
@@ -31,13 +32,13 @@ var accountSchema = Schema({
   isAdmin: { type: Boolean, default: false },
   isCustomer: { type: Boolean, default: false },
   isVendor: { type: Boolean, default: false },
-  owner: {
+  ownerID: {
     type: OID,
     ref: "User",
     required: true
   },
-  created: { type: Date, default: Date.now() },
-  modified: { type: Date, default: Date.now() }
+  createdAt: { type: Date, default: Date.now() },
+  modifiedAt: { type: Date, default: Date.now() }
 });
 
 const Account = mongoose.model("Account", accountSchema);

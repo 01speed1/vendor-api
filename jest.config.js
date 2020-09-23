@@ -1,5 +1,5 @@
 module.exports = {
   verbose: true,
   testEnvironment: "node",
-  setupFilesAfterEnv: ["<rootDir>/test/jestHelpers.js"],
+  setupFilesAfterEnv: ["<rootDir>/test/jest.helpers.js"],
 };

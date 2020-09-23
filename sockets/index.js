@@ -1,4 +1,4 @@
-require("../entities/orders/orders.socket");
+require("../entities/orders/order.socket");
 require("../entities/users/users.socket");
 require("./auth");
 

@@ -1,7 +1,9 @@
-require("../entities/orders/orders.socket");
+require("../entities/orders/order.socket");
 require("../entities/users/users.socket");
 require("./auth");
 
+
+// TODO: remove when we dont need this any more
 // andres temp
 
 // const { io } = require("../index");

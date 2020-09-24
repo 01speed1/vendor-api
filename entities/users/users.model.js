@@ -5,8 +5,8 @@ var userSchema = Schema({
   name: { type: String, required: true },
   lastName: { type: String, required: true },
   documentNumber: { type: String },
-  contactPhones: [String],
-  created: { type: Date, default: Date.now() },
+  contactPhones: [{ type: String }],
+  createdAt: { type: Date, default: Date.now() },
   imagePath: { type: String }
 });
 

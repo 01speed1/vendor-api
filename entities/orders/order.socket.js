@@ -5,7 +5,7 @@ const {
   createOrder,
   updateOrder,
   removeOrder
-} = require("./orders.services");
+} = require("./order.services");
 
 io.on("connection", client => {
   client.on("get orders", response => {

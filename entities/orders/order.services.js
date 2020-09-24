@@ -1,4 +1,4 @@
-const Order = require("./orders.model");
+const Order = require("./order.model");
 
 const serviceBuilder = require("../../libs/serviceBuilder");
 

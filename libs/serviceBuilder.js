@@ -1,23 +1,15 @@
-const getAll = (Model) => async () => Model.find({});
+const getAll = (Model) => () => Model.find({});
 
-const findBy = (Model) => async (parameters) => {
-  return await Model.find(parameters);
-};
+const findBy = (Model) => (parameters) => Model.find(parameters);
 
-const getOne = (Model) => async (findOptions) => {
-  try {
-    return await Model.findOne(findOptions);
-  } catch (errors) {
-    return errors;
-  }
-};
+const getOne = (Model) => (findOptions) => Model.findOne(findOptions);
 
-const create = (Model) => async (parameters) => await Model.create(parameters);
+const create = (Model) => (parameters) => Model.create(parameters);
 
-const update = (Model) => async (_id, parameters) =>
-  await Model.findByIdAndUpdate(_id, parameters, { new: true }).exec();
+const update = (Model) => (_id, parameters) =>
+  Model.findByIdAndUpdate(_id, parameters, { new: true });
 
-const remove = (Model) => async (_id) => await Model.findByIdAndRemove(_id);
+const remove = (Model) => (_id) => Model.findByIdAndRemove(_id);
 
 module.exports = (Model) => ({
   findBy: findBy(Model),

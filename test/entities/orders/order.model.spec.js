@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const Order = require("../../../entities/orders/order.model");
+const Order = require("../../../src/entities/orders/order.model");
 
 describe("Like a developer", () => {
   const neededParameters = {

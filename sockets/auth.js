@@ -1,6 +1,7 @@
 const { io } = require("../app");
 
-const { userRegister } = require("../libs/register");
+//TODO Refactor this endpoint
+// const { userRegister } = require("../libs/register");
 const { userSession } = require("../libs/session");
 
 io.on("connection", client => {

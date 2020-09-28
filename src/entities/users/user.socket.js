@@ -1,11 +1,11 @@
-const { io } = require("../../app");
+const { io } = require("../../../app");
 const {
   getAllUsers,
   getUser,
   createUser,
   updateUser,
   removeUser
-} = require("./users.services");
+} = require("./user.services");
 
 io.on("connection", client => {
   client.on("get a user", (parameters, response) => {

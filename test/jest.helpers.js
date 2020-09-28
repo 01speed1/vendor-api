@@ -1,6 +1,6 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const { DatabaseURLBuilder } = require('../libs/URLBuilder')
+const { DatabaseURLBuilder } = require('../libs/database/URLDBBuilder')
 
 const dabaseUrl = DatabaseURLBuilder()
 

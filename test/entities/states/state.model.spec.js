@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const State = require("../../../entities/states/state.model");
+const State = require("../../../src/entities/states/state.model");
 
 describe("Like a developer", () => {
   const neededParameters = {

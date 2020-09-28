@@ -1,6 +1,6 @@
 var faker = require("faker");
 
-const Order = require("../../../entities/orders/order.model");
+const Order = require("../../../src/entities/orders/order.model");
 
 const defaultArgumets = () => ({
   location: {

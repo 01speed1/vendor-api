@@ -1,6 +1,6 @@
 var faker = require("faker");
 
-const User = require("../../../entities/users/users.model");
+const User = require("../../../src/entities/users/user.model");
 
 const defaultArgumets = () => ({
   name           : faker.name.firstName(),
@@ -10,6 +10,6 @@ const defaultArgumets = () => ({
   imagePath      : faker.random.image(),
 })
 
-module.exports = async function userMocker(args) {
-  return await User.create({ ...defaultArgumets(), ...args });
+module.exports = function userMocker(args = {}) {
+  return User.create({ ...defaultArgumets(), ...args });
 };

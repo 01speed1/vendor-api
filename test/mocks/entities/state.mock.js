@@ -1,6 +1,6 @@
 var faker = require("faker");
 
-const State = require("../../../entities/states/state.model");
+const State = require("../../../src/entities/states/state.model");
 
 const defaultArgumets = () => ({
   description: faker.lorem.paragraph(),

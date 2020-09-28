@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const User = require("../../../entities/users/users.model");
+const User = require("../../../src/entities/users/user.model");
 
 describe("Like a developer", () => {
   const neededParameters = {

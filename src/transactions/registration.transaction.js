@@ -54,7 +54,7 @@ const accountRegistrationPersister = async (payload = {}) => {
   const { _id: accountID, ownerID, email } = createdAccount;
 
   return { accountID, ownerID, email };
-};<
+};
 
 const sessionTokenBuilder = (payload = {}) => JWTBuilder(payload);
 

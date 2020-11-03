@@ -1,42 +1,43 @@
 {
-  "name": "backend-vendor",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "jest test/ --coverage --watch --runInBand --detectOpenHandles --unhandled-rejections=strict",
-    "start:docker:mongo": "docker-compose up -d",
-    "start:env:test": "sh bash/start_test_mode.sh",
-    "start:env:dev": "sh bash/start_dev_mode.sh",
-    "start:only:test": "NODE_ENV='test' nodemon --trace-warnings --unhandled-rejections=strict app.js",
-    "start:only:dev": "NODE_ENV='development' nodemon --trace-warnings --unhandled-rejections=strict app.js"
-  },
-  "dependencies": {
-    "cors": "2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "4.17.1",
-    "jsonwebtoken": "8.5.1",
-    "mongoose": "5.9.19",
-    "mongoose-beautiful-unique-validation": "7.1.1",
-    "react-notification-system": "0.4.0",
-    "socket.io": "2.3.0",
-    "socketio-jwt": "4.6.2",
-    "validatorjs": "^3.20.0"
-  },
-  "devDependencies": {
-    "axios": "^0.20.0",
-    "eslint": "^7.2.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-node": "^4.1.0",
-    "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "faker": "^5.1.0",
-    "jest": "24.9.0",
-    "nodemon": "1.18.4",
-    "prettier": "^2.1.2",
-    "validate.js": "^0.13.1"
-  },
-  "keywords": []
+    "name": "backend-vendor",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "jest test/ --coverage --watch --runInBand --detectOpenHandles --unhandled-rejections=strict",
+        "start:docker:mongo": "docker-compose up -d",
+        "start:env:test": "sh bash/start_test_mode.sh",
+        "start:env:dev": "sh bash/start_dev_mode.sh",
+        "start:only:test": "NODE_ENV='test' nodemon --trace-warnings --unhandled-rejections=strict app.js",
+        "start:windows:test": "nodemon --trace-warnings --unhandled-rejections=strict app.js",
+        "start:only:dev": "NODE_ENV='development' nodemon --trace-warnings --unhandled-rejections=strict app.js"
+    },
+    "dependencies": {
+        "cors": "2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "4.17.1",
+        "jsonwebtoken": "8.5.1",
+        "mongoose": "5.9.19",
+        "mongoose-beautiful-unique-validation": "7.1.1",
+        "react-notification-system": "0.4.0",
+        "socket.io": "2.3.0",
+        "socketio-jwt": "4.6.2",
+        "validatorjs": "^3.20.0"
+    },
+    "devDependencies": {
+        "axios": "^0.20.0",
+        "eslint": "^7.2.0",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-config-node": "^4.1.0",
+        "eslint-config-prettier": "^6.12.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "faker": "^5.1.0",
+        "jest": "24.9.0",
+        "nodemon": "1.18.4",
+        "prettier": "^2.1.2",
+        "validate.js": "^0.13.1"
+    },
+    "keywords": []
 }

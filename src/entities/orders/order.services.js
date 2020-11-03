@@ -1,6 +1,6 @@
 const Order = require("./order.model");
 
-const serviceBuilder = require("../../libs/serviceBuilder");
+const serviceBuilder = require("../../../libs/serviceBuilder");
 
 const { getAll, getOne, create, update, remove } = serviceBuilder(Order);
 

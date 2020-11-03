@@ -4,7 +4,7 @@ const accountMocker = require("../../mocks/entities/account.mock")
 const orderMocker =   require("../../mocks/entities/order.mock")
 const stateMocker =   require("../../mocks/entities/state.mock")
 
-const Offer = require("../../../entities/offers/offer.model");
+const Offer = require("../../../src/entities/offers/offer.model");
 
 describe("Like a developer", () => {
   const neededParameters = {};

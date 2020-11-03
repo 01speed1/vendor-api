@@ -1,5 +1,5 @@
-require("../entities/orders/order.socket");
-require("../entities/users/users.socket");
+require("../src/entities/orders/order.socket");
+require("../src/entities/users/user.socket");
 require("./auth");
 
 

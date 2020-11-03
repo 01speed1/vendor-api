@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const Company = require("../../../entities/companies/company.model");
+const Company = require("../../../src/entities/companies/company.model");
 
 const userMocker = require("../../mocks/entities/user.mock");
 const AccountMocker = require("../../mocks/entities/account.mock");

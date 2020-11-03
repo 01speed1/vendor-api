@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const Account = require("../../../entities/accounts/account.model");
+const Account = require("../../../src/entities/accounts/account.model");
 
 const userMocker = require("../../mocks/entities/user.mock");
 const accountMocker = require("../../mocks/entities/account.mock");
@@ -9,7 +9,10 @@ describe("Like a developer", () => {
   const needParameters = {
     email: "PonnyTheSoulKiller@vendor.com",
     identificationPhone: "3004005060",
-    password: "ponnylover",
+    password: {
+      IVEncryptKey: "blablebliencrypt",
+      encryptedData: "encryptblablebli"
+    },
     pinPass: "0000",
     twoFactorsToken: "twoFactorsToken",
     facebookToken: "facebookToken",
@@ -117,7 +120,10 @@ describe("Like a developer", () => {
         ...needParameters,
         email: "otheremail@vendor.com",
         identificationPhone: "2345234523",
-        password: "3r3w3r323",
+        password: {
+          IVEncryptKey: "3r3w3r323",
+          encryptedData: "45323g333gj3g3k2g33g2k3jh3g"
+        },
         pinPass: "1114",
         twoFactorsToken: "qwerqwer",
         facebookToken: "asdfasdf",
@@ -142,9 +148,13 @@ describe("Like a developer", () => {
         "identificationPhone",
         newParameters["identificationPhone"]
       );
-      expect(updatedAccount).toHaveProperty(
-        "password",
-        newParameters["password"]
+      expect(updatedAccount["password"]).toHaveProperty(
+        "encryptedData",
+        newParameters["password"]["encryptedData"]
+      );
+      expect(updatedAccount["password"]).toHaveProperty(
+        "IVEncryptKey",
+        newParameters["password"]["IVEncryptKey"]
       );
       expect(updatedAccount).toHaveProperty(
         "pinPass",

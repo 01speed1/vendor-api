@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
-const { getAccount } = require("../entities/accounts/account.services");
-const { getUser } = require("../entities/users/users.services");
+const { getAccount } = require("../src/entities/accounts/account.services");
+const { getUser } = require("../src/entities/users/user.services");
 
 module.exports.userSession = ({ email, password }) => {
   return new Promise(async (resolve, reject) => {

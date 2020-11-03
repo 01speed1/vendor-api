@@ -1,5 +1,5 @@
 const Account = require("./account.model");
-const serviceBuilder = require("../../libs/serviceBuilder");
+const serviceBuilder = require("../../../libs/serviceBuilder");
 
 const { getAll, getOne, create, update, remove } = serviceBuilder(Account);
 

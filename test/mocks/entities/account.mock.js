@@ -1,12 +1,15 @@
 var faker = require("faker");
 
-const Account = require("../../../entities/accounts/account.model");
+const Account = require("../../../src/entities/accounts/account.model");
 const userMocker = require('./user.mock')
 
 const defaultArgumets = () => ({
   email               :faker.internet.email(),
   identificationPhone :faker.phone.phoneNumber(),
-  password            :faker.internet.password(),
+  password            :{
+    IVEncryptKey        : faker.internet.password(),
+    encryptedData       : faker.internet.password()
+                      },
   pinPass             :faker.unique,
   twoFactorsToken     :faker.unique,
   facebookToken       :faker.unique,

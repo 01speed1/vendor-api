@@ -1,4 +1,4 @@
-const { io, privateIO } = require("../../app");
+const { io, privateIO } = require("../../../app");
 const {
   getAllOrders,
   getOrder,

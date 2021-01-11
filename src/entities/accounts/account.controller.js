@@ -1,10 +1,13 @@
 const accountRepository = require('./account.repository');
+const accountServices = require('./account.services');
 
 const signUp = async (request, response) => {
   try {
     const signUpParams = request.body;
 
-    await accountRepository.create(signUpParams);
+    const createdAccount = await accountRepository.create(signUpParams);
+
+    await accountServices.createRoles(createdAccount._id);
 
     response.json({
       message: 'account created'

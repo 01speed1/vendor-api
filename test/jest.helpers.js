@@ -1,8 +1,8 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-const { DatabaseURLBuilder } = require('../libs/database/URLDBBuilder')
+require('dotenv').config();
+const mongoose = require('mongoose');
+const { DatabaseURLBuilder } = require('../libs/database/URLDBBuilder');
 
-const dabaseUrl = DatabaseURLBuilder()
+const dabaseUrl = DatabaseURLBuilder();
 
 beforeEach(function (done) {
   function clearDB() {
@@ -19,9 +19,9 @@ beforeEach(function (done) {
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true,
-        useFindAndModify: false,
+        useFindAndModify: false
       },
-      (err) => {
+      err => {
         if (err) {
           throw err;
         }
@@ -37,3 +37,13 @@ afterAll(function (done) {
   mongoose.disconnect();
   return done();
 });
+
+const apiServerConnection = () => {
+  const apiServer = require('../api.server');
+  const supertest = require('supertest');
+  return supertest(apiServer);
+};
+
+module.exports = {
+  apiServerConnection
+};

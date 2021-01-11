@@ -1,33 +1,10 @@
-require("dotenv").config();
+require('dotenv').config();
+require('./config/database');
 
-const express = require("express");
-const io = require("socket.io");
-const http = require("http");
-const app = express();
+//TODO add a env variables validator
 
-const cors = require("cors");
-app.use(cors());
+const apiServer = require('./api.server');
 
-require("./config/database");
+const port = process.env.NODE_PORT || 8080;
 
-const server = http.createServer(app);
-
-const baseIO = io(server);
-baseIO.origins("*:*");
-
-const privateIO = baseIO.of("/private");
-
-const athorizacion = require("./middlewares/athorizacionSocket");
-
-privateIO.use(athorizacion);
-
-module.exports.io = baseIO;
-module.exports.privateIO = privateIO;
-
-require("./sockets");
-
-app.get("/", (r, s) => s.json({ winiie: "ok" }));
-
-const port = process.env.NODE_PORT || 8080
-
-server.listen(port, () => console.log(`Socket Server runnig in ${port}`));
+apiServer.listen(port, () => console.log(`API Server runnig in ${port}`));

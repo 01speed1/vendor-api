@@ -1,54 +1,25 @@
-const accountModel = require('../../db/models/account.model');
+const accountMock = require('../../../test/mocks/models/account.mock');
 const accountRepository = require('./account.repository');
 
-let accountData;
-
 describe('#create', () => {
-  describe('When create a account', () => {
-    it('should save an account in the database', async () => {
-      accountData = {
-        email: 'skatintest@tes.com',
-        identificationPhone: '',
-        password: 'blibloblu',
-        firstName: 'Skatin',
-        lastName: 'BLiblo'
-      };
+  it('should save an account in the database', async () => {
+    const data = accountMock.generateFakeData();
 
-      await accountRepository.create(accountData);
+    await accountRepository.create(data);
 
-      expect(await accountModel.countDocuments()).toEqual(1);
-    });
+    expect(await accountMock.model.countDocuments()).toEqual(1);
   });
 });
 
 describe('#update', () => {
-  describe('When update a account', () => {
-    it('should update the account on the database', async () => {
-      accountData = {
-        email: 'skatintest@tes.com',
-        identificationPhone: '',
-        password: 'blibloblu',
-        firstName: 'Skatin',
-        lastName: 'BLiblo'
-      };
+  it('should update the account on the database', async () => {
+    const createdAccount = await accountMock.createFake();
 
-      const createdAccount = await accountRepository.create(accountData);
-
-      expect(createdAccount.identificationPhone).toEqual('');
-
-      const updateData = {
-        identificationPhone: '3001114455'
-      };
-
-      await accountRepository.update(updateData);
-
-      const foundAccount = await accountModel.findById(createdAccount._id);
-
-      expect(foundAccount.email).toEqual(accountData.email);
-
-      expect(foundAccount.identificationPhone).toEqual(
-        updateData.identificationPhone
-      );
+    const response = await accountRepository.update({
+      id: createdAccount._id,
+      email: 'bli@Blob.com'
     });
+
+    expect(response.value.email).toEqual('bli@Blob.com');
   });
 });

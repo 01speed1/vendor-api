@@ -30,7 +30,7 @@ const update = ({
   twitterToken,
   modifiedAt
 }) => {
-  const filteredParamaters = objectUtils.removeEmpties({
+  const filteredParameters = objectUtils.removeEmpties({
     email,
     identificationPhone,
     password,
@@ -43,7 +43,12 @@ const update = ({
     modifiedAt
   });
 
-  return accountModel.updateOne(id, filteredParamaters);
+  return accountModel
+    .findByIdAndUpdate(id, filteredParameters, {
+      rawResult: true,
+      new: true
+    })
+    .lean();
 };
 
 module.exports = {

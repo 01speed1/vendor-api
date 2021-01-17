@@ -1,17 +1,11 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
-const OID = Schema.Types.ObjectId;
 
-//TODO validate unique function
-// move to account validations
-
-//move this validation to other site
 const uniqueValidator = (Model, field, value) => {
   return new Promise(async (resolve, reject) => {
     const response = await Model.find({
       [field]: value
-    }).exec();
+    })
     resolve(response.length <= 0);
     reject(response.length > 0);
   });

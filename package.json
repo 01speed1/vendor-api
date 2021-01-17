@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "jest test/ --coverage --watch --runInBand --detectOpenHandles --unhandled-rejections=strict",
+    "test": "jest test/ --coverage --watchAll --runInBand --detectOpenHandles --unhandled-rejections=strict",
     "start:docker:mongo": "docker-compose up -d",
     "start:env:test": "sh bash/start_test_mode.sh",
     "start:env:dev": "sh bash/start_dev_mode.sh",
@@ -20,6 +20,7 @@
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.9.19",
     "mongoose-beautiful-unique-validation": "7.1.1",
+    "mongoose-dummy": "^1.0.8",
     "react-notification-system": "0.4.0",
     "socket.io": "2.3.0",
     "socketio-jwt": "4.6.2",

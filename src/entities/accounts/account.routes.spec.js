@@ -54,7 +54,7 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
     });
   });
 
-  fit('should create a consumer, bussines, and carrier reference', async () => {
+  it('should create a  consumer, bussines, and carrier reference', async () => {
     const accountData = {
       email: 'goka@skate.com',
       identificationPhone: '3032241247',
@@ -67,7 +67,7 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
     const response = await request
       .post('/api/accounts/signup')
       .send(accountData);
-
+    
     expect(await consumerModel.countDocuments()).toEqual(1);
     expect(await businessModel.countDocuments()).toEqual(1);
     expect(await carrierModel.countDocuments()).toEqual(1);

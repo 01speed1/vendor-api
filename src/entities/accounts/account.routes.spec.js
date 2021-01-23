@@ -1,8 +1,8 @@
 const accountMock = require('../../../test/mocks/models/account.mock');
 const consumerMock = require('../../../test/mocks/models/consumer.mock');
 
-// const businessModel = require('../../db/models/business.model');
-// const carrierModel = require('../../db/models/carrier.model');
+const businessModel = require('../../db/models/business.model');
+const carrierModel = require('../../db/models/carrier.model');
 
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
@@ -54,7 +54,7 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
     });
   });
 
-  xit('should create a consumer, business, and carrier reference', async () => {
+  it('should create a consumer, business, and carrier reference', async () => {
     const accountData = {
       email: 'goka@skate.com',
       identificationPhone: '3032241247',
@@ -84,22 +84,23 @@ describe('Like a current user, when I visit "/api/accounts/login"', () => {
     const response = await request
       .post('/api/accounts/login')
       .send(accountData)
-      .expect(401);
+      .expect(400);
 
     expect(response.body).toEqual({
-      error: '"password" is required'
+      error: '"password" is not allowed to be empty'
     });
   });
 
   it('should return an authentication token', async () => {
-    await accountMock.createFake({
-      email: 'goka@skate.com',
-      password: 'superIziPss'
+    const { saveFake, fakePassword } = accountMock.registerFake({
+      email: 'goka@skate.com'
     });
+
+    await saveFake();
 
     const accountData = {
       email: 'goka@skate.com',
-      password: 'superIziPss'
+      password: fakePassword
     };
 
     const response = await request
@@ -108,5 +109,27 @@ describe('Like a current user, when I visit "/api/accounts/login"', () => {
       .expect(200);
 
     expect(response.body).toHaveProperty('token');
+  });
+
+  describe('When password is incorrect', () => {
+    it('should return 401 unauthorized', async () => {
+      const { saveFake } = accountMock.registerFake({
+        email: 'goka@skate.com'
+      });
+
+      await saveFake();
+
+      const accountData = {
+        email: 'goka@skate.com',
+        password: 'bliblablo'
+      };
+
+      const response = await request
+        .post('/api/accounts/login')
+        .send(accountData)
+        .expect(401);
+
+      expect(response.body).toEqual({ message: 'Incorrect password' });
+    });
   });
 });

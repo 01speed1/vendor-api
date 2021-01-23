@@ -5,7 +5,7 @@ const uniqueValidator = (Model, field, value) => {
   return new Promise(async (resolve, reject) => {
     const response = await Model.find({
       [field]: value
-    })
+    });
     resolve(response.length <= 0);
     reject(response.length > 0);
   });

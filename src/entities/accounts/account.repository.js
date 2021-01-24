@@ -1,5 +1,6 @@
 const accountModel = require('../../../src/db/models/account.model');
 const objectUtils = require('../../utils/objects');
+const encrypter = require('../../../libs/auth/Encrypter');
 
 const create = ({
   email,
@@ -30,7 +31,7 @@ const update = ({
   twitterToken,
   modifiedAt
 }) => {
-  const filteredParamaters = objectUtils.removeEmpties({
+  const filteredParameters = objectUtils.removeEmpties({
     email,
     identificationPhone,
     password,
@@ -43,10 +44,35 @@ const update = ({
     modifiedAt
   });
 
-  return accountModel.updateOne(id, filteredParamaters);
+  return accountModel
+    .findByIdAndUpdate(id, filteredParameters, {
+      rawResult: true,
+      new: true
+    })
+    .lean();
 };
+
+const register = ({
+  email,
+  identificationPhone,
+  password,
+  firstName,
+  lastName
+}) => {
+  return accountModel.create({
+    email,
+    identificationPhone,
+    password: encrypter.encrypt(password),
+    firstName,
+    lastName
+  });
+};
+
+const foundByEmail = email => accountModel.findOne({ email });
 
 module.exports = {
   create,
-  update
+  update,
+  register,
+  foundByEmail
 };

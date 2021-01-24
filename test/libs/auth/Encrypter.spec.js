@@ -1,53 +1,31 @@
-const { encrypt, decrypt, descryptAsync } = require("../../../libs/auth/Encrypter")
+const {
+  encrypt,
+  isValidPasswordAsync
+} = require('../../../libs/auth/Encrypter');
 
-describe("Encrypter", () => {
-  describe("When need encrypt a value", () => {
-    it("should return the encription object", () => {
-      const password = "maisupercoolpassguortwowo"
+describe('#encrypt', () => {
+  describe('When need encrypt a value', () => {
+    it('should return the encription object', () => {
+      const password = 'maisupercoolpassguortwowo';
 
-      const response = encrypt(password)
+      const response = encrypt(password);
 
-      expect(response).toHaveProperty("IVEncryptKey")
-      expect(response).toHaveProperty("encryptedData")
-    })
-  })
+      expect(response).toEqual(expect.any(String));
+    });
+  });
+});
 
-  describe("When need decrypt a value", () => {
-    it("should return the value", () => {
-      const password = "maisupercoolpassguortwowo"
+describe('#isValidPasswordAsync', () => {
+  it('should compare and return if password is equivalent', async () => {
+    const password = 'maisupercoolpassguortwowo';
 
-      const response = encrypt(password)
-      const decriptedValue = decrypt(response)
+    const encryptedPassword = encrypt(password);
 
-      expect(decriptedValue).toEqual("maisupercoolpassguortwowo")
-    })
-  })
+    const response = await isValidPasswordAsync({
+      originalPassword: password,
+      encryptedPassword
+    });
 
-  describe("When need decrypt a value", () => {
-    it("should return async value", () => {
-      const password = "maisupercoolpassguortwowo"
-
-      expectedError = {"errorMessage": "description IV key is invalid", "errorSource": "Ecrypter"}
-
-      const response = encrypt(password)
-      descryptAsync({...response, IVEncryptKey: undefined})
-        .catch( errors => {
-          expect(errors).toEqual(expectedError)
-        })
-    })
-  })
-
-  describe("When need decrypt a value", () => {
-    it("should return async value", () => {
-      const password = "maisupercoolpassguortwowo"
-
-      expectedError = {"errorMessage": "description IV key is invalid", "errorSource": "Ecrypter"}
-
-      const response = encrypt(password)
-      descryptAsync({...response, encryptedData: undefined})
-        .catch( errors => {
-          expect(errors).toEqual(expectedError)
-        })
-    })
-  })
-})
+    expect(response).toBeTruthy();
+  });
+});

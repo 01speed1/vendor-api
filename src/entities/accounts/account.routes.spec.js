@@ -1,6 +1,6 @@
-const accountModel = require('../../db/models/account.model');
+const accountMock = require('../../../test/mocks/models/account.mock');
+const consumerMock = require('../../../test/mocks/models/consumer.mock');
 
-const consumerModel = require('../../db/models/consumer.model');
 const businessModel = require('../../db/models/business.model');
 const carrierModel = require('../../db/models/carrier.model');
 
@@ -26,7 +26,7 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
       message: 'account created'
     });
 
-    expect(await accountModel.countDocuments()).toEqual(1);
+    expect(await accountMock.model.countDocuments()).toEqual(1);
   });
 
   it('should validate required email', async () => {
@@ -54,7 +54,7 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
     });
   });
 
-  it('should create a  consumer, bussines, and carrier reference', async () => {
+  it('should create a consumer, business, and carrier reference', async () => {
     const accountData = {
       email: 'goka@skate.com',
       identificationPhone: '3032241247',
@@ -64,12 +64,72 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
       lastName: 'BLiblo'
     };
 
-    const response = await request
-      .post('/api/accounts/signup')
-      .send(accountData);
-    
-    expect(await consumerModel.countDocuments()).toEqual(1);
+    await request.post('/api/accounts/signup').send(accountData);
+
+    expect(await consumerMock.model.countDocuments()).toEqual(1);
     expect(await businessModel.countDocuments()).toEqual(1);
     expect(await carrierModel.countDocuments()).toEqual(1);
+  });
+});
+
+describe('Like a current user, when I visit "/api/accounts/login"', () => {
+  it('should validate my credentials', async () => {
+    await accountMock.createFake({ email: 'goka@skate.com' });
+
+    const accountData = {
+      email: 'goka@skate.com',
+      password: ''
+    };
+
+    const response = await request
+      .post('/api/accounts/login')
+      .send(accountData)
+      .expect(400);
+
+    expect(response.body).toEqual({
+      error: '"password" is not allowed to be empty'
+    });
+  });
+
+  it('should return an authentication token', async () => {
+    const { saveFake, fakePassword } = accountMock.registerFake({
+      email: 'goka@skate.com'
+    });
+
+    await saveFake();
+
+    const accountData = {
+      email: 'goka@skate.com',
+      password: fakePassword
+    };
+
+    const response = await request
+      .post('/api/accounts/login')
+      .send(accountData)
+      .expect(200);
+
+    expect(response.body).toHaveProperty('token');
+  });
+
+  describe('When password is incorrect', () => {
+    it('should return 401 unauthorized', async () => {
+      const { saveFake } = accountMock.registerFake({
+        email: 'goka@skate.com'
+      });
+
+      await saveFake();
+
+      const accountData = {
+        email: 'goka@skate.com',
+        password: 'bliblablo'
+      };
+
+      const response = await request
+        .post('/api/accounts/login')
+        .send(accountData)
+        .expect(401);
+
+      expect(response.body).toEqual({ message: 'Incorrect password' });
+    });
   });
 });

@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const { async } = require('validate.js');
 
 const signupSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -25,8 +24,26 @@ const signUpValidation = async (request, response, next) => {
   }
 };
 
+const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required()
+});
 
+const logInValidation = async (request, response, next) => {
+  try {
+    const { body } = request;
+
+    const validatedBody = await loginSchema.validateAsync(body);
+
+    request.body = validatedBody;
+
+    next();
+  } catch (error) {
+    response.status(400).json({ error: error.message });
+  }
+};
 
 module.exports = {
-  signUpValidation
+  signUpValidation,
+  logInValidation
 };

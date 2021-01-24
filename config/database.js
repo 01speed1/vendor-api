@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { DatabaseURLBuilder } = require("../libs/database/URLDBBuilder");
+const mongoose = require('mongoose');
+const { DatabaseURLBuilder } = require('../libs/database/URLDBBuilder');
 
 const options = {
   useNewUrlParser: true,
@@ -15,9 +15,9 @@ const options = {
   useUnifiedTopology: true
 };
 
-const dabaseUrl = DatabaseURLBuilder()
+const dabaseUrl = DatabaseURLBuilder();
 
 module.exports = mongoose
   .connect(dabaseUrl, options)
-  .then( database => console.log("database connection stablished") )
-  .catch( error => console.log('error database ', error) )
+  .then(database => console.log('database connection stablished'))
+  .catch(error => console.log('error database ', error));

@@ -1,24 +1,23 @@
-const { JWTBuilder } = require("../../../libs/auth/JWTBuilder")
+const JWT = require('../../../libs/auth/JWT');
 
-describe("JWTBuilder", () => {
-  describe("When the developer need a json web token", () => {
-    it("should be created with the right params", async () => {
+describe('#create', () => {
+  describe('When the developer need a json web token', () => {
+    it('should be created with the right params', async () => {
       const payload = {
-        username: "somebody",
-        email:    "somemail@mail.com"
-      }
+        email: 'somemail@mail.com'
+      };
 
-      const response = await JWTBuilder({payload})
+      const responseToken = JWT.create(payload);
 
-      expect(response).toHaveProperty("token")
-    })
-  })
+      expect(responseToken).toEqual(expect.any(String));
+    });
 
-  describe("When developer does not send a payload", () => {
-    it("should return a object with error", async () => {
-      const response = JWTBuilder()
+    describe('when payload does not exist', () => {
+      it('should create a token', () => {
+        const responseToken = JWT.create();
 
-      await expect(response).rejects.toHaveProperty("error", "payload no found to create token")
-    })
-  })
-})
+        expect(responseToken).toEqual(expect.any(String));
+      });
+    });
+  });
+});

@@ -15,7 +15,10 @@ const accountExist = async (request, response, next) => {
 
     if (!isCorrectPassword) throw new Error('Incorrect password');
 
-    request.account = { email: foundAccount.email };
+    request.account = {
+      accountId: foundAccount._id,
+      email: foundAccount.email
+    };
 
     next();
   } catch (error) {

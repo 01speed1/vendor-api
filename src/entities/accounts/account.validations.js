@@ -1,40 +1,49 @@
-const {
-  ParametersValidator,
-} = require('../../../libs/validation/ParametersValidator');
+const Joi = require('joi');
 
-const basicCreadentialsRules = {
-  email: 'string|email|required',
-  password: 'string|confirmed|required',
-  password_confirmation: 'string|required',
+const signupSchema = Joi.object({
+  email: Joi.string().email().required(),
+  // TODO validate format
+  identificationPhone: Joi.string().required(),
+  password: Joi.string().required(),
+  validatePassword: Joi.ref('password'),
+  firstName: Joi.string().required(),
+  lastName: Joi.string().required()
+}).with('password', 'validatePassword');
+
+const signUpValidation = async (request, response, next) => {
+  try {
+    const { body } = request;
+
+    const validatedBody = await signupSchema.validateAsync(body);
+
+    request.body = validatedBody;
+
+    next();
+  } catch (error) {
+    response.status(400).json({ error: error.message });
+  }
 };
 
-const creationRules = {
-  email: 'string|email|required',
-  identificationPhone: 'string',
-  password: {
-    IVEncryptKey: 'string|required',
-    encryptedData: 'string|required',
-  },
-  pinPass: 'string',
-  twoFactorsToken: 'string',
-  facebookToken: 'string',
-  googleToken: 'string',
-  twitterToken: 'string',
-  isAdmin: 'boolean',
-  isCustomer: 'boolean',
-  isVendor: 'boolean',
-  ownerID: 'required',
+const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required()
+});
+
+const logInValidation = async (request, response, next) => {
+  try {
+    const { body } = request;
+
+    const validatedBody = await loginSchema.validateAsync(body);
+
+    request.body = validatedBody;
+
+    next();
+  } catch (error) {
+    response.status(400).json({ error: error.message });
+  }
 };
-
-function credentialsParametersValidator(parameters) {
-  return ParametersValidator(parameters, basicCreadentialsRules);
-}
-
-function creationParametersValidator(parameters) {
-  return ParametersValidator(parameters, creationRules);
-}
 
 module.exports = {
-  creationParametersValidator,
-  credentialsParametersValidator,
+  signUpValidation,
+  logInValidation
 };

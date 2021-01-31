@@ -1,12 +1,15 @@
-const Account = require("../../db/models/account.model");
-const serviceBuilder = require("../../../libs/serviceBuilder");
+const consumerRepository = require('../consumer/consumer.repository');
+const businessRepository = require('../business/business.repository');
+const carrierRepository = require('../carriers/carrier.repository');
 
-const { getAll, getOne, create, update, remove } = serviceBuilder(Account);
+const createRoles = accountId => {
+  return Promise.all([
+    consumerRepository.createByAccountId(accountId),
+    businessRepository.createByAccountId(accountId),
+    carrierRepository.createByAccountId(accountId)
+  ]);
+};
 
 module.exports = {
-    getAllAccounts: getAll,
-    getAccount: getOne,
-    createAccount: create,
-    updateAccount: update,
-    removeAccount: remove
+  createRoles
 };

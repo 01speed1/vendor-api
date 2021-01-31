@@ -1,4 +1,4 @@
-const consumerRepository = require('../consumer/consumer.repository');
+const consumerRepository = require('../consumers/consumer.repository');
 const businessRepository = require('../business/business.repository');
 const carrierRepository = require('../carriers/carrier.repository');
 

@@ -1,5 +1,7 @@
 const accountMock = require('../../../test/mocks/models/account.mock');
 const consumerMock = require('../../../test/mocks/models/consumer.mock');
+const businessMock = require('../../../test/mocks/models/business.mock');
+const carrierMock = require('../../../test/mocks/models/carrier.mock');
 
 const businessModel = require('../../db/models/business.model');
 const carrierModel = require('../../db/models/carrier.model');
@@ -96,7 +98,10 @@ describe('Like a current user, when I visit "/api/accounts/login"', () => {
       email: 'goka@skate.com'
     });
 
-    await saveFake();
+    const { _id: accountId } = await saveFake();
+    await consumerMock.createFake({ accountId });
+    await businessMock.createFake({ accountId });
+    await carrierMock.createFake({ accountId });
 
     const accountData = {
       email: 'goka@skate.com',

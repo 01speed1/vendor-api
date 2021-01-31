@@ -6,6 +6,11 @@ const createByAccountId = accountId => {
   });
 };
 
+const findByAccountId = accountId => {
+  return consumerModel.findOne({ accountId });
+};
+
 module.exports = {
-  createByAccountId
+  createByAccountId,
+  findByAccountId
 };

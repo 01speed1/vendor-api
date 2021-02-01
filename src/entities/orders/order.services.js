@@ -1,13 +1,12 @@
-const Order = require("../../db/models/order.model");
+const productRepository = require('../products/product.repository');
+const serviceRepository = require('../services/service.repository');
 
-const serviceBuilder = require("../../../libs/serviceBuilder");
-
-const { getAll, getOne, create, update, remove } = serviceBuilder(Order);
-
-module.exports = {
-    getAllOrders: getAll,
-    getOrder: getOne,
-    createOrder: create,
-    updateOrder: update,
-    removeOrder: remove
+const createProducts = (productsList = []) => {
+  return productRepository.createMany(productsList);
 };
+
+const createServices = (servicesList = []) => {
+  return serviceRepository.createMany(servicesList);
+};
+
+module.exports = { createProducts, createServices };

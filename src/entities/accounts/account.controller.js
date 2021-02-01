@@ -21,7 +21,6 @@ const signUp = async (request, response) => {
 
 const logIn = async (request, response) => {
   try {
-
     const token = JWT.create(request.account);
 
     response.status(200).json({ token });

@@ -18,9 +18,8 @@ var orderSchema = Schema({
     required: true,
     default: 'pending'
   },
-  // TODO: this need to be a model, Product and Service
-  products: [String],
-  services: [String],
+  products: [{ type: OID, ref: 'Product' }],
+  services: [{ type: OID, ref: 'Service' }],
   deliverDetails: String,
   createdAt: { type: Date, default: Date.now() },
   modifiedAt: { type: Date, default: Date.now() }

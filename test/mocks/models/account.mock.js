@@ -1,3 +1,7 @@
+const consumerMock = require('./consumer.mock');
+const businessMock = require('./business.mock');
+const carrierMock = require('./carrier.mock');
+
 const accountModel = require('../../../src/db/models/account.model');
 const fakeGoose = require('../../../libs/fakeGoose');
 const encrypter = require('../../../libs/auth/Encrypter');
@@ -25,7 +29,15 @@ const registerFake = params => {
       password: encrypter.encrypt(finalParams.password)
     });
 
-  return { saveFake, fakePassword };
+  const createFakeModels = accountId => {
+    return Promise.all([
+      consumerMock.createFake({ accountId }),
+      businessMock.createFake({ accountId }),
+      carrierMock.createFake({ accountId })
+    ]);
+  };
+
+  return { saveFake, fakePassword, createFakeModels };
 };
 
 module.exports = { ...fakeModel, registerFake };

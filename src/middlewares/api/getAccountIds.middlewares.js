@@ -4,7 +4,7 @@ const businessRepository = require('../../entities/business/business.repository'
 
 const getRolesByLoggedAccount = async (request, response, next) => {
   try {
-    const loggedAccount = request.account;
+    const loggedAccount = request.account || request.user;
 
     const [
       { _id: consumerId },

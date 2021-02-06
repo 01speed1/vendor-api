@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const OID = Schema.Types.ObjectId;
 
 var categorySchema = Schema({
   name: { type: String, required: true },
@@ -12,4 +13,4 @@ var categorySchema = Schema({
   modifiedAt: { type: Date, default: Date.now() }
 });
 
-module.exports = mongoose.model('Category', categorySchema);
+module.exports = mongoose.model('SubCategory', categorySchema);

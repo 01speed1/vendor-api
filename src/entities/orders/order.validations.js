@@ -26,6 +26,7 @@ const createSchema = Joi.object({
   ),
   services: Joi.array().items(
     Joi.object({
+      description: Joi.string().required(),
       subcategory: Joi.string().required(),
       name: Joi.string().required(),
       price: Joi.number()

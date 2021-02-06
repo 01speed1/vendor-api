@@ -67,12 +67,21 @@ describe('Like a consumer, when visit GET "/orders"', () => {
 
 describe('Like a consumer, when visit POST "/orders"', () => {
   it('should create an order in the database', async () => {
+    const { _id: categoryId } = await categoryModel.create({
+      name: 'blinblon'
+    });
+
+    const { _id: subcategoryId } = await subCategoryModel.create({
+      categoryId,
+      name: 'ndfsb bliuvo UwU'
+    });
+
     const body = {
       location: 'this should be a location object',
       destinyAddress: 'cll false 123',
       products: [
         {
-          subcategory: 'subcategory',
+          subcategory: subcategoryId,
           name: 'Product name',
           quantity: 1
         }
@@ -91,7 +100,7 @@ describe('Like a consumer, when visit POST "/orders"', () => {
     expect(await orderModel.countDocuments()).toEqual(1);
   });
 
-  fit('should create product and services in the database', async () => {
+  it('should create product and services in the database', async () => {
     const { _id: categoryId } = await categoryModel.create({
       name: 'blinblon'
     });

@@ -7,6 +7,7 @@ const orderValidations = require('./order.validations');
 const orderController = require('./order.controller');
 
 router.get('/', orderController.getAll);
+
 router.post(
   '/',
   apiMiddleware.validateJWT,

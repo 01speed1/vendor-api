@@ -9,7 +9,8 @@ app.use(cors());
 const helmet = require('helmet');
 app.use(helmet());
 
-const apiRoutes = require('./api.routes')();
-app.use('/api', apiRoutes);
+const apiRouter = express.Router();
+require('./api.routes')(apiRouter);
+app.use('/api', apiRouter);
 
 module.exports = app;

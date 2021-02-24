@@ -1,7 +1,7 @@
 const {
   encrypt,
   isValidPasswordAsync
-} = require('../../../libs/auth/Encrypter');
+} = require('./Encrypter');
 
 describe('#encrypt', () => {
   describe('When need encrypt a value', () => {

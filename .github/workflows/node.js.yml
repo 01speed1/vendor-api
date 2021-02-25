@@ -25,8 +25,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
       - run: git checkout .
       - run: git pull
       - run: npm ci
-      - run: pm2 restart all
       - run: npm test
+      - run: pm2 restart all
+
+    env:
+      NODE_ENV: deploy
+      AUTH_SECRET: aSuperSecret4testing

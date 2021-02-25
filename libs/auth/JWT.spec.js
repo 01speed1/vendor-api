@@ -1,4 +1,4 @@
-const JWT = require('../../../libs/auth/JWT');
+const JWT = require('./JWT');
 
 describe('#create', () => {
   describe('When the developer need a json web token', () => {

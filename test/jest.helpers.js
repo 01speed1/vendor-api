@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const { DatabaseURLBuilder } = require('../libs/database/URLDBBuilder');
 
-const dabaseUrl = DatabaseURLBuilder();
+const databaseUrl = global.__MONGO_URI__; //DatabaseURLBuilder();
 
 beforeEach(function (done) {
   function clearDB() {
@@ -14,7 +14,7 @@ beforeEach(function (done) {
 
   if (mongoose.connection.readyState === 0) {
     mongoose.connect(
-      dabaseUrl,
+      databaseUrl,
       {
         useNewUrlParser: true,
         useCreateIndex: true,

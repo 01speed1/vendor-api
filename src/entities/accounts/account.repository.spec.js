@@ -1,8 +1,6 @@
 const accountMock = require('../../../test/mocks/models/account.mock');
 const accountRepository = require('./account.repository');
 
-console.log( process.env )
-
 describe('#create', () => {
   it('should save an account in the database', async () => {
     const data = accountMock.generateFakeData();

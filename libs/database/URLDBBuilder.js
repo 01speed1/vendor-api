@@ -1,10 +1,12 @@
 require('dotenv').config();
 
+const { NODE_DATABASE_URL, NODE_ENV } = process.env;
+
 const DatabaseURLBuilder = (
-  urlDB = process.env.NODE_DATABASE_URL,
-  enviroment = process.env.NODE_ENV
+  urlDB = NODE_DATABASE_URL,
+  environment = NODE_ENV
 ) => {
-  const url = `${urlDB}/${enviroment}DB`;
+  const url = `${urlDB}/${environment}DB`;
 
   return url;
 };

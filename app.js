@@ -1,7 +1,7 @@
 require('dotenv').config();
 require('./config/database');
 
-//TODO add a env variables validator
+console.log('testing');
 
 const apiServer = require('./api.server');
 

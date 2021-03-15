@@ -1,13 +1,33 @@
-const Offer = require("../../db/models/offers.model");
+const productOfferedRepository = require('../productsOffered/productOffered.repository');
+const serviceOfferedRepository = require('../servicesOffered/serviceOffered.repository');
 
-const serviceBuilder = require("../../libs/serviceBuilder");
+const integrateOfferIdToList = ({ offerId, list = [] }) => {
+  return list.map(element => ({ offerId, ...element }));
+};
 
-const { getAll, getOne, create, update, remove } = serviceBuilder(Offer);
+const createProductsAndServicesOffered = ({
+  offerId,
+  productsList = [],
+  servicesList = []
+}) => {
+  if (!offerId) throw new Error('offerId is required');
+
+  const updatedProductsList = integrateOfferIdToList({
+    offerId,
+    list: productsList
+  });
+
+  const updatedServiceList = integrateOfferIdToList({
+    offerId,
+    list: servicesList
+  });
+
+  return Promise.all([
+    productOfferedRepository.createMany(updatedProductsList),
+    serviceOfferedRepository.createMany(updatedServiceList)
+  ]);
+};
 
 module.exports = {
-    getAllOffers: getAll,
-    getOffer: getOne,
-    createOffer: create,
-    updateOffer: update,
-    removeOffer: remove
+  createProductsAndServicesOffered
 };

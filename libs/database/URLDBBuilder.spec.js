@@ -2,7 +2,7 @@ const { DatabaseURLBuilder } = require('./URLDBBuilder');
 
 describe('When need to build a URL DB Path', () => {
   beforeEach(() => {
-    process.env.NODE_DATABASE_URL = 'mongodb://localhost:27018';
+    process.env.NODE_DATABASE_URL = 'mongodb://localhost:27017';
     process.env.NODE_ENV = 'test';
   });
 

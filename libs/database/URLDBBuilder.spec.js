@@ -8,7 +8,7 @@ describe('When need to build a URL DB Path', () => {
 
   test('should return the DB Path', () => {
     expect(DatabaseURLBuilder()).toEqual(
-      `${process.env.NODE_DATABASE_URL}/${process.env.NODE_ENV}`
+      `${process.env.NODE_DATABASE_URL}/${process.env.NODE_ENV}DB`
     );
   });
 

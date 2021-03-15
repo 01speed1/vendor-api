@@ -7,7 +7,9 @@ describe('When need to build a URL DB Path', () => {
   });
 
   test('should return the DB Path', () => {
-    expect(DatabaseURLBuilder()).toEqual('mongodb://localhost:27017/testDB');
+    expect(DatabaseURLBuilder()).toEqual(
+      `${process.env.NODE_DATABASE_URL}/${process.env.NODE_ENV}`
+    );
   });
 
   describe('when the function use params', () => {

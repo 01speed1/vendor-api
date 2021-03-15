@@ -26,4 +26,3 @@ jobs:
       NODE_ENV: deploy
       AUTH_SECRET: aSuperSecret4testing
       NODE_DATABASE_URL: mongodb://localhost:27017
-

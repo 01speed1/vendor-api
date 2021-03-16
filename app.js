@@ -1,8 +1,6 @@
 require('dotenv').config();
 require('./config/database');
 
-console.log('testing');
-
 const apiServer = require('./api.server');
 
 const port = process.env.NODE_PORT || 8080;

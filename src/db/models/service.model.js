@@ -12,10 +12,7 @@ var serviceSchema = Schema({
     type: String,
     required: true
   },
-  price: {
-    type: Number,
-    required: true
-  },
+  price: { type: Number },
   createdAt: { type: Date, default: Date.now() },
   modifiedAt: { type: Date, default: Date.now() }
 });

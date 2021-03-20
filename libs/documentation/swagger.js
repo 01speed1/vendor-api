@@ -26,24 +26,22 @@ const UISetup = async apiRouter => {
 
   const joinContent = merge(...paths);
 
-  const outputPath = './output.yaml';
+  const outputPath = './documentation/output.yaml';
   await writeFile(outputPath, joinContent);
 
   apiRouter.use(swaggerUi.serve);
 
-  const documentationFile = YAML.load('./output.yaml');
+  const documentationFile = YAML.load(outputPath);
 
   const controller = swaggerUi.setup(documentationFile, swaggerUIOptions);
 
-  apiRouter.get(
-    '/',
-    (request, response, next) => {
-      swaggerDocument.host = req.get('host');
-      req.swaggerDoc = swaggerDocument;
-      next();
-    },
-    controller
-  );
+  //apiRouter.get('/', controller);
+
+  apiRouter.get('/', (request, response) => {
+    response.redirect(
+      'https://app.swaggerhub.com/apis/01speed1/vendor-api_documentation/v1.0'
+    );
+  });
 };
 
 module.exports = { UISetup };

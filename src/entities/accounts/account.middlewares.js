@@ -8,12 +8,14 @@ const accountExist = async (request, response, next) => {
 
     const foundAccount = await accountRepository.foundByEmail(email);
 
+    if (!foundAccount) throw new Error('Incorrect email or password');
+
     const isCorrectPassword = await encrypter.isValidPasswordAsync({
       originalPassword: password,
       encryptedPassword: foundAccount.password
     });
 
-    if (!isCorrectPassword) throw new Error('Incorrect password');
+    if (!isCorrectPassword) throw new Error('Incorrect email or password');
 
     request.account = {
       accountId: foundAccount._id,

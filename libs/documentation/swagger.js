@@ -6,6 +6,13 @@ const YAML = require('yamljs');
 const { writeFile } = require('fs/promises');
 const resolve = require('path').resolve;
 
+const swaggerUIOptions = {
+  explorer: true,
+  swaggerOptions: {
+    validatorUrl: null
+  }
+};
+
 const UISetup = async apiRouter => {
   const indexDocumentation = resolve(
     `${global.ROOT_DIRNAME}/documentation/index.yaml`
@@ -26,7 +33,7 @@ const UISetup = async apiRouter => {
 
   const documentationFile = YAML.load('./output.yaml');
 
-  const controller = swaggerUi.setup(documentationFile);
+  const controller = swaggerUi.setup(documentationFile, swaggerUIOptions);
 
   apiRouter.get('/', controller);
 };

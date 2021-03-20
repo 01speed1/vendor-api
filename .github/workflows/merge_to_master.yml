@@ -24,7 +24,7 @@ jobs:
       - run: npm i --silent
       - run: npm test
       - run: rm -rf /var/www/vendorApi
-      - run: cp ./ /var/www/vendorApi
+      - run: cp -r ./ /var/www/vendorApi
       - run: pm2 restart all
 
     env:

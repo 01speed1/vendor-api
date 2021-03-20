@@ -20,12 +20,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: cd /var/www/vendorApi
-      - run: pwd
-      - run: git checkout .
       - run: git pull
       - run: npm i --silent
       - run: npm test
+      - run: rm -rf /var/www/vendorApi
+      - run: cp ./ /var/www/vendorApi
       - run: pm2 restart all
 
     env:

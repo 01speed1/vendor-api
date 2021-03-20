@@ -25,6 +25,7 @@ jobs:
       - run: npm test
       - run: rm -rf /var/www/vendorApi
       - run: cp -r ./ /var/www/vendorApi
+      - run: cp -r /var/www/shared/.env /var/www/vendorApi/.env
       - run: pm2 restart all
 
     env:

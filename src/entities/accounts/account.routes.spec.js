@@ -116,6 +116,22 @@ describe('Like a current user, when I visit "/api/accounts/login"', () => {
     expect(response.body).toHaveProperty('token');
   });
 
+  describe('When account does not exist', () => {
+    it("Should return expected error 'Incorrect email or password'", async () => {
+      const accountData = {
+        email: 'goka@skate.com',
+        password: 'bliblablo'
+      };
+
+      const response = await request
+        .post('/api/accounts/login')
+        .send(accountData)
+        .expect(401);
+
+      expect(response.body).toEqual({ message: 'Incorrect email or password' });
+    });
+  });
+
   describe('When password is incorrect', () => {
     it('should return 401 unauthorized', async () => {
       const { saveFake } = accountMock.registerFake({
@@ -134,7 +150,7 @@ describe('Like a current user, when I visit "/api/accounts/login"', () => {
         .send(accountData)
         .expect(401);
 
-      expect(response.body).toEqual({ message: 'Incorrect password' });
+      expect(response.body).toEqual({ message: 'Incorrect email or password' });
     });
   });
 });

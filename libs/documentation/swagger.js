@@ -35,7 +35,15 @@ const UISetup = async apiRouter => {
 
   const controller = swaggerUi.setup(documentationFile, swaggerUIOptions);
 
-  apiRouter.get('/', controller);
+  apiRouter.get(
+    '/',
+    (request, response, next) => {
+      swaggerDocument.host = req.get('host');
+      req.swaggerDoc = swaggerDocument;
+      next();
+    },
+    controller
+  );
 };
 
 module.exports = { UISetup };

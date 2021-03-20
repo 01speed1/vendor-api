@@ -1,8 +1,10 @@
 require('dotenv').config();
 require('./config/database');
 
-const apiServer = require('./api.server');
+global.ROOT_DIRNAME = __dirname;
 
 const port = process.env.NODE_PORT || 8080;
 
-apiServer.listen(port, () => console.log(`API Server runnig in ${port}`));
+const apiServer = require('./api.server');
+
+apiServer.listen(port, () => console.log(`API Server running in ${port}`));

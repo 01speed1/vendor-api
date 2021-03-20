@@ -1,0 +1,59 @@
+tags:
+  - name: Offers
+
+paths:
+  /api/offers/:
+    post:
+      security:
+        - bearerAuth: []
+
+      summary: Endpoint to get all offers in the app
+      tags:
+        - Offers
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              required: [businessId, orderId, productsOffered, servicesOffered]
+              properties:
+                businessId:
+                  type: string
+                  example: 2435rrf345f43rf234t
+                orderId:
+                  type: string
+                  example: 2435rrf345f43rf234t
+                state:
+                  type: string
+                  example: pending
+                productsOffered:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productId:
+                        type: string
+                        example: 2435rrf345f43rf234t
+                      quantity:
+                        type: integer
+                        example: 2
+                      price:
+                        type: integer
+                        example: 20000
+                servicesOffered:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      serviceId:
+                        type: string
+                        example: 2435rrf345f43rf234t
+                      price:
+                        type: integer
+                        example: 20000
+      responses:
+        200:
+          description: 'Return all offers'
+          content:
+            'application/json':
+              example:
+                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'

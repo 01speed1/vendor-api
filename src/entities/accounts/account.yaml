@@ -1,0 +1,87 @@
+tags:
+  - name: Accounts
+
+paths:
+  /api/accounts/login:
+    post:
+      summary: Authenticate de user with his main account
+      tags:
+        - Accounts
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              properties:
+                email:
+                  type: string
+                  example: 'android@email.com'
+                password:
+                  type: string
+                  example: 'Superpa$$23'
+              required:
+                - email
+                - password
+      responses:
+        200:
+          description: 'Return new Authentication token'
+          content:
+            'application/json':
+              example:
+                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        400:
+          description: 'Required param'
+          content:
+            'application/json':
+              example:
+                error: '"email" is required'
+
+  /api/accounts/signup:
+    post:
+      summary: Register a new user
+      tags:
+        - Accounts
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              properties:
+                identificationPhone:
+                  type: string
+                  example: '3005556677'
+                validatePassword:
+                  type: string
+                  example: 'Superpa$$23'
+                firstName:
+                  type: string
+                  example: Pedro G.
+                lastName:
+                  type: string
+                  example: Perez
+                email:
+                  type: string
+                  example: 'android@email.com'
+                password:
+                  type: string
+                  example: 'Superpa$$23'
+              required:
+                [
+                  identificationPhone,
+                  validatePassword,
+                  firstName,
+                  lastName,
+                  email,
+                  password,
+                ]
+      responses:
+        200:
+          description: 'Return message account created'
+          content:
+            'application/json':
+              example:
+                message: account created
+        400:
+          description: 'Required param'
+          content:
+            'application/json':
+              example:
+                error: '"email" is required'

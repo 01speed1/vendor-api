@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  version: v1.0
+  title: Vendor API Documentation
+  description: Vendor API Documentation main API server service v1
+  contact:
+    name: Oscar Guzman
+    email: oscar.guzman9501@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - description: EC2 Test instance
+    url: http://3.84.108.148/api
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

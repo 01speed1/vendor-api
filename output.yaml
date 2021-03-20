@@ -1,0 +1,164 @@
+openapi: 3.0.0
+info:
+  version: v1.0
+  title: Vendor API Documentation
+  description: Vendor API Documentation main API server service v1
+  contact:
+    name: Oscar Guzman
+    email: oscar.guzman9501@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - description: EC2 Test instance
+    url: http://3.84.108.148/api
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: Accounts
+  - name: Offers
+paths:
+  /api/accounts/login:
+    post:
+      summary: Authenticate de user with his main account
+      tags:
+        - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                  example: android@email.com
+                password:
+                  type: string
+                  example: Superpa$$23
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Return new Authentication token
+          content:
+            application/json:
+              example:
+                token: >-
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        '400':
+          description: Required param
+          content:
+            application/json:
+              example:
+                error: '"email" is required'
+  /api/accounts/signup:
+    post:
+      summary: Register a new user
+      tags:
+        - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                identificationPhone:
+                  type: string
+                  example: '3005556677'
+                validatePassword:
+                  type: string
+                  example: Superpa$$23
+                firstName:
+                  type: string
+                  example: Pedro G.
+                lastName:
+                  type: string
+                  example: Perez
+                email:
+                  type: string
+                  example: android@email.com
+                password:
+                  type: string
+                  example: Superpa$$23
+              required:
+                - identificationPhone
+                - validatePassword
+                - firstName
+                - lastName
+                - email
+                - password
+      responses:
+        '200':
+          description: Return message account created
+          content:
+            application/json:
+              example:
+                message: account created
+        '400':
+          description: Required param
+          content:
+            application/json:
+              example:
+                error: '"email" is required'
+  /api/offers/:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Endpoint to get all offers in the app
+      tags:
+        - Offers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - businessId
+                - orderId
+                - productsOffered
+                - servicesOffered
+              properties:
+                businessId:
+                  type: string
+                  example: 2435rrf345f43rf234t
+                orderId:
+                  type: string
+                  example: 2435rrf345f43rf234t
+                state:
+                  type: string
+                  example: pending
+                productsOffered:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productId:
+                        type: string
+                        example: 2435rrf345f43rf234t
+                      quantity:
+                        type: integer
+                        example: 2
+                      price:
+                        type: integer
+                        example: 20000
+                servicesOffered:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      serviceId:
+                        type: string
+                        example: 2435rrf345f43rf234t
+                      price:
+                        type: integer
+                        example: 20000
+      responses:
+        '200':
+          description: Return all offers
+          content:
+            application/json:
+              example:
+                token: >-
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c

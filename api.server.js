@@ -9,7 +9,14 @@ app.use(cors());
 const helmet = require('helmet');
 app.use(helmet());
 
+const swagger = require('./libs/documentation/swagger');
+
 const apiRouter = express.Router();
+
+(async () => {
+  await swagger.UISetup(apiRouter);
+})();
+
 require('./api.routes')(apiRouter);
 app.use('/api', apiRouter);
 

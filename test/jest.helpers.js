@@ -1,8 +1,10 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const { DatabaseURLBuilder } = require('../libs/database/URLDBBuilder');
+const path = require('path');
 
-const databaseUrl = global.__MONGO_URI__; //DatabaseURLBuilder();
+global.ROOT_DIRNAME = path.resolve('./');
+const databaseUrl = global.__MONGO_URI__;
 
 beforeEach(function (done) {
   function clearDB() {

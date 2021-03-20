@@ -1,0 +1,57 @@
+tags:
+  - name: Orders
+
+paths:
+  /api/orders/:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Endpoint to get all offers in the app
+      tags:
+        - Offers
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              required: [location, destinyAddress, products, services]
+              properties:
+                location:
+                  type: string
+                  example: '34.324342 234.23423432'
+                destinyAddress:
+                  type: string
+                  example: Calle false 123
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productId:
+                        type: string
+                        example: 2435rrf345f43rf234t
+                      quantity:
+                        type: integer
+                        example: 2
+                      price:
+                        type: integer
+                        example: 20000
+                services:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      serviceId:
+                        type: string
+                        example: 2435rrf345f43rf234t
+                      price:
+                        type: integer
+                        example: 20000
+
+      responses:
+        200:
+          description: 'Return message cerated order'
+          content:
+            'application/json':
+              example:
+                message: "order created"
+

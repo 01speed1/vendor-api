@@ -43,8 +43,6 @@ describe('Like a consumer, when I visit "/api/consumer/orders"', () => {
       .set('Authorization', `Bearer ${token}`)
       .expect(200);
 
-    console.log(JSON.stringify(response.body, null, 2));
-
     expect(response.body.orders.length).toEqual(2);
   });
 });

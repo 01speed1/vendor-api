@@ -22,7 +22,12 @@ const getAll = () => {
   return orderModel.find();
 };
 
+const getByConsumerId = consumerId => {
+  return orderModel.find({ consumerId }).lean();
+};
+
 module.exports = {
   create,
-  getAll
+  getAll,
+  getByConsumerId
 };

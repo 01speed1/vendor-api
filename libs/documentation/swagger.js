@@ -35,13 +35,18 @@ const UISetup = async apiRouter => {
 
   const controller = swaggerUi.setup(documentationFile, swaggerUIOptions);
 
-  //apiRouter.get('/', controller);
+  const selectController = () => {
+    if (process.env.NODE_ENV === 'development') {
+      return controller;
+    } else {
+      return (request, response) =>
+        response.redirect(
+          'https://app.swaggerhub.com/apis/01speed1/vendor-api_documentation/v1.0'
+        );
+    }
+  };
 
-  apiRouter.get('/', (request, response) => {
-    response.redirect(
-      'https://app.swaggerhub.com/apis/01speed1/vendor-api_documentation/v1.0'
-    );
-  });
+  apiRouter.get('/', selectController());
 };
 
 module.exports = { UISetup };

@@ -1,10 +1,9 @@
-const accountMock = require('../../../test/mocks/models/account.mock');
-const consumerMock = require('../../../test/mocks/models/consumer.mock');
-const businessMock = require('../../../test/mocks/models/business.mock');
-const carrierMock = require('../../../test/mocks/models/carrier.mock');
-
-const businessModel = require('../../db/models/business.model');
-const carrierModel = require('../../db/models/carrier.model');
+const {
+  accountMock,
+  consumerMock,
+  businessMock,
+  carrierMock
+} = require('../../../test/mocks/models/');
 
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
@@ -69,8 +68,8 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
     await request.post('/api/accounts/signup').send(accountData);
 
     expect(await consumerMock.model.countDocuments()).toEqual(1);
-    expect(await businessModel.countDocuments()).toEqual(1);
-    expect(await carrierModel.countDocuments()).toEqual(1);
+    expect(await businessMock.model.countDocuments()).toEqual(1);
+    expect(await carrierMock.model.countDocuments()).toEqual(1);
   });
 });
 

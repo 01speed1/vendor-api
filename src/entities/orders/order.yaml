@@ -6,9 +6,9 @@ paths:
     post:
       security:
         - bearerAuth: []
-      summary: Endpoint to get all offers in the app
+      summary: Endpoint to get all orders
       tags:
-        - Offers
+        - Orders
       requestBody:
         content:
           'application/json':
@@ -53,5 +53,4 @@ paths:
           content:
             'application/json':
               example:
-                message: "order created"
-
+                message: 'order created'

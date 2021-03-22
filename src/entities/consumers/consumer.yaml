@@ -1,0 +1,52 @@
+tags:
+  - name: Consumers
+
+paths:
+  /api/consumers/orders:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Endpoint to get all orders of logged user
+      tags:
+        - Consumers
+      responses:
+        200:
+          description: 'Return message cerated order'
+          content:
+            'application/json':
+              example:
+                orders:
+                  - _id: 6058ff8403b45518108b0298
+                    status: Zelma.Collins
+                    products:
+                      - 6058ff849191e918105e7060
+                      - 6058ff849191e918105e7061
+                    services:
+                      - 6058ff849191e918105e7062
+                      - 6058ff849191e918105e7063
+                    createdAt: '2021-03-22T10:59:21.396Z'
+                    modifiedAt: '2021-03-22T00:23:52.422Z'
+                    location: Alexandre.Dach
+                    consumerId: 6058ff8403b45518108b0292
+                    destinyAddress: Jackeline.Von
+                    deliverDetails: Cielo80
+                    __v: 0
+                  - _id: 6058ff8403b45518108b0299
+                    status: Laverne7
+                    products:
+                      - 6058ff849191e918105e7065
+                      - 6058ff849191e918105e7066
+                      - 6058ff849191e918105e7067
+                      - 6058ff849191e918105e7068
+                      - 6058ff849191e918105e7069
+                      - 6058ff849191e918105e706a
+                    services:
+                      - 6058ff849191e918105e706b
+                      - 6058ff849191e918105e706c
+                    createdAt: '2021-03-22T06:24:15.948Z'
+                    modifiedAt: '2021-03-22T11:27:48.625Z'
+                    location: Aisha.Buckridge17
+                    consumerId: 6058ff8403b45518108b0292
+                    destinyAddress: Alena_Leannon72
+                    deliverDetails: Landen.Rohan52
+                    __v: 0

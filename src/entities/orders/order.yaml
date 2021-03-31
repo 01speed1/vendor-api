@@ -3,6 +3,16 @@ tags:
 
 paths:
   /api/orders/:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Endpoint to get create an order
+      tags:
+        - Orders
+      responses:
+        200:
+          description: 'Return the list of orders'
+
     post:
       security:
         - bearerAuth: []

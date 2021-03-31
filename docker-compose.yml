@@ -1,8 +1,20 @@
-
-version: "3.2"
+version: '3.2'
 services:
+  server:
+    env_file:
+      - ./.env
+    environment:
+      - NODE_DATABASE_URL=mongodb://mongo:27017
+    build: ./
+    working_dir: /vendor-api
+    volumes:
+      - ./:/vendor-api/
+      - /vendor-api/node_modules
+    command: npm start
+    depends_on:
+      - mongo
   mongo:
-    image: mongo:3
+    image: mongo:latest
     ports:
       - '27017:27017'
     volumes:

@@ -17,7 +17,6 @@ beforeEach(async () => {
   const [consumer, business, carrier] = await createFakeModels(accountId);
 
   consumerIdStub = consumer._id;
-
   const { body } = await request
     .post('/api/accounts/login')
     .send({ email, password: fakePassword });

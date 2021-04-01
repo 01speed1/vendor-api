@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const { DatabaseURLBuilder } = require('../libs/database/URLDBBuilder');
 const path = require('path');
+const supertest = require('supertest');
 
 global.ROOT_DIRNAME = path.resolve('./');
 const databaseUrl = global.__MONGO_URI__;
@@ -42,7 +42,7 @@ afterAll(function (done) {
 
 const apiServerConnection = () => {
   const apiServer = require('../api.server');
-  const supertest = require('supertest');
+
   return supertest(apiServer);
 };
 

@@ -20,6 +20,7 @@ components:
       bearerFormat: JWT
 tags:
   - name: Accounts
+  - name: Categories
   - name: Consumers
   - name: Offers
   - name: Orders
@@ -106,6 +107,34 @@ paths:
             application/json:
               example:
                 error: '"email" is required'
+  /api/categories:
+    post:
+      summary: Create a category
+      tags:
+        - Categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: A name category
+      responses:
+        '200':
+          description: Category created
+          content:
+            application/json:
+              example:
+                message: Category created
+        '400':
+          description: Required param
+          content:
+            application/json:
+              example:
+                error: '"name" is required'
   /api/consumers/orders:
     get:
       security:
@@ -214,6 +243,15 @@ paths:
                 token: >-
                   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
   /api/orders/:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Endpoint to get create an order
+      tags:
+        - Orders
+      responses:
+        '200':
+          description: Return the list of orders
     post:
       security:
         - bearerAuth: []

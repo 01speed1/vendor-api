@@ -9,7 +9,7 @@ const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
 
 describe('Like a user, when I visit "/api/accounts/signup"', () => {
-  it('should created account', async () => {
+  it('should create account', async () => {
     const accountData = {
       email: 'goka@skate.com',
       identificationPhone: '3032241247',

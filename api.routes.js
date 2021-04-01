@@ -2,6 +2,7 @@ const accountRoutes = require('./src/entities/accounts/account.routes');
 const orderRoutes = require('./src/entities/orders/order.routes');
 const offerRoutes = require('./src/entities/offers/offer.routes');
 const consumerRoutes = require('./src/entities/consumers/consumer.routes');
+const categoryRoutes = require('./src/entities/categories/category.routes');
 
 module.exports = router => {
   router.use('/accounts', accountRoutes);
@@ -11,4 +12,6 @@ module.exports = router => {
   router.use('/offers', offerRoutes);
 
   router.use('/consumers', consumerRoutes);
+
+  router.use('/categories', categoryRoutes);
 };

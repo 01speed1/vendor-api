@@ -25,7 +25,7 @@ const logIn = async (request, response) => {
 
     response.status(200).json({ token });
   } catch (err) {
-    response.status(500);
+    response.status(500).json({ error: err.message });
   }
 };
 

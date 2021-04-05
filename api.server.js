@@ -20,4 +20,7 @@ const apiRouter = express.Router();
 require('./api.routes')(apiRouter);
 app.use('/api', apiRouter);
 
+const { errors } = require('celebrate');
+app.use(errors());
+
 module.exports = app;

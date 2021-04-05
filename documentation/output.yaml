@@ -26,6 +26,7 @@ tags:
   - name: Orders
   - name: Products
   - name: Subcategories
+  - name: Categories
 paths:
   /api/accounts/login:
     post:
@@ -113,11 +114,13 @@ paths:
       summary: Create a category
       tags:
         - Categories
+        - Categories
       requestBody:
         content:
           application/json:
             schema:
               required:
+                - name
                 - name
               properties:
                 name:

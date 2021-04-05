@@ -1,0 +1,31 @@
+tags:
+  - name: Categories
+
+paths:
+  /api/categories:
+    post:
+      summary: Create a category
+      tags:
+        - Categories
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              required: [name]
+              properties:
+                name:
+                  type: string
+                  example: 'A name category'
+      responses:
+        200:
+          description: Category created
+          content:
+            'application/json':
+              example:
+                message: 'Category created'
+        400:
+          description: 'Required param'
+          content:
+            'application/json':
+              example:
+                error: '"name" is required'

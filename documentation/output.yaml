@@ -25,6 +25,7 @@ tags:
   - name: Offers
   - name: Orders
   - name: Products
+  - name: Subcategories
 paths:
   /api/accounts/login:
     post:
@@ -306,3 +307,35 @@ paths:
             application/json:
               example:
                 message: order created
+  /api/subcategories:
+    post:
+      summary: Create a subcategory
+      tags:
+        - Subcategories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - categoryId
+              properties:
+                name:
+                  type: string
+                  example: A name category
+                categoryId:
+                  type: string
+                  example: 606a76d7eeee6f0013b9c2f1
+      responses:
+        '200':
+          description: Subcategory created
+          content:
+            application/json:
+              example:
+                message: Subcategory created
+        '400':
+          description: Required param
+          content:
+            application/json:
+              example:
+                error: '"name" is required'

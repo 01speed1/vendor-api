@@ -10,9 +10,11 @@ services:
     volumes:
       - ./:/vendor-api/
       - /vendor-api/node_modules
-    command: npm start
+    command: bash -c "npm i && npm start"
     depends_on:
       - mongo
+    ports:
+      - '${NODE_PORT}:${NODE_PORT}'
   mongo:
     image: mongo:latest
     ports:

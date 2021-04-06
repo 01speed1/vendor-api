@@ -26,7 +26,6 @@ tags:
   - name: Orders
   - name: Products
   - name: Subcategories
-  - name: Categories
 paths:
   /api/accounts/login:
     post:
@@ -110,17 +109,26 @@ paths:
               example:
                 error: '"email" is required'
   /api/categories:
+    get:
+      summary: Get all categories
+      tags:
+        - Categories
+      responses:
+        '200':
+          description: List of categories
+          content:
+            application/json:
+              example:
+                categories: []
     post:
       summary: Create a category
       tags:
-        - Categories
         - Categories
       requestBody:
         content:
           application/json:
             schema:
               required:
-                - name
                 - name
               properties:
                 name:
@@ -310,6 +318,18 @@ paths:
             application/json:
               example:
                 message: order created
+  /api/subcategories/category/{categoryId}:
+    get:
+      summary: Get a subcategories by category
+      tags:
+        - Subcategories
+      responses:
+        '200':
+          description: Get a subcategories by category
+          content:
+            application/json:
+              example:
+                subcategories: '[]'
   /api/subcategories:
     post:
       summary: Create a subcategory

@@ -38,6 +38,24 @@ beforeEach(async () => {
   token = body.token;
 });
 
+describe('Like a user, when I visit GET "/api/subcategories/category/:categoryId"', () => {
+  it('should return the subcategories of a category', async () => {
+    const { _id: categoryId } = await categoryMock.createFake();
+
+    subcategoryMock.createFake({ categoryId });
+    subcategoryMock.createFake({ categoryId });
+    subcategoryMock.createFake({ categoryId });
+    subcategoryMock.createFake();
+
+    const response = await request
+      .get(`/api/subcategories/category/${categoryId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(JSON.parse(response.text).subcategories).toHaveLength(3);
+  });
+});
+
 describe('Like a user, when I visit POST "/api/subcategories"', () => {
   it('should should create a subcategory', async () => {
     const { _id: categoryId } = await categoryMock.createFake();

@@ -3,6 +3,18 @@ tags:
 
 paths:
   /api/categories:
+    get:
+      summary: Get all categories
+      tags:
+        - Categories
+      responses:
+        200:
+          description: List of categories
+          content:
+            'application/json':
+              example:
+                categories: []
+
     post:
       summary: Create a category
       tags:

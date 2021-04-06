@@ -37,6 +37,21 @@ beforeEach(async () => {
   token = body.token;
 });
 
+describe('Like a user, when I visit GET "/api/categories"', () => {
+  it('should should create a category', async () => {
+    await categoryMock.createFake();
+    await categoryMock.createFake();
+    await categoryMock.createFake();
+
+    const response = await request
+      .get('/api/categories')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(JSON.parse(response.text).categories).toHaveLength(3);
+  });
+});
+
 describe('Like a user, when I visit POST "/api/categories"', () => {
   it('should should create a category', async () => {
     const body = { name: 'A Super duper category' };

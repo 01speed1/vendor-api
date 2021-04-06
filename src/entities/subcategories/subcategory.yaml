@@ -2,6 +2,18 @@ tags:
   - name: Subcategories
 
 paths:
+  /api/subcategories/category/{categoryId}:
+    get:
+      summary: Get a subcategories by category
+      tags:
+        - Subcategories
+      responses:
+        200:
+          description: Get a subcategories by category
+          content:
+            'application/json':
+              example:
+                subcategories: '[]'
   /api/subcategories:
     post:
       summary: Create a subcategory

@@ -1,5 +1,15 @@
 const categoryRepository = require('./category.repository');
 
+const getAll = async (request, response) => {
+  try {
+    const categories = await categoryRepository.getAll();
+
+    response.json({ categories });
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+  }
+};
+
 const create = async (request, response) => {
   try {
     const { body } = request;
@@ -12,4 +22,4 @@ const create = async (request, response) => {
   }
 };
 
-module.exports = { create };
+module.exports = { getAll, create };

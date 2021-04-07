@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const { celebrate, Joi, Segments } = require('celebrate');
 
 const isEmptyProductsOrService = (value, helpers) => {
   const isEmptyProducts =
@@ -34,18 +34,8 @@ const createSchema = Joi.object({
   )
 }).custom(isEmptyProductsOrService);
 
-const createValidation = async (request, response, next) => {
-  try {
-    const { body } = request;
-
-    const validatedBody = await createSchema.validateAsync(body);
-
-    request.body = validatedBody;
-
-    next();
-  } catch (error) {
-    response.status(400).json({ error: error.message });
-  }
-};
+const createValidation = celebrate({
+  [Segments.BODY]: createSchema
+});
 
 module.exports = { createValidation };

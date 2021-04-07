@@ -34,7 +34,16 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
     const response = await request.post('/api/accounts/signup').send({});
 
     expect(response.body).toEqual({
-      error: '"email" is required'
+      statusCode: 400,
+      error: 'Bad Request',
+      message: 'celebrate request validation failed',
+      validation: {
+        body: {
+          source: 'body',
+          keys: ['email'],
+          message: '"email" is required'
+        }
+      }
     });
   });
 
@@ -51,7 +60,16 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
       .send(badPasswords);
 
     expect(response.body).toEqual({
-      error: '"validatePassword" must be [ref:password]'
+      statusCode: 400,
+      error: 'Bad Request',
+      message: 'celebrate request validation failed',
+      validation: {
+        body: {
+          source: 'body',
+          keys: ['validatePassword'],
+          message: '"validatePassword" must be [ref:password]'
+        }
+      }
     });
   });
 
@@ -88,7 +106,16 @@ describe('Like a current user, when I visit "/api/accounts/login"', () => {
       .expect(400);
 
     expect(response.body).toEqual({
-      error: '"password" is not allowed to be empty'
+      statusCode: 400,
+      error: 'Bad Request',
+      message: 'celebrate request validation failed',
+      validation: {
+        body: {
+          source: 'body',
+          keys: ['password'],
+          message: '"password" is not allowed to be empty'
+        }
+      }
     });
   });
 

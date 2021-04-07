@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const { celebrate, Joi, Segments } = require('celebrate');
 
 const signupSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -10,38 +10,18 @@ const signupSchema = Joi.object({
   lastName: Joi.string().required()
 }).with('password', 'validatePassword');
 
-const signUpValidation = async (request, response, next) => {
-  try {
-    const { body } = request;
-
-    const validatedBody = await signupSchema.validateAsync(body);
-
-    request.body = validatedBody;
-
-    next();
-  } catch (error) {
-    response.status(400).json({ error: error.message });
-  }
-};
+const signUpValidation = celebrate({
+  [Segments.BODY]: signupSchema
+});
 
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required()
 });
 
-const logInValidation = async (request, response, next) => {
-  try {
-    const { body } = request;
-
-    const validatedBody = await loginSchema.validateAsync(body);
-
-    request.body = validatedBody;
-
-    next();
-  } catch (error) {
-    response.status(400).json({ error: error.message });
-  }
-};
+const logInValidation = celebrate({
+  [Segments.BODY]: loginSchema
+});
 
 module.exports = {
   signUpValidation,

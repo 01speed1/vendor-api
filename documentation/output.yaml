@@ -10,7 +10,7 @@ info:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
-  - description: EC2 Test instance
+  - description: LocalHost
     url: http://localhost:5000/api
   - description: EC2 Test instance
     url: http://3.84.108.148/api

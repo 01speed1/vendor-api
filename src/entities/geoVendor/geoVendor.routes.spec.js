@@ -1,9 +1,12 @@
+const sinon = require('sinon');
 const { accountMock } = require('../../../test/mocks/models/');
 
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
 
-let token;
+const geoVendorLib = require('../../../libs/geolocation/geoVendor');
+
+let token, getCoordinatesStub;
 
 beforeEach(async () => {
   const {
@@ -22,6 +25,12 @@ beforeEach(async () => {
     .send({ email, password: fakePassword });
 
   token = body.token;
+
+  getCoordinatesStub = sinon.stub(geoVendorLib, 'getCoordinates');
+});
+
+afterAll(() => {
+  getCoordinatesStub.restore();
 });
 
 describe('Like a consumer, when I visit GET "/api/geo/"', () => {
@@ -51,6 +60,8 @@ describe('Like a consumer, when I visit GET "/api/geo/"', () => {
         }
       ]
     };
+
+    getCoordinatesStub.returns(expectedResponse.addresses);
 
     const response = await request
       .get('/api/geo?address=calle%20152%20%23%209%2093')

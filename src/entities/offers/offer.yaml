@@ -2,7 +2,7 @@ tags:
   - name: Offers
 
 paths:
-  /api/offers/:
+  /offers/:
     post:
       security:
         - bearerAuth: []

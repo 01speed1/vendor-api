@@ -2,7 +2,7 @@ tags:
   - name: Orders
 
 paths:
-  /api/orders/:
+  /orders/:
     get:
       security:
         - bearerAuth: []

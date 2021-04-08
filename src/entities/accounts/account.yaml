@@ -2,7 +2,7 @@ tags:
   - name: Accounts
 
 paths:
-  /api/accounts/login:
+  /accounts/login:
     post:
       summary: Authenticate de user with his main account
       tags:
@@ -35,7 +35,7 @@ paths:
               example:
                 error: '"email" is required'
 
-  /api/accounts/signup:
+  /accounts/signup:
     post:
       summary: Register a new user
       tags:
@@ -70,7 +70,7 @@ paths:
                   firstName,
                   lastName,
                   email,
-                  password,
+                  password
                 ]
       responses:
         200:

@@ -1,0 +1,19 @@
+tags:
+  - name: Geo
+
+paths:
+  /geo:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Endpoint to get geo coordinates
+      tags:
+        - Geo
+      parameters:
+        - name: address
+          in: query
+          description: address of place
+          required: true
+      responses:
+        200:
+          description: 'Return coordinates'

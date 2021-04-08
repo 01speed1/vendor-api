@@ -2,8 +2,17 @@ tags:
   - name: Subcategories
 
 paths:
-  /api/subcategories/category/{categoryId}:
+  /subcategories/category/{categoryId}:
     get:
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: categoryId
+          in: path
+          description: categoryId
+          required: true
+          schema:
+            type: string
       summary: Get a subcategories by category
       tags:
         - Subcategories
@@ -14,8 +23,10 @@ paths:
             'application/json':
               example:
                 subcategories: '[]'
-  /api/subcategories:
+  /subcategories:
     post:
+      security:
+        - bearerAuth: []
       summary: Create a subcategory
       tags:
         - Subcategories

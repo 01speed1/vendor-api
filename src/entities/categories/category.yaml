@@ -2,8 +2,10 @@ tags:
   - name: Categories
 
 paths:
-  /api/categories:
+  /categories:
     get:
+      security:
+        - bearerAuth: []
       summary: Get all categories
       tags:
         - Categories
@@ -16,6 +18,8 @@ paths:
                 categories: []
 
     post:
+      security:
+        - bearerAuth: []
       summary: Create a category
       tags:
         - Categories

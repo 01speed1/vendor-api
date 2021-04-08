@@ -10,6 +10,8 @@ info:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
+  - description: LocalHost
+    url: http://localhost:5000/api
   - description: EC2 Test instance
     url: http://3.84.108.148/api
 components:
@@ -22,12 +24,13 @@ tags:
   - name: Accounts
   - name: Categories
   - name: Consumers
+  - name: Geo
   - name: Offers
   - name: Orders
   - name: Products
   - name: Subcategories
 paths:
-  /api/accounts/login:
+  /accounts/login:
     post:
       summary: Authenticate de user with his main account
       tags:
@@ -60,7 +63,7 @@ paths:
             application/json:
               example:
                 error: '"email" is required'
-  /api/accounts/signup:
+  /accounts/signup:
     post:
       summary: Register a new user
       tags:
@@ -108,8 +111,10 @@ paths:
             application/json:
               example:
                 error: '"email" is required'
-  /api/categories:
+  /categories:
     get:
+      security:
+        - bearerAuth: []
       summary: Get all categories
       tags:
         - Categories
@@ -121,6 +126,8 @@ paths:
               example:
                 categories: []
     post:
+      security:
+        - bearerAuth: []
       summary: Create a category
       tags:
         - Categories
@@ -147,7 +154,7 @@ paths:
             application/json:
               example:
                 error: '"name" is required'
-  /api/consumers/orders:
+  /consumers/orders:
     get:
       security:
         - bearerAuth: []
@@ -195,7 +202,22 @@ paths:
                     destinyAddress: Alena_Leannon72
                     deliverDetails: Landen.Rohan52
                     __v: 0
-  /api/offers/:
+  /geo:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Endpoint to get geo coordinates
+      tags:
+        - Geo
+      parameters:
+        - name: address
+          in: query
+          description: address of place
+          required: true
+      responses:
+        '200':
+          description: Return coordinates
+  /offers/:
     post:
       security:
         - bearerAuth: []
@@ -254,7 +276,7 @@ paths:
               example:
                 token: >-
                   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-  /api/orders/:
+  /orders/:
     get:
       security:
         - bearerAuth: []
@@ -318,8 +340,17 @@ paths:
             application/json:
               example:
                 message: order created
-  /api/subcategories/category/{categoryId}:
+  /subcategories/category/{categoryId}:
     get:
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: categoryId
+          in: path
+          description: categoryId
+          required: true
+          schema:
+            type: string
       summary: Get a subcategories by category
       tags:
         - Subcategories
@@ -330,8 +361,10 @@ paths:
             application/json:
               example:
                 subcategories: '[]'
-  /api/subcategories:
+  /subcategories:
     post:
+      security:
+        - bearerAuth: []
       summary: Create a subcategory
       tags:
         - Subcategories

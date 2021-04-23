@@ -13,20 +13,34 @@ const options = {
 const geocoder = NodeGeocoder(options);
 
 const getCoordinates = async addressOptions => {
-  let foundAddresses = [];
+  let foundCoordinates = [];
 
   try {
     if (geoVendorUtils.isObjectAddress(addressOptions)) {
       const { address, country, zipcode } = addressOptions;
-      foundAddresses = await geocoder.geocode({ address, country, zipcode });
+
+      foundCoordinates = await geocoder.geocode({ address, country, zipcode });
     }
 
-    foundAddresses = await geocoder.geocode(addressOptions);
+    foundCoordinates = await geocoder.geocode(addressOptions);
 
-    return foundAddresses;
+    return foundCoordinates;
   } catch (error) {
-    return foundAddresses;
+    console.error(error);
+    return foundCoordinates;
   }
 };
 
-module.exports = { getCoordinates, geocoder };
+const getAddresses = async ({ lat, lon }) => {
+  let foundAddress = [];
+
+  try {
+    foundAddress = await geocoder.reverse({ lat, lon });
+    return foundAddress;
+  } catch (error) {
+    console.error(error);
+    return foundAddress;
+  }
+};
+
+module.exports = { getCoordinates, getAddresses, geocoder };

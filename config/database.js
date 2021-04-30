@@ -15,9 +15,6 @@ const options = {
   useUnifiedTopology: true
 };
 
-const dabaseUrl = DatabaseURLBuilder();
+const databaseUrl = DatabaseURLBuilder();
 
-module.exports = mongoose
-  .connect(dabaseUrl, options)
-  .then(database => console.log('database connection stablished'))
-  .catch(error => console.log('error database ', error));
+module.exports = mongoose.connect(databaseUrl, options);

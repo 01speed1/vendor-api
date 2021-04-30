@@ -26,7 +26,6 @@ const getCoordinates = async addressOptions => {
 
     return foundCoordinates;
   } catch (error) {
-    console.error(error);
     return foundCoordinates;
   }
 };
@@ -36,9 +35,9 @@ const getAddresses = async ({ lat, lon }) => {
 
   try {
     foundAddress = await geocoder.reverse({ lat, lon });
+
     return foundAddress;
   } catch (error) {
-    console.error(error);
     return foundAddress;
   }
 };

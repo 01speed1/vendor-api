@@ -232,6 +232,28 @@ paths:
       responses:
         '200':
           description: Return coordinates or address
+          example:
+            addresses:
+              - formattedAddress: 'Cl. 152 #9-93, Bogotá, Colombia'
+                latitude: 4.730390499999999
+                longitude: -74.03485479999999
+                extra:
+                  googlePlaceId: ChIJlztCWWGFP44RDFhDZaDyFNM
+                  confidence: 1
+                  premise: null
+                  subpremise: null
+                  neighborhood: Usaquén
+                  establishment: null
+                administrativeLevels:
+                  level1long: Bogotá
+                  level1short: Bogotá
+                streetNumber: 9-93
+                streetName: Calle 152
+                city: Bogotá
+                country: Colombia
+                countryCode: CO
+                zipcode: '110131'
+                provider: google
   /offers/:
     post:
       security:

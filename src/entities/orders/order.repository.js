@@ -23,11 +23,24 @@ const getAll = () => {
 };
 
 const getByConsumerId = consumerId => {
-  return orderModel.find({ consumerId }).lean();
+  return orderModel
+    .find({ consumerId })
+    .populate('products')
+    .populate('services')
+    .lean();
+};
+
+const getConsumerOrder = ({ consumerId, _id }) => {
+  return orderModel
+    .findOne({ consumerId, _id })
+    .populate('products')
+    .populate('services')
+    .lean();
 };
 
 module.exports = {
   create,
   getAll,
+  getConsumerOrder,
   getByConsumerId
 };

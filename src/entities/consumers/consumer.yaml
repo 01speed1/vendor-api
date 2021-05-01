@@ -50,3 +50,44 @@ paths:
                     destinyAddress: Alena_Leannon72
                     deliverDetails: Landen.Rohan52
                     __v: 0
+  /consumers/orders/{:orderId}:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Endpoint to get an order of logged user
+      tags:
+        - Consumers
+      response:
+        200:
+          description: 'Return found order'
+          content:
+            'application/json':
+              example:
+                order:
+                  _id: 608cc303a62588b141b41776
+                  status: Rebecca_Ryan
+                  products:
+                    - _id: 608cc303a62588b141b41774
+                      quantity: 72
+                      createdAt: '2021-04-30T14:11:21.709Z'
+                      modifiedAt: '2021-04-30T20:50:50.484Z'
+                      name: Shaun_Jaskolski36
+                      price: 21
+                      subcategory: 608cc3034e2aceb1415dbc4d
+                      __v: 0
+                    - _id: 608cc303a62588b141b41775
+                      quantity: 70
+                      createdAt: '2021-04-30T13:06:40.339Z'
+                      modifiedAt: '2021-04-30T22:29:08.296Z'
+                      name: Sydni87
+                      price: 26
+                      subcategory: 608cc3034e2aceb1415dbc4e
+                      __v: 0
+                  services: []
+                  createdAt: '2021-05-01T00:26:52.840Z'
+                  modifiedAt: '2021-04-30T07:12:44.330Z'
+                  location: Lesley24
+                  consumerId: 608cc303a62588b141b41771
+                  destinyAddress: Kaitlyn_VonRueden34
+                  deliverDetails: Myah_Dooley
+                  __v: 0

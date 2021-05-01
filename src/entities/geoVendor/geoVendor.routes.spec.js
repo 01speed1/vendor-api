@@ -1,5 +1,6 @@
 const sinon = require('sinon');
-const { accountMock } = require('../../../test/mocks/models/');
+
+const { accountHelper } = require('../../../test/helpers');
 
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
@@ -9,22 +10,9 @@ const geoVendorLib = require('../../../libs/geolocation/geoVendor');
 let token, getCoordinatesStub;
 
 beforeEach(async () => {
-  const {
-    saveFake,
-    fakePassword,
-    createFakeModels
-  } = accountMock.registerFake();
+  const { token: tokenLogged } = await accountHelper.generateFakeLoginData();
 
-  const { _id: accountId, email } = await saveFake();
-
-  const [consumer, business, carrier] = await createFakeModels(accountId);
-
-  consumerIdStub = consumer._id;
-  const { body } = await request
-    .post('/api/accounts/login')
-    .send({ email, password: fakePassword });
-
-  token = body.token;
+  token = tokenLogged;
 
   getCoordinatesStub = sinon.stub(geoVendorLib, 'getCoordinates');
 });

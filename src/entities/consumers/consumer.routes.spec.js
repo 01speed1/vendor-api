@@ -1,8 +1,6 @@
-const {
-  accountMock,
-  orderMock,
-  productMock
-} = require('../../../test/mocks/models/');
+const { orderMock, productMock } = require('../../../test/mocks/models/');
+
+const { accountHelper } = require('../../../test/helpers');
 
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
@@ -11,21 +9,12 @@ let consumerIdStub, token;
 
 beforeEach(async () => {
   const {
-    saveFake,
-    fakePassword,
-    createFakeModels
-  } = accountMock.registerFake();
+    token: tokenLogged,
+    consumer
+  } = await accountHelper.generateFakeLoginData();
 
-  const { _id: accountId, email } = await saveFake();
-
-  const [consumer, business, carrier] = await createFakeModels(accountId);
-
+  token = tokenLogged;
   consumerIdStub = consumer._id;
-  const { body } = await request
-    .post('/api/accounts/login')
-    .send({ email, password: fakePassword });
-
-  token = body.token;
 });
 
 describe('Like a consumer, when I visit "/api/consumer/orders"', () => {

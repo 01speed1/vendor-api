@@ -8,6 +8,8 @@ const categoryMock = require('./category.mock');
 const subcategoryMock = require('./subcategory.mock');
 const carrierMock = require('./carrier.mock');
 const businessMock = require('./business.mock');
+const productMock = require('./product.mock');
+const serviceMock = require('./service.mock');
 
 module.exports = {
   offerMock,
@@ -19,5 +21,7 @@ module.exports = {
   categoryMock,
   subcategoryMock,
   carrierMock,
-  businessMock
+  businessMock,
+  productMock,
+  serviceMock
 };

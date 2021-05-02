@@ -1,8 +1,4 @@
-const {
-  accountMock,
-  consumerMock,
-  orderMock
-} = require('../../../test/mocks/models/');
+const { orderMock } = require('../../../test/mocks/models/');
 
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const productModel = require('../../db/models/product.model');
@@ -10,48 +6,32 @@ const serviceModel = require('../../db/models/service.model');
 const categoryModel = require('../../db/models/category.model');
 const subCategoryModel = require('../../db/models/subcategory.model');
 
+const { accountHelper } = require('../../../test/helpers');
+
 const request = apiServerConnection();
 
-let createdAccount, createdConsumer, token;
+let consumerIdStub, token;
 
 beforeEach(async () => {
-  createdAccount = await accountMock.model.create({
-    email: 'skatin@mail.com',
-    password: 'bloblu',
-    lastName: 'MyPresident',
-    firstName: 'Skatin'
-  });
+  const {
+    token: tokenLogged,
+    consumer
+  } = await accountHelper.generateFakeLoginData();
 
-  createdConsumer = await consumerMock.model.create({
-    accountId: createdAccount._id
-  });
-
-  const { saveFake, createFakeModels, fakePassword } = accountMock.registerFake(
-    {
-      email: 'fake@man.com'
-    }
-  );
-
-  const { _id: accountId, email } = await saveFake();
-  await createFakeModels(accountId);
-
-  const { body } = await request
-    .post('/api/accounts/login')
-    .send({ email, password: fakePassword });
-
-  token = body.token;
+  token = tokenLogged;
+  consumerIdStub = consumer._id;
 });
 
 describe('Like a consumer, when visit GET "/orders"', () => {
   it('should return all orders', async () => {
     const order1 = await orderMock.model.create({
-      consumerId: createdConsumer._id,
+      consumerId: consumerIdStub,
       destinyAddress: 'calle falsa 123',
       location: 'po ahia'
     });
 
     const order2 = await orderMock.model.create({
-      consumerId: createdConsumer._id,
+      consumerId: consumerIdStub,
       destinyAddress: 'calle falsa 456',
       location: 'po ahia'
     });

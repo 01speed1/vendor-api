@@ -1,4 +1,6 @@
-const { accountMock, orderMock } = require('../../../test/mocks/models/');
+const { orderMock, productMock } = require('../../../test/mocks/models/');
+
+const { accountHelper } = require('../../../test/helpers');
 
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
@@ -7,21 +9,12 @@ let consumerIdStub, token;
 
 beforeEach(async () => {
   const {
-    saveFake,
-    fakePassword,
-    createFakeModels
-  } = accountMock.registerFake();
+    token: tokenLogged,
+    consumer
+  } = await accountHelper.generateFakeLoginData();
 
-  const { _id: accountId, email } = await saveFake();
-
-  const [consumer, business, carrier] = await createFakeModels(accountId);
-
+  token = tokenLogged;
   consumerIdStub = consumer._id;
-  const { body } = await request
-    .post('/api/accounts/login')
-    .send({ email, password: fakePassword });
-
-  token = body.token;
 });
 
 describe('Like a consumer, when I visit "/api/consumer/orders"', () => {
@@ -43,5 +36,49 @@ describe('Like a consumer, when I visit "/api/consumer/orders"', () => {
       .expect(200);
 
     expect(response.body.orders.length).toEqual(2);
+  });
+});
+
+describe('Like a consumer, when I visit "/api/consumer/orders/:id"', () => {
+  it('should return an order', async () => {
+    const productsIds = [
+      await productMock.createFake({ consumerId: consumerIdStub }),
+      await productMock.createFake({ consumerId: consumerIdStub })
+    ].map(product => product._id);
+
+    const { _id: orderId } = await orderMock.createFake({
+      consumerId: consumerIdStub,
+      products: productsIds
+    });
+
+    const response = await request
+      .get(`/api/consumers/orders/${orderId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(response.body.order).toHaveProperty('_id');
+  });
+
+  describe('When the order have different consumer owner', () => {
+    it('should return not found', async () => {
+      const offersStuff = [await orderMock.createFake()];
+
+      const productsIds = [
+        await productMock.createFake({ consumerId: consumerIdStub }),
+        await productMock.createFake({ consumerId: consumerIdStub })
+      ].map(product => product._id);
+
+      await orderMock.createFake({
+        consumerId: consumerIdStub,
+        products: productsIds
+      });
+
+      const response = await request
+        .get(`/api/consumers/orders/${offersStuff[0]['_id']}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200);
+
+      expect(response.body.order).toEqual(null);
+    });
   });
 });

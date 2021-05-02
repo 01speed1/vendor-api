@@ -1,5 +1,6 @@
 const sinon = require('sinon');
-const { accountMock } = require('../../../test/mocks/models/');
+
+const { accountHelper } = require('../../../test/helpers');
 
 const geoVendorLib = require('../../../libs/geolocation/geoVendor');
 
@@ -9,30 +10,21 @@ const request = apiServerConnection();
 let token, getCoordinatesStub, getAddressesStub;
 
 beforeEach(async () => {
-  const {
-    saveFake,
-    fakePassword,
-    createFakeModels
-  } = accountMock.registerFake();
+  const { token: tokenLogged } = await accountHelper.generateFakeLoginData();
 
-  const { _id: accountId, email } = await saveFake();
+  token = tokenLogged;
 
-  const [consumer, business, carrier] = await createFakeModels(accountId);
-
-  consumerIdStub = consumer._id;
-  const { body } = await request
-    .post('/api/accounts/login')
-    .send({ email, password: fakePassword });
-
-  token = body.token;
+  getCoordinatesStub = sinon.stub(geoVendorLib, 'getCoordinates');
+  getAddressesStub = sinon.stub(geoVendorLib, 'getAddresses');
 });
 
-afterAll(() => {});
+afterEach(() => {
+  getCoordinatesStub.restore();
+  getAddressesStub.restore();
+});
 
 describe('Like a consumer, when I visit GET "/api/geo/"', () => {
   describe('When in the params there is an address', () => {
-    getCoordinatesStub = sinon.stub(geoVendorLib, 'getCoordinates');
-
     it('should return an address', async () => {
       const expectedResponse = {
         addresses: [
@@ -75,8 +67,6 @@ describe('Like a consumer, when I visit GET "/api/geo/"', () => {
   });
 
   describe('When in the params there are coordinates', () => {
-    getAddressesStub = sinon.stub(geoVendorLib, 'getAddresses');
-
     it('should return an address', async () => {
       const expectedResponse = {
         addresses: [
@@ -112,7 +102,7 @@ describe('Like a consumer, when I visit GET "/api/geo/"', () => {
       getAddressesStub.returns(expectedResponse.addresses);
 
       const response = await request
-        .get('/api/geo?lat=45.767&lon=4.833')
+        .get('/api/geo?lat=45.767&lon=10.833')
         .set('Authorization', `Bearer ${token}`)
         .expect(200);
 

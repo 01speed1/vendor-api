@@ -1,10 +1,21 @@
 require('dotenv').config();
-require('./config/database');
+const dbConnection = require('./config/database');
 
 global.ROOT_DIRNAME = __dirname;
 
 const port = process.env.NODE_PORT || 8080;
 
-const apiServer = require('./api.server');
+(async () => {
+  try {
+    console.log('Starting Server...');
+    await dbConnection;
+    console.log('database connection established');
 
-apiServer.listen(port, () => console.log(`API Server running in ${port}`));
+    const apiServer = require('./api.server');
+
+    apiServer.listen(port, () => console.log(`API Server running in ${port}`));
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
+})();

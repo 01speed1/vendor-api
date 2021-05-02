@@ -13,17 +13,18 @@ beforeEach(async () => {
   const { token: tokenLogged } = await accountHelper.generateFakeLoginData();
 
   token = tokenLogged;
+
+  getCoordinatesStub = sinon.stub(geoVendorLib, 'getCoordinates');
+  getAddressesStub = sinon.stub(geoVendorLib, 'getAddresses');
 });
 
 afterEach(() => {
-  getCoordinatesStub.restore()
-  getAddressesStub.restore()
+  getCoordinatesStub.restore();
+  getAddressesStub.restore();
 });
 
 describe('Like a consumer, when I visit GET "/api/geo/"', () => {
   describe('When in the params there is an address', () => {
-    getCoordinatesStub = sinon.stub(geoVendorLib, 'getCoordinates');
-
     it('should return an address', async () => {
       const expectedResponse = {
         addresses: [
@@ -66,8 +67,6 @@ describe('Like a consumer, when I visit GET "/api/geo/"', () => {
   });
 
   describe('When in the params there are coordinates', () => {
-    getAddressesStub = sinon.stub(geoVendorLib, 'getAddresses');
-
     it('should return an address', async () => {
       const expectedResponse = {
         addresses: [
@@ -103,7 +102,7 @@ describe('Like a consumer, when I visit GET "/api/geo/"', () => {
       getAddressesStub.returns(expectedResponse.addresses);
 
       const response = await request
-        .get('/api/geo?lat=45.767&lon=4.833')
+        .get('/api/geo?lat=45.767&lon=10.833')
         .set('Authorization', `Bearer ${token}`)
         .expect(200);
 

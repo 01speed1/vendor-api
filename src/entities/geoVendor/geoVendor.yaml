@@ -6,14 +6,51 @@ paths:
     get:
       security:
         - bearerAuth: []
-      summary: Endpoint to get geo coordinates
+      summary: Endpoint to get geo coordinates or address
       tags:
         - Geo
       parameters:
         - name: address
           in: query
           description: address of place
-          required: true
+          required: false
+        - name: country
+          in: query
+          description: country
+          required: false
+        - name: zipcode
+          in: query
+          description: zipcode
+        - name: lat
+          in: query
+          description: latitude
+          required: false
+        - name: lon
+          in: query
+          description: longitude
+          required: false
       responses:
         200:
-          description: 'Return coordinates'
+          description: 'Return coordinates or address'
+          example:
+            addresses:
+              - formattedAddress: 'Cl. 152 #9-93, Bogotá, Colombia'
+                latitude: 4.730390499999999
+                longitude: -74.03485479999999
+                extra:
+                  googlePlaceId: ChIJlztCWWGFP44RDFhDZaDyFNM
+                  confidence: 1
+                  premise:
+                  subpremise:
+                  neighborhood: Usaquén
+                  establishment:
+                administrativeLevels:
+                  level1long: Bogotá
+                  level1short: Bogotá
+                streetNumber: 9-93
+                streetName: Calle 152
+                city: Bogotá
+                country: Colombia
+                countryCode: CO
+                zipcode: '110131'
+                provider: google

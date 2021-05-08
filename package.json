@@ -7,7 +7,7 @@
     "dev": "nodemon app.js",
     "start": "node app.js",
     "swagger": "node documentation",
-    "test:watch": "jest ./ --watchAll --runInBand --detectOpenHandles --unhandled-rejections=strict",
+    "test:watch": "jest ./ --watch --runInBand --detectOpenHandles --unhandled-rejections=strict",
     "test": "jest --detectOpenHandles --logHeapUsage",
     "test:coverage": "jest --coverage --detectOpenHandles --logHeapUsage",
     "docker": "docker-compose up server",

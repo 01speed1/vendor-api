@@ -1,37 +1,28 @@
 const {
-  accountMock,
   offerMock,
   orderMock,
   productOfferedMock,
   serviceOfferedMock
 } = require('../../../test/mocks/models');
 
+const { accountHelper } = require('../../../test/helpers');
+
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
 
 let businessIdStub, token;
 
+beforeEach(async () => {
+  const {
+    token: tokenLogged,
+    business
+  } = await accountHelper.generateFakeLoginData();
+
+  token = tokenLogged;
+  businessIdStub = business._id;
+});
+
 describe('Like a business, when visit POST "/offers"', () => {
-  beforeEach(async () => {
-    const {
-      saveFake,
-      createFakeModels,
-      fakePassword
-    } = accountMock.registerFake();
-
-    const { _id: accountId, email } = await saveFake();
-
-    const [, { _id: businessId }] = await createFakeModels(accountId);
-
-    businessIdStub = businessId;
-
-    const { body } = await request
-      .post('/api/accounts/login')
-      .send({ email, password: fakePassword });
-
-    token = body.token;
-  });
-
   it('should create an offer on the database', async () => {
     const { _id: orderId, products } = await orderMock.createFake();
 

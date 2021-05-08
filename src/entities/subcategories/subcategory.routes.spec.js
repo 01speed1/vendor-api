@@ -1,41 +1,16 @@
-const {
-  categoryMock,
-  subcategoryMock,
-  accountMock,
-  consumerMock
-} = require('../../../test/mocks/models');
+const { categoryMock, subcategoryMock } = require('../../../test/mocks/models');
+
+const { accountHelper } = require('../../../test/helpers');
 
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
 
-let createdAccount, token;
+let token;
 
 beforeEach(async () => {
-  createdAccount = await accountMock.model.create({
-    email: 'skatin@mail.com',
-    password: 'bloblu',
-    lastName: 'MyPresident',
-    firstName: 'Skatin'
-  });
+  const { token: tokenLogged } = await accountHelper.generateFakeLoginData();
 
-  await consumerMock.model.create({
-    accountId: createdAccount._id
-  });
-
-  const { saveFake, createFakeModels, fakePassword } = accountMock.registerFake(
-    {
-      email: 'fake@man.com'
-    }
-  );
-
-  const { _id: accountId, email } = await saveFake();
-  await createFakeModels(accountId);
-
-  const { body } = await request
-    .post('/api/accounts/login')
-    .send({ email, password: fakePassword });
-
-  token = body.token;
+  token = tokenLogged;
 });
 
 describe('Like a user, when I visit GET "/api/subcategories/category/:categoryId"', () => {

@@ -3,6 +3,8 @@ const dbConnection = require('./config/database');
 
 const logger = require("./libs/logger")
 
+const logger = require("./libs/logger")
+
 global.ROOT_DIRNAME = __dirname;
 
 const port = process.env.NODE_PORT || 8080;

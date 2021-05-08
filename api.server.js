@@ -23,4 +23,7 @@ app.use('/api', apiRouter);
 const { errors } = require('celebrate');
 app.use(errors());
 
+const morgan = require('morgan');
+app.use(morgan('dev'));
+
 module.exports = app;

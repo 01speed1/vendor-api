@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { DatabaseURLBuilder } = require('../libs/database/URLDBBuilder');
+const { DatabaseURLBuilder } = require('../../../libs/database/URLDBBuilder');
 
 const options = {
   useNewUrlParser: true,

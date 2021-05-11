@@ -28,10 +28,12 @@
     "mongoose": "^5.12.2",
     "mongoose-beautiful-unique-validation": "^7.1.1",
     "mongoose-dummy": "^1.0.8",
+    "morgan": "^1.10.0",
     "node-geocoder": "^3.27.0",
     "passport": "^0.4.1",
     "socket.io": "^4.0.0",
     "socketio-jwt": "^4.6.2",
+    "winston": "^3.3.3",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {

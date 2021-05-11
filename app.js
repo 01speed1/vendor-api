@@ -1,21 +1,28 @@
 require('dotenv').config();
-const dbConnection = require('./config/database');
+const dbConnection = require('./src/db/mongoose');
+const logger = require('./libs/logger');
 
 global.ROOT_DIRNAME = __dirname;
+global.logger = logger;
 
 const port = process.env.NODE_PORT || 8080;
 
 (async () => {
   try {
-    console.log('Starting Server...');
+    logger.info('Starting Server...');
     await dbConnection;
-    console.log('database connection established');
+    logger.info('database connection established');
 
     const apiServer = require('./api.server');
 
-    apiServer.listen(port, () => console.log(`API Server running in ${port}`));
+    apiServer.listen(port, () => {
+      let startMeessage = `API Server running in ${port}`;
+
+      logger.info(startMeessage);
+    });
   } catch (error) {
     console.error(error.message);
+    logger.error(error.message);
     process.exit(1);
   }
 })();

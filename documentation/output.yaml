@@ -358,7 +358,7 @@ paths:
     get:
       security:
         - bearerAuth: []
-      summary: Endpoint to get create an order
+      summary: Endpoint to get all orders
       tags:
         - Orders
       responses:
@@ -367,7 +367,7 @@ paths:
     post:
       security:
         - bearerAuth: []
-      summary: Endpoint to get all orders
+      summary: Endpoint to get create an order
       tags:
         - Orders
       requestBody:
@@ -391,7 +391,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      productId:
+                      subcategoryId:
                         type: string
                         example: 2435rrf345f43rf234t
                       quantity:
@@ -405,7 +405,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      serviceId:
+                      subcategoryId:
                         type: string
                         example: 2435rrf345f43rf234t
                       price:

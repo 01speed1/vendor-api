@@ -18,7 +18,7 @@ const createSchema = Joi.object({
   destinyAddress: Joi.string().required(),
   products: Joi.array().items(
     Joi.object({
-      subcategory: Joi.string().required(),
+      subcategoryId: Joi.string().required(),
       name: Joi.string().required(),
       quantity: Joi.number().required(),
       price: Joi.number()
@@ -27,7 +27,7 @@ const createSchema = Joi.object({
   services: Joi.array().items(
     Joi.object({
       description: Joi.string().required(),
-      subcategory: Joi.string().required(),
+      subcategoryId: Joi.string().required(),
       name: Joi.string().required(),
       price: Joi.number()
     })

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const OID = Schema.Types.ObjectId;
 
 var productSchema = Schema({
-  subcategory: { type: OID, ref: 'Subcategory', required: true },
+  subcategoryId: { type: OID, ref: 'Subcategory', required: true },
   name: {
     type: String,
     required: true

@@ -62,7 +62,7 @@ describe('Like a consumer, when visit POST "/orders"', () => {
       destinyAddress: 'cll false 123',
       products: [
         {
-          subcategory: subcategoryId,
+          subcategoryId: subcategoryId,
           name: 'Product name',
           quantity: 1
         }
@@ -93,7 +93,7 @@ describe('Like a consumer, when visit POST "/orders"', () => {
 
     const products = [
       {
-        subcategory: subcategoryId,
+        subcategoryId: subcategoryId,
         name: 'Product name',
         quantity: 1,
         price: 40000
@@ -101,7 +101,7 @@ describe('Like a consumer, when visit POST "/orders"', () => {
     ];
     const services = [
       {
-        subcategory: subcategoryId,
+        subcategoryId: subcategoryId,
         name: 'Product name',
         description: 'bli bla blo',
         price: 40000

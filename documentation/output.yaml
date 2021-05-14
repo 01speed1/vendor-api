@@ -364,6 +364,33 @@ paths:
       responses:
         '200':
           description: Return the list of orders
+          content:
+            application/json:
+              example:
+                orders:
+                  - _id: 609ca15403b442018f735d67
+                    status: pending
+                    products:
+                      - 609ca15403b442018f735d66
+                    services: []
+                    createdAt: '2021-05-13T03:46:36.248Z'
+                    modifiedAt: '2021-05-13T03:46:36.248Z'
+                    consumerId: 609c98e5234dca002bfd4171
+                    location: 40.82223286, -96.7982002
+                    destinyAddress: Cra89A
+                    __v: 0
+                  - _id: 609ca1be03b442018f735d6a
+                    status: pending
+                    products:
+                      - 609ca1be03b442018f735d68
+                    services:
+                      - 609ca1be03b442018f735d69
+                    createdAt: '2021-05-13T03:46:36.248Z'
+                    modifiedAt: '2021-05-13T03:46:36.248Z'
+                    consumerId: 609c98e5234dca002bfd4171
+                    location: 40.82223286, -96.7982002
+                    destinyAddress: Cra89A
+                    __v: 0
     post:
       security:
         - bearerAuth: []

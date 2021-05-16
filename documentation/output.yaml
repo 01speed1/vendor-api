@@ -20,6 +20,203 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  promos:
+    schemas:
+      multiBuy:
+        summary: Create a multi buy promo
+        required:
+          - businessId
+          - products
+          - type
+          - hoursLeft
+        properties:
+          businessId:
+            type: string
+            example: 2435rrf345f43rf234t
+          hoursLeft:
+            type: integer
+            example: 8
+          products:
+            type: array
+            items:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 2
+                price:
+                  type: integer
+                  example: 20000
+          services:
+            type: array
+            items:
+              type: object
+              properties:
+                price:
+                  type: integer
+                  example: 20000
+          type:
+            type: object
+            properties:
+              required:
+                - name
+                - multiBuy
+              name:
+                type: string
+                example: multiBuy
+              multiBuy:
+                type: object
+                required:
+                  - min
+                  - get
+                properties:
+                  min:
+                    type: integer
+                    example: 1
+                  get:
+                    type: integer
+                    example: 2
+      discountRate:
+        summary: Create a discount rate promo
+        required:
+          - businessId
+          - products
+          - type
+          - hoursLeft
+        properties:
+          businessId:
+            type: string
+            example: 2435rrf345f43rf234t
+          hoursLeft:
+            type: integer
+            example: 8
+          products:
+            type: array
+            items:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 2
+                price:
+                  type: integer
+                  example: 20000
+          services:
+            type: array
+            items:
+              type: object
+              properties:
+                price:
+                  type: integer
+                  example: 20000
+          type:
+            type: object
+            properties:
+              required:
+                - name
+                - discountRate
+              name:
+                type: string
+                example: discountRate
+              discountRate:
+                type: integer
+                example: 20
+      discountPrice:
+        summary: Create a discount rate promo
+        required:
+          - businessId
+          - products
+          - type
+          - hoursLeft
+        properties:
+          businessId:
+            type: string
+            example: 2435rrf345f43rf234t
+          hoursLeft:
+            type: integer
+            example: 8
+          products:
+            type: array
+            items:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 2
+                price:
+                  type: integer
+                  example: 20000
+          services:
+            type: array
+            items:
+              type: object
+              properties:
+                price:
+                  type: integer
+                  example: 20000
+          type:
+            type: object
+            properties:
+              required:
+                - name
+                - discountPrice
+              name:
+                type: string
+                example: discountPrice
+              discountPrice:
+                type: integer
+                example: 20000
+      freeProduct:
+        summary: Create a discount rate promo
+        required:
+          - businessId
+          - products
+          - type
+          - hoursLeft
+        properties:
+          businessId:
+            type: string
+            example: 2435rrf345f43rf234t
+          hoursLeft:
+            type: integer
+            example: 8
+          products:
+            type: array
+            items:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 2
+                price:
+                  type: integer
+                  example: 20000
+          services:
+            type: array
+            items:
+              type: object
+              properties:
+                price:
+                  type: integer
+                  example: 20000
+          type:
+            type: object
+            properties:
+              required:
+                - name
+                - freeProduct
+              name:
+                type: string
+                example: freeProduct
+              freeProduct:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Product free name
+                  quantity:
+                    type: integer
+                    example: 2
 tags:
   - name: Accounts
   - name: Categories
@@ -28,6 +225,7 @@ tags:
   - name: Offers
   - name: Orders
   - name: Products
+  - name: Promos
   - name: Subcategories
 paths:
   /accounts/login:
@@ -295,7 +493,7 @@ paths:
                 countryCode: CO
                 zipcode: '110131'
                 provider: google
-  /offers/:
+  /offers:
     post:
       security:
         - bearerAuth: []
@@ -318,9 +516,6 @@ paths:
                 orderId:
                   type: string
                   example: 2435rrf345f43rf234t
-                state:
-                  type: string
-                  example: pending
                 productsOffered:
                   type: array
                   items:
@@ -354,7 +549,7 @@ paths:
               example:
                 token: >-
                   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-  /orders/:
+  /orders:
     get:
       security:
         - bearerAuth: []
@@ -445,6 +640,22 @@ paths:
             application/json:
               example:
                 message: order created
+  /promos:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Endpoint to create a promo
+      tags:
+        - Promos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/promos/multiBuy'
+                - $ref: '#/components/schemas/promos/discountRate'
+                - $ref: '#/components/schemas/promos/discountPrice'
+                - $ref: '#/components/schemas/promos/freeProduct'
   /subcategories/category/{categoryId}:
     get:
       security:

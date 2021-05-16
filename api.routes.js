@@ -5,6 +5,7 @@ const consumerRoutes = require('./src/entities/consumers/consumer.routes');
 const categoryRoutes = require('./src/entities/categories/category.routes');
 const subcategoryRoutes = require('./src/entities/subcategories/subcategory.routes');
 const geoRoutes = require('./src/entities/geoVendor/geoVendor.routes');
+const promoRoutes = require('./src/entities/promos/promo.routes');
 
 module.exports = router => {
   router.use('/accounts', accountRoutes);
@@ -20,4 +21,6 @@ module.exports = router => {
   router.use('/subcategories', subcategoryRoutes);
 
   router.use('/geo', geoRoutes);
+
+  router.use('/promos', promoRoutes);
 };

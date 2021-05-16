@@ -44,7 +44,9 @@ describe('Like a business, when visit POST "/offers"', () => {
       .send(body)
       .expect(200);
 
-    expect(await offerMock.model.countDocuments()).toEqual(1);
+    const expectedResponse = await offerMock.model.countDocuments();
+
+    expect(expectedResponse).toEqual(1);
   });
 
   it('should create a product offered by every product', async () => {
@@ -68,7 +70,9 @@ describe('Like a business, when visit POST "/offers"', () => {
       .send(body)
       .expect(200);
 
-    expect(await productOfferedMock.model.countDocuments()).toEqual(1);
+    const expectedResponse = await productOfferedMock.model.countDocuments();
+
+    expect(expectedResponse).toEqual(1);
   });
 
   it('should create a service offered by every service', async () => {
@@ -85,12 +89,14 @@ describe('Like a business, when visit POST "/offers"', () => {
       ]
     };
 
-    const response = await request
+    await request
       .post('/api/offers')
       .set('Authorization', `Bearer ${token}`)
       .send(body)
       .expect(200);
 
-    expect(await serviceOfferedMock.model.countDocuments()).toEqual(1);
+    const expectedResponse = await serviceOfferedMock.model.countDocuments();
+
+    expect(expectedResponse).toEqual(1);
   });
 });

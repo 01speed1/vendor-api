@@ -18,7 +18,6 @@ const isEmptyProductsOrService = (value, helpers) => {
 const createSchema = Joi.object({
   businessId: Joi.string().required(),
   orderId: Joi.string().required(),
-  state: Joi.string(),
   productsOffered: Joi.array().items(
     Joi.object({
       productId: Joi.string().required(),

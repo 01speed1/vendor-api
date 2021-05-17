@@ -3,7 +3,7 @@ const logger = require('../../../libs/logger');
 
 const skip = () => {
   const env = process.env.NODE_ENV || 'development';
-  return env !== 'development' || env === 'test';
+  return env !== 'development' || env !== 'test';
 };
 
 const stream = { write: message => logger.http(message) };

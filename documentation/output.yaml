@@ -20,203 +20,198 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-  promos:
-    schemas:
-      multiBuy:
-        summary: Create a multi buy promo
-        required:
-          - businessId
-          - products
-          - type
-          - hoursLeft
-        properties:
-          businessId:
-            type: string
-            example: 2435rrf345f43rf234t
-          hoursLeft:
-            type: integer
-            example: 8
-          products:
-            type: array
-            items:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  example: 2
-                price:
-                  type: integer
-                  example: 20000
-          services:
-            type: array
-            items:
-              type: object
-              properties:
-                price:
-                  type: integer
-                  example: 20000
-          type:
+  schemas:
+    multiBuy:
+      required:
+        - businessId
+        - products
+        - type
+        - hoursLeft
+      properties:
+        businessId:
+          type: string
+          example: 2435rrf345f43rf234t
+        hoursLeft:
+          type: integer
+          example: 8
+        products:
+          type: array
+          items:
             type: object
             properties:
-              required:
-                - name
-                - multiBuy
-              name:
-                type: string
-                example: multiBuy
-              multiBuy:
-                type: object
-                required:
-                  - min
-                  - get
-                properties:
-                  min:
-                    type: integer
-                    example: 1
-                  get:
-                    type: integer
-                    example: 2
-      discountRate:
-        summary: Create a discount rate promo
-        required:
-          - businessId
-          - products
-          - type
-          - hoursLeft
-        properties:
-          businessId:
-            type: string
-            example: 2435rrf345f43rf234t
-          hoursLeft:
-            type: integer
-            example: 8
-          products:
-            type: array
-            items:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  example: 2
-                price:
-                  type: integer
-                  example: 20000
-          services:
-            type: array
-            items:
-              type: object
-              properties:
-                price:
-                  type: integer
-                  example: 20000
-          type:
-            type: object
-            properties:
-              required:
-                - name
-                - discountRate
-              name:
-                type: string
-                example: discountRate
-              discountRate:
+              quantity:
                 type: integer
-                example: 20
-      discountPrice:
-        summary: Create a discount rate promo
-        required:
-          - businessId
-          - products
-          - type
-          - hoursLeft
-        properties:
-          businessId:
-            type: string
-            example: 2435rrf345f43rf234t
-          hoursLeft:
-            type: integer
-            example: 8
-          products:
-            type: array
-            items:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  example: 2
-                price:
-                  type: integer
-                  example: 20000
-          services:
-            type: array
-            items:
-              type: object
-              properties:
-                price:
-                  type: integer
-                  example: 20000
-          type:
-            type: object
-            properties:
-              required:
-                - name
-                - discountPrice
-              name:
-                type: string
-                example: discountPrice
-              discountPrice:
+                example: 2
+              price:
                 type: integer
                 example: 20000
-      freeProduct:
-        summary: Create a discount rate promo
-        required:
-          - businessId
-          - products
-          - type
-          - hoursLeft
-        properties:
-          businessId:
-            type: string
-            example: 2435rrf345f43rf234t
-          hoursLeft:
-            type: integer
-            example: 8
-          products:
-            type: array
-            items:
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              price:
+                type: integer
+                example: 20000
+        type:
+          type: object
+          required:
+            - name
+            - multiBuy
+          properties:
+            name:
+              type: string
+              example: multiBuy
+            multiBuy:
+              type: object
+              required:
+                - min
+                - get
+              properties:
+                min:
+                  type: integer
+                  example: 1
+                get:
+                  type: integer
+                  example: 2
+    discountRate:
+      required:
+        - businessId
+        - products
+        - type
+        - hoursLeft
+      properties:
+        businessId:
+          type: string
+          example: 2435rrf345f43rf234t
+        hoursLeft:
+          type: integer
+          example: 8
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                type: integer
+                example: 2
+              price:
+                type: integer
+                example: 20000
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              price:
+                type: integer
+                example: 20000
+        type:
+          type: object
+          required:
+            - name
+            - discountRate
+          properties:
+            name:
+              type: string
+              example: discountRate
+            discountRate:
+              type: integer
+              example: 20
+    discountPrice:
+      required:
+        - businessId
+        - products
+        - type
+        - hoursLeft
+      properties:
+        businessId:
+          type: string
+          example: 2435rrf345f43rf234t
+        hoursLeft:
+          type: integer
+          example: 8
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                type: integer
+                example: 2
+              price:
+                type: integer
+                example: 20000
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              price:
+                type: integer
+                example: 20000
+        type:
+          type: object
+          required:
+            - name
+            - discountPrice
+          properties:
+            name:
+              type: string
+              example: discountPrice
+            discountPrice:
+              type: integer
+              example: 20000
+    freeProduct:
+      required:
+        - businessId
+        - products
+        - type
+        - hoursLeft
+      properties:
+        businessId:
+          type: string
+          example: 2435rrf345f43rf234t
+        hoursLeft:
+          type: integer
+          example: 8
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                type: integer
+                example: 2
+              price:
+                type: integer
+                example: 20000
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              price:
+                type: integer
+                example: 20000
+        type:
+          type: object
+          required:
+            - name
+            - freeProduct
+          properties:
+            name:
+              type: string
+              example: freeProduct
+            freeProduct:
               type: object
               properties:
+                name:
+                  type: string
+                  example: Product free name
                 quantity:
                   type: integer
                   example: 2
-                price:
-                  type: integer
-                  example: 20000
-          services:
-            type: array
-            items:
-              type: object
-              properties:
-                price:
-                  type: integer
-                  example: 20000
-          type:
-            type: object
-            properties:
-              required:
-                - name
-                - freeProduct
-              name:
-                type: string
-                example: freeProduct
-              freeProduct:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: Product free name
-                  quantity:
-                    type: integer
-                    example: 2
 tags:
   - name: Accounts
   - name: Categories
@@ -400,14 +395,21 @@ paths:
                     destinyAddress: Alena_Leannon72
                     deliverDetails: Landen.Rohan52
                     __v: 0
-  /consumers/orders/{:orderId}:
+  /consumers/orders/{orderId}:
     get:
       security:
         - bearerAuth: []
       summary: Endpoint to get an order of logged user
+      parameters:
+        - name: orderId
+          in: path
+          description: orderId
+          required: true
+          schema:
+            type: string
       tags:
         - Consumers
-      response:
+      responses:
         '200':
           description: Return found order
           content:
@@ -451,48 +453,61 @@ paths:
       parameters:
         - name: address
           in: query
+          schema:
+            type: string
           description: address of place
           required: false
         - name: country
           in: query
           description: country
+          schema:
+            type: string
           required: false
         - name: zipcode
           in: query
           description: zipcode
+          schema:
+            type: string
+          required: false
         - name: lat
           in: query
           description: latitude
+          schema:
+            type: number
           required: false
         - name: lon
           in: query
           description: longitude
           required: false
+          schema:
+            type: number
       responses:
         '200':
           description: Return coordinates or address
-          example:
-            addresses:
-              - formattedAddress: 'Cl. 152 #9-93, Bogotá, Colombia'
-                latitude: 4.730390499999999
-                longitude: -74.03485479999999
-                extra:
-                  googlePlaceId: ChIJlztCWWGFP44RDFhDZaDyFNM
-                  confidence: 1
-                  premise: null
-                  subpremise: null
-                  neighborhood: Usaquén
-                  establishment: null
-                administrativeLevels:
-                  level1long: Bogotá
-                  level1short: Bogotá
-                streetNumber: 9-93
-                streetName: Calle 152
-                city: Bogotá
-                country: Colombia
-                countryCode: CO
-                zipcode: '110131'
-                provider: google
+          content:
+            application/json:
+              example:
+                addresses:
+                  - formattedAddress: 'Cl. 152 #9-93, Bogotá, Colombia'
+                    latitude: 4.730390499999999
+                    longitude: -74.03485479999999
+                    extra:
+                      googlePlaceId: ChIJlztCWWGFP44RDFhDZaDyFNM
+                      confidence: 1
+                      premise: null
+                      subpremise: null
+                      neighborhood: Usaquén
+                      establishment: null
+                    administrativeLevels:
+                      level1long: Bogotá
+                      level1short: Bogotá
+                    streetNumber: 9-93
+                    streetName: Calle 152
+                    city: Bogotá
+                    country: Colombia
+                    countryCode: CO
+                    zipcode: '110131'
+                    provider: google
   /offers:
     post:
       security:
@@ -641,6 +656,42 @@ paths:
               example:
                 message: order created
   /promos:
+    get:
+      summary: Endpoint to get promos
+      tags:
+        - Promos
+      responses:
+        '200':
+          description: the list of promos
+          content:
+            application/json:
+              example:
+                promos:
+                  _id: 60a2d7b954f96300131cc65a
+                  type:
+                    multiBuy:
+                      min: 12
+                      get: 11
+                    name: Destiney_Borer
+                    freeProduct: 60a2d7b94afb730013db1336
+                    discountRate: 38
+                    discountPrice: 21
+                  status: Kacie_Treutel91
+                  products:
+                    - _id: 60a2d7b954f96300131cc659
+                      quantity: 76
+                      createdAt: '2021-05-17T05:35:53.114Z'
+                      modifiedAt: '2021-05-17T08:54:07.530Z'
+                      name: Orion_Hermiston37
+                      price: 63
+                      subcategoryId: 60a2d7b94afb730013db132c
+                      __v: 0
+                  services: []
+                  createdAt: '2021-05-16T22:42:47.846Z'
+                  modifiedAt: '2021-05-17T04:15:56.683Z'
+                  hoursLeft: 18
+                  businessId: 60a2d7b94afb730013db132d
+                  __v: 0
     post:
       security:
         - bearerAuth: []
@@ -652,10 +703,17 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/promos/multiBuy'
-                - $ref: '#/components/schemas/promos/discountRate'
-                - $ref: '#/components/schemas/promos/discountPrice'
-                - $ref: '#/components/schemas/promos/freeProduct'
+                - $ref: '#/components/schemas/multiBuy'
+                - $ref: '#/components/schemas/discountRate'
+                - $ref: '#/components/schemas/discountPrice'
+                - $ref: '#/components/schemas/freeProduct'
+      responses:
+        '200':
+          description: Return all offers
+          content:
+            application/json:
+              example:
+                message: Promo created
   /subcategories/category/{categoryId}:
     get:
       security:

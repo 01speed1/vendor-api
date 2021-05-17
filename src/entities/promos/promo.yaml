@@ -14,183 +14,185 @@ paths:
           'application/json':
             schema:
               oneOf:
-                - $ref: '#/components/schemas/promos/multiBuy'
-                - $ref: '#/components/schemas/promos/discountRate'
-                - $ref: '#/components/schemas/promos/discountPrice'
-                - $ref: '#/components/schemas/promos/freeProduct'
+                - $ref: '#/components/schemas/multiBuy'
+                - $ref: '#/components/schemas/discountRate'
+                - $ref: '#/components/schemas/discountPrice'
+                - $ref: '#/components/schemas/freeProduct'
+      responses:
+        200:
+          description: 'Return all offers'
+          content:
+            'application/json':
+              example:
+                message: Promo created
 
 components:
-  promos:
-    schemas:
-      multiBuy:
-        summary: Create a multi buy promo
-        required: [businessId, products, type, hoursLeft]
-        properties:
-          businessId:
-            type: string
-            example: 2435rrf345f43rf234t
-          hoursLeft:
-            type: integer
-            example: 8
-          products:
-            type: array
-            items:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  example: 2
-                price:
-                  type: integer
-                  example: 20000
-          services:
-            type: array
-            items:
-              type: object
-              properties:
-                price:
-                  type: integer
-                  example: 20000
-          type:
+  schemas:
+    multiBuy:
+      required: [businessId, products, type, hoursLeft]
+      properties:
+        businessId:
+          type: string
+          example: 2435rrf345f43rf234t
+        hoursLeft:
+          type: integer
+          example: 8
+        products:
+          type: array
+          items:
             type: object
             properties:
-              required: [name, multiBuy]
-              name:
-                type: string
-                example: multiBuy
-              multiBuy:
-                type: object
-                required: [min, get]
-                properties:
-                  min:
-                    type: integer
-                    example: 1
-                  get:
-                    type: integer
-                    example: 2
-
-      discountRate:
-        summary: Create a discount rate promo
-        required: [businessId, products, type, hoursLeft]
-        properties:
-          businessId:
-            type: string
-            example: 2435rrf345f43rf234t
-          hoursLeft:
-            type: integer
-            example: 8
-          products:
-            type: array
-            items:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  example: 2
-                price:
-                  type: integer
-                  example: 20000
-          services:
-            type: array
-            items:
-              type: object
-              properties:
-                price:
-                  type: integer
-                  example: 20000
-          type:
-            type: object
-            properties:
-              required: [name, discountRate]
-              name:
-                type: string
-                example: discountRate
-              discountRate:
+              quantity:
                 type: integer
-                example: 20
-
-      discountPrice:
-        summary: Create a discount rate promo
-        required: [businessId, products, type, hoursLeft]
-        properties:
-          businessId:
-            type: string
-            example: 2435rrf345f43rf234t
-          hoursLeft:
-            type: integer
-            example: 8
-          products:
-            type: array
-            items:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  example: 2
-                price:
-                  type: integer
-                  example: 20000
-          services:
-            type: array
-            items:
-              type: object
-              properties:
-                price:
-                  type: integer
-                  example: 20000
-          type:
-            type: object
-            properties:
-              required: [name, discountPrice]
-              name:
-                type: string
-                example: discountPrice
-              discountPrice:
+                example: 2
+              price:
                 type: integer
                 example: 20000
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              price:
+                type: integer
+                example: 20000
+        type:
+          type: object
+          required: [name, multiBuy]
+          properties:
+            name:
+              type: string
+              example: multiBuy
+            multiBuy:
+              type: object
+              required: [min, get]
+              properties:
+                min:
+                  type: integer
+                  example: 1
+                get:
+                  type: integer
+                  example: 2
 
-      freeProduct:
-        summary: Create a discount rate promo
-        required: [businessId, products, type, hoursLeft]
-        properties:
-          businessId:
-            type: string
-            example: 2435rrf345f43rf234t
-          hoursLeft:
-            type: integer
-            example: 8
-          products:
-            type: array
-            items:
+    discountRate:
+      required: [businessId, products, type, hoursLeft]
+      properties:
+        businessId:
+          type: string
+          example: 2435rrf345f43rf234t
+        hoursLeft:
+          type: integer
+          example: 8
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                type: integer
+                example: 2
+              price:
+                type: integer
+                example: 20000
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              price:
+                type: integer
+                example: 20000
+        type:
+          type: object
+          required: [name, discountRate]
+          properties:
+            name:
+              type: string
+              example: discountRate
+            discountRate:
+              type: integer
+              example: 20
+
+    discountPrice:
+      required: [businessId, products, type, hoursLeft]
+      properties:
+        businessId:
+          type: string
+          example: 2435rrf345f43rf234t
+        hoursLeft:
+          type: integer
+          example: 8
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                type: integer
+                example: 2
+              price:
+                type: integer
+                example: 20000
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              price:
+                type: integer
+                example: 20000
+        type:
+          type: object
+          required: [name, discountPrice]
+          properties:
+            name:
+              type: string
+              example: discountPrice
+            discountPrice:
+              type: integer
+              example: 20000
+
+    freeProduct:
+      required: [businessId, products, type, hoursLeft]
+      properties:
+        businessId:
+          type: string
+          example: 2435rrf345f43rf234t
+        hoursLeft:
+          type: integer
+          example: 8
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                type: integer
+                example: 2
+              price:
+                type: integer
+                example: 20000
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              price:
+                type: integer
+                example: 20000
+        type:
+          type: object
+          required: [name, freeProduct]
+          properties:
+            name:
+              type: string
+              example: freeProduct
+            freeProduct:
               type: object
               properties:
+                name:
+                  type: string
+                  example: Product free name
                 quantity:
                   type: integer
                   example: 2
-                price:
-                  type: integer
-                  example: 20000
-          services:
-            type: array
-            items:
-              type: object
-              properties:
-                price:
-                  type: integer
-                  example: 20000
-          type:
-            type: object
-            properties:
-              required: [name, freeProduct]
-              name:
-                type: string
-                example: freeProduct
-              freeProduct:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: Product free name
-                  quantity:
-                    type: integer
-                    example: 2

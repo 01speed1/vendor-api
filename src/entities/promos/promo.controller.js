@@ -1,6 +1,16 @@
 const promoRepository = require('./promo.repository');
 const promoServices = require('./promo.services');
 
+const get = async (request, response) => {
+  try {
+    const promos = await promoRepository.get();
+
+    response.json({ promos });
+  } catch (error) {
+    response.status(500).json({ message: error.message });
+  }
+};
+
 const create = async (request, response) => {
   try {
     const { body, account } = request;
@@ -24,9 +34,8 @@ const create = async (request, response) => {
 
     response.json({ message: 'Promo created' });
   } catch (error) {
-    console.log(error);
     response.status(500).json({ message: error.message });
   }
 };
 
-module.exports = { create };
+module.exports = { create, get };

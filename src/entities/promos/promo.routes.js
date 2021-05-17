@@ -6,6 +6,8 @@ const promoValidations = require('./promo.validations');
 
 const promoController = require('./promo.controller');
 
+router.get('/', promoController.get);
+
 router.post(
   '/',
   apiMiddleware.validateJWT,

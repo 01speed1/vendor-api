@@ -21,6 +21,25 @@ beforeEach(async () => {
   businessIdStub = business._id;
 });
 
+describe('Like a user when visit GET "/promos"', () => {
+  it('should return all promos', async () => {
+    const stubProduct = await productMock.createFake();
+
+    const stubPromos = [
+      await promoMock.createFake({ products: [stubProduct._id] }),
+      await promoMock.createFake(),
+      await promoMock.createFake()
+    ];
+
+    const { text } = await request.get('/api/promos').expect(200);
+
+    const response = JSON.parse(text);
+
+    expect(response).toHaveProperty('promos');
+    expect(response.promos).toHaveLength(3);
+  });
+});
+
 describe('Like a business, when visit POST "/promos"', () => {
   describe('when I want to create multiple buy promo', () => {
     it('should return a multi buy promo', async () => {

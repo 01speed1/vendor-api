@@ -76,9 +76,11 @@ describe('Like a consumer, when visit POST "/orders"', () => {
       .send(body)
       .expect(200);
 
-    expect(response.body).toEqual({ message: 'order created' });
+    expect(response.body).toEqual({ message: 'Order created' });
 
-    expect(await orderMock.model.countDocuments()).toEqual(1);
+    const expectedResponse = await orderMock.model.countDocuments();
+
+    expect(expectedResponse).toEqual(1);
   });
 
   it('should create product and services in the database', async () => {

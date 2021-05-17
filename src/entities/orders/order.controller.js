@@ -1,5 +1,4 @@
 const orderRepository = require('./order.repository');
-
 const orderServices = require('./order.services');
 
 const getAll = async (request, response) => {
@@ -32,7 +31,7 @@ const create = async (request, response) => {
 
     await orderRepository.create(orderData);
 
-    response.json({ message: 'order created' });
+    response.json({ message: 'Order created' });
   } catch (error) {
     response.status(500).json({ message: error.message });
   }

@@ -2,7 +2,7 @@ tags:
   - name: Offers
 
 paths:
-  /offers/:
+  /offers:
     post:
       security:
         - bearerAuth: []
@@ -22,9 +22,6 @@ paths:
                 orderId:
                   type: string
                   example: 2435rrf345f43rf234t
-                state:
-                  type: string
-                  example: pending
                 productsOffered:
                   type: array
                   items:

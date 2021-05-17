@@ -16,9 +16,9 @@ const port = process.env.NODE_PORT || 8080;
     const apiServer = require('./api.server');
 
     apiServer.listen(port, () => {
-      let startMeessage = `API Server running in ${port}`;
+      let startMessage = `API Server running in ${port}`;
 
-      logger.info(startMeessage);
+      logger.info(startMessage);
     });
   } catch (error) {
     console.error(error.message);

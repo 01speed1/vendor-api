@@ -1,9 +1,9 @@
-const authMiddlesware = require('./auth.middlewares');
+const authMiddleware = require('./auth.middlewares');
 const getAccountMiddleware = require('./getAccountIds.middlewares');
 const loggerMiddleware = require('./logger.middlewares');
 
 module.exports = {
-  ...authMiddlesware,
+  ...authMiddleware,
   ...getAccountMiddleware,
   ...loggerMiddleware
 };

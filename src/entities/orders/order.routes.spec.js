@@ -24,16 +24,32 @@ beforeEach(async () => {
 
 describe('Like a consumer, when visit GET "/orders"', () => {
   it('should return all orders', async () => {
-    const order1 = await orderMock.model.create({
+    const order1 = await orderMock.createFake({
       consumerId: consumerIdStub,
-      destinyAddress: 'calle falsa 123',
-      location: 'po ahia'
+      destinyAddress: {
+        address: 'Calle 9 #10-93',
+        neighborhood: 'Las Delicias',
+        apartament: 306,
+        additionalDestination: 'Casa con una tienda'
+      },
+      location: {
+        lat: 40.564574,
+        lon: 70.567448
+      }
     });
 
-    const order2 = await orderMock.model.create({
+    const order2 = await orderMock.createFake({
       consumerId: consumerIdStub,
-      destinyAddress: 'calle falsa 456',
-      location: 'po ahia'
+      destinyAddress: {
+        address: 'Calle 9 #10-93',
+        neighborhood: 'Las Delicias',
+        apartament: 306,
+        additionalDestination: 'Casa con una tienda'
+      },
+      location: {
+        lat: 40.564574,
+        lon: 70.567448
+      }
     });
 
     const response = await request.get('/api/orders');
@@ -58,8 +74,16 @@ describe('Like a consumer, when visit POST "/orders"', () => {
     });
 
     const body = {
-      location: 'this should be a location object',
-      destinyAddress: 'cll false 123',
+      destinyAddress: {
+        address: 'Calle 9 #10-93',
+        neighborhood: 'Las Delicias',
+        apartament: 306,
+        additionalDescription: 'Casa con una tienda'
+      },
+      location: {
+        lat: 40.564574,
+        lon: 70.567448
+      },
       products: [
         {
           subcategoryId: subcategoryId,
@@ -111,8 +135,16 @@ describe('Like a consumer, when visit POST "/orders"', () => {
     ];
 
     const body = {
-      location: 'la casa de jose',
-      destinyAddress: 'la otra casa de jose',
+      destinyAddress: {
+        address: 'Calle 9 #10-93',
+        neighborhood: 'Las Delicias',
+        apartament: 306,
+        additionalDescription: 'Casa con una tienda'
+      },
+      location: {
+        lat: 40.564574,
+        lon: 70.567448
+      },
       products,
       services
     };
@@ -121,7 +153,6 @@ describe('Like a consumer, when visit POST "/orders"', () => {
       .post('/api/orders')
       .set('Authorization', `Bearer ${token}`)
       .send(body);
-
     expect(await productModel.countDocuments()).toEqual(1);
     expect(await serviceModel.countDocuments()).toEqual(1);
   });

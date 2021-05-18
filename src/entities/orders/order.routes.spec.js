@@ -157,7 +157,6 @@ describe('Like a consumer, when visit POST "/orders"', () => {
       .post('/api/orders')
       .set('Authorization', `Bearer ${token}`)
       .send(body);
-
     expect(await productModel.countDocuments()).toEqual(1);
     expect(await serviceModel.countDocuments()).toEqual(1);
   });

@@ -6,7 +6,8 @@ const create = ({
   destinyAddress,
   status,
   products,
-  services
+  services,
+  hoursLeft
 }) => {
   return orderModel.create({
     consumerId,
@@ -14,12 +15,13 @@ const create = ({
     destinyAddress,
     status,
     products,
-    services
+    services,
+    hoursLeft
   });
 };
 
 const getAll = () => {
-  return orderModel.find();
+  return orderModel.find().lean({ virtuals: true });
 };
 
 const getByConsumerId = consumerId => {

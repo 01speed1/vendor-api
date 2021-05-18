@@ -1,5 +1,5 @@
 const dummy = require('mongoose-dummy');
-const ignoredFields = ['_id', 'created_at', '__v', /detail.*_info/];
+const ignoredFields = ['_id', 'id', 'created_at', '__v', /detail.*_info/];
 
 const generateFakeData = Model => {
   return dummy(Model, {
@@ -8,11 +8,13 @@ const generateFakeData = Model => {
   });
 };
 
-const createFake = (Model, additionalParameters) => {
-  return Model.create({
+const createFake = async (Model, additionalParameters) => {
+  const { _id } = await Model.create({
     ...generateFakeData(Model),
     ...additionalParameters
   });
+
+  return await Model.findById(_id).lean({ virtuals: true });
 };
 
 module.exports = Model => {

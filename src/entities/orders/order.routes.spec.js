@@ -24,13 +24,13 @@ beforeEach(async () => {
 
 describe('Like a consumer, when visit GET "/orders"', () => {
   it('should return all orders', async () => {
-    const order1 = await orderMock.model.create({
+    const order1 = await orderMock.createFake({
       consumerId: consumerIdStub,
       destinyAddress: 'calle falsa 123',
       location: 'po ahia'
     });
 
-    const order2 = await orderMock.model.create({
+    const order2 = await orderMock.createFake({
       consumerId: consumerIdStub,
       destinyAddress: 'calle falsa 456',
       location: 'po ahia'
@@ -43,6 +43,8 @@ describe('Like a consumer, when visit GET "/orders"', () => {
     });
 
     expect(response.body).toEqual(JSON.parse(expectedResponse));
+
+    expect(response.body.orders[0]).toHaveProperty('finishAt');
   });
 });
 
@@ -60,6 +62,7 @@ describe('Like a consumer, when visit POST "/orders"', () => {
     const body = {
       location: 'this should be a location object',
       destinyAddress: 'cll false 123',
+      hoursLeft: 8,
       products: [
         {
           subcategoryId: subcategoryId,
@@ -113,11 +116,12 @@ describe('Like a consumer, when visit POST "/orders"', () => {
     const body = {
       location: 'la casa de jose',
       destinyAddress: 'la otra casa de jose',
+      hoursLeft: 8,
       products,
       services
     };
 
-    const response = await request
+    await request
       .post('/api/orders')
       .set('Authorization', `Bearer ${token}`)
       .send(body);

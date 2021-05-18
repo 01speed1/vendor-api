@@ -11,4 +11,19 @@ const isEmptyProductsOrService = (value, helpers) => {
   return value;
 };
 
-module.exports = { isEmptyProductsOrService };
+const isEmptyProductsOrServiceOffered = (value, helpers) => {
+  const isEmptyProducts =
+    value.productsOffered && value.productsOffered.length > 0;
+  const isEmptyServices =
+    value.servicesOffered && value.servicesOffered.length > 0;
+
+  if (!isEmptyProducts && !isEmptyServices) {
+    return helpers.message(
+      'We need a least one product or service to create an offer'
+    );
+  }
+
+  return value;
+};
+
+module.exports = { isEmptyProductsOrService, isEmptyProductsOrServiceOffered };

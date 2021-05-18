@@ -25,8 +25,15 @@ paths:
                     createdAt: '2021-05-13T03:46:36.248Z'
                     modifiedAt: '2021-05-13T03:46:36.248Z'
                     consumerId: 609c98e5234dca002bfd4171
-                    location: 40.82223286, -96.7982002
-                    destinyAddress: Cra89A #83d-21
+                    hoursLeft: 8
+                    location:
+                      lat: 40.82223286
+                      lon: -96.7982002
+                    destinyAddress:
+                      address: Cra89A #83d-21
+                      neighborhood: Los cerezos
+                      apartament: 306
+                      additionalDescription: Casa verde esquinera
                     __v: 0
                   - _id: 609ca1be03b442018f735d6a
                     status: pending
@@ -37,8 +44,15 @@ paths:
                     createdAt: '2021-05-13T03:46:36.248Z'
                     modifiedAt: '2021-05-13T03:46:36.248Z'
                     consumerId: 609c98e5234dca002bfd4171
-                    location: 40.82223286, -96.7982002
-                    destinyAddress: Cra89A #83d-21
+                    hoursLeft: 8
+                    location:
+                      lat: 40.82223286
+                      lon: -96.7982002
+                    destinyAddress:
+                      address: Cra89A #83d-21
+                      neighborhood: Los cerezos
+                      apartament: 306
+                      additionalDescription: Casa verde esquinera
                     __v: 0
 
     post:
@@ -54,11 +68,32 @@ paths:
               required: [location, destinyAddress, products, services]
               properties:
                 location:
-                  type: string
-                  example: '34.324342 234.23423432'
+                  type: object
+                  properties:
+                    lat:
+                      type: string
+                      example: '34.324342'
+                    lon:
+                      type: string
+                      example: '234.23423432'
                 destinyAddress:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      example: calle 9 #10-93
+                    neighborhood:
+                      type: string
+                      example: Las Delicias
+                    apartament:
+                      type: number
+                      example: 306
+                    additionalDescription:
+                      type: string
+                      example: Casa con una tienda
+                hoursLeft:
                   type: string
-                  example: Calle false 123
+                  example: 8
                 products:
                   type: array
                   items:
@@ -87,8 +122,8 @@ paths:
 
       responses:
         200:
-          description: 'Return message cerated order'
+          description: 'Return message created order'
           content:
             'application/json':
               example:
-                message: 'order created'
+                message: 'Order created'

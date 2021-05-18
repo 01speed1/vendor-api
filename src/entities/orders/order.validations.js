@@ -3,8 +3,16 @@ const { celebrate, Joi, Segments } = require('celebrate');
 const { isEmptyProductsOrService } = require('../../utils/validations');
 
 const createSchema = Joi.object({
-  location: Joi.string().required(),
-  destinyAddress: Joi.string().required(),
+  location: Joi.object({
+      lat: Joi.number().required(),
+      lon: Joi.number().required()
+  }).required(),
+  destinyAddress: Joi.object({
+    address: Joi.string().required(),
+    neighborhood: Joi.string().required(),
+    apartament: Joi.number(),
+    additionalDescription: Joi.string()
+  }).required(),
   hoursLeft: Joi.number().required(),
   products: Joi.array().items(
     Joi.object({

@@ -26,14 +26,30 @@ describe('Like a consumer, when visit GET "/orders"', () => {
   it('should return all orders', async () => {
     const order1 = await orderMock.createFake({
       consumerId: consumerIdStub,
-      destinyAddress: 'calle falsa 123',
-      location: 'po ahia'
+      destinyAddress: {
+        address: 'Calle 9 #10-93',
+        neighborhood: 'Las Delicias',
+        apartament: 306,
+        additionalDestination: 'Casa con una tienda'
+      },
+      location: {
+        lat: 40.564574,
+        lon: 70.567448
+      }
     });
 
     const order2 = await orderMock.createFake({
       consumerId: consumerIdStub,
-      destinyAddress: 'calle falsa 456',
-      location: 'po ahia'
+      destinyAddress: {
+        address: 'Calle 9 #10-93',
+        neighborhood: 'Las Delicias',
+        apartament: 306,
+        additionalDestination: 'Casa con una tienda'
+      },
+      location: {
+        lat: 40.564574,
+        lon: 70.567448
+      }
     });
 
     const response = await request.get('/api/orders');
@@ -60,9 +76,16 @@ describe('Like a consumer, when visit POST "/orders"', () => {
     });
 
     const body = {
-      location: 'this should be a location object',
-      destinyAddress: 'cll false 123',
-      hoursLeft: 8,
+      destinyAddress: {
+        address: 'Calle 9 #10-93',
+        neighborhood: 'Las Delicias',
+        apartament: 306,
+        additionalDescription: 'Casa con una tienda'
+      },
+      location: {
+        lat: 40.564574,
+        lon: 70.567448
+      },
       products: [
         {
           subcategoryId: subcategoryId,
@@ -70,7 +93,8 @@ describe('Like a consumer, when visit POST "/orders"', () => {
           quantity: 1
         }
       ],
-      services: []
+      services: [],
+      hoursLeft: 8
     };
 
     const response = await request
@@ -114,14 +138,22 @@ describe('Like a consumer, when visit POST "/orders"', () => {
     ];
 
     const body = {
-      location: 'la casa de jose',
-      destinyAddress: 'la otra casa de jose',
-      hoursLeft: 8,
+      destinyAddress: {
+        address: 'Calle 9 #10-93',
+        neighborhood: 'Las Delicias',
+        apartament: 306,
+        additionalDescription: 'Casa con una tienda'
+      },
+      location: {
+        lat: 40.564574,
+        lon: 70.567448
+      },
       products,
-      services
+      services,
+      hoursLeft: 8
     };
 
-    await request
+    const response = await request
       .post('/api/orders')
       .set('Authorization', `Bearer ${token}`)
       .send(body);

@@ -9,12 +9,14 @@ var orderSchema = Schema({
   consumerId: { type: OID, ref: 'Consumer', required: true },
   // TODO this should be an object or json location object
   location: {
-    type: String,
-    required: true
+    lat: { type: Number, required: true },
+    lon: { type: Number, required: true }
   },
   destinyAddress: {
-    type: String,
-    required: true
+    address: { type: String, required: true },
+    neighborhood: { type: String, required: true },
+    apartament: { type: Number },
+    additionalDescription: { type: String }
   },
   status: {
     type: String,

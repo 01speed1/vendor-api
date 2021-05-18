@@ -1,5 +1,5 @@
 const dummy = require('mongoose-dummy');
-const ignoredFields = ['_id', 'id', 'created_at', '__v', /detail.*_info/];
+const ignoredFields = ['_id', 'created_at', '__v', /detail.*_info/];
 
 const generateFakeData = Model => {
   return dummy(Model, {

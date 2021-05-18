@@ -100,3 +100,24 @@ describe('Like a business, when visit POST "/offers"', () => {
     expect(expectedResponse).toEqual(1);
   });
 });
+
+describe('Like a user, when visit GET "/offers"', () => {
+  it('should return all offers', async () => {
+    const offer1 = await offerMock.createFake({
+
+    });
+
+    const offer2 = await offerMock.createFake({
+      
+    });
+
+    const response = await request.get('/api/offers').expect(200);
+    
+    const expectedResponse = JSON.stringify({
+      offers: [offer1, offer2]
+    });
+
+    expect(response.body).toEqual(JSON.parse(expectedResponse));
+  });
+
+});

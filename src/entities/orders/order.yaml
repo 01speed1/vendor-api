@@ -87,7 +87,7 @@ paths:
 
       responses:
         200:
-          description: 'Return message cerated order'
+          description: 'Return message created order'
           content:
             'application/json':
               example:

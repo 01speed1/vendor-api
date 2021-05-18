@@ -3,11 +3,40 @@ tags:
 
 paths:
   /offers:
+
+    get:
+      summary: Endpoint to get all offers in the app
+      tags:
+        - Offers
+      responses:
+        200:
+          description: 'Return all offers created'
+          content:
+            'application/json':
+              example: 
+                offers: 
+                  - _id: '60a4058bdb53ca0388f20367'
+                    state: 'pending'
+                    createdAt: '2021-05-18T15:47:04.381Z'
+                    modifiedAt: '2021-05-18T08:14:38.819Z'
+                    orderId: '60a4058b1c2dea038827b839'
+                    businessId: '60a4058b1c2dea038827b838'
+                    __v: 0
+                
+              
+                  - _id: '60a4058bdb53ca0388f20368'
+                    state: 'pending'
+                    createdAt: '2021-05-18T05:20:49.366Z'
+                    modifiedAt: '2021-05-18T00:20:24.026Z'
+                    orderId: '60a4058b1c2dea038827b83b'
+                    businessId: '60a4058b1c2dea038827b83a'
+                    __v: 0
+        
     post:
       security:
         - bearerAuth: []
 
-      summary: Endpoint to get all offers in the app
+      summary: Endpoint to create an offer in the app
       tags:
         - Offers
       requestBody:
@@ -49,8 +78,8 @@ paths:
                         example: 20000
       responses:
         200:
-          description: 'Return all offers'
+          description: 'Return message offer created'
           content:
             'application/json':
               example:
-                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+                message: 'Offer Created'

@@ -5,6 +5,8 @@ const apiMiddleware = require('../../middlewares/api/');
 
 const offerController = require('./offer.controller');
 
+router.get('/', offerController.getAll);
+
 router.post(
   '/',
   apiMiddleware.validateJWT,

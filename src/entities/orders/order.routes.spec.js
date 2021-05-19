@@ -59,6 +59,8 @@ describe('Like a consumer, when visit GET "/orders"', () => {
     });
 
     expect(response.body).toEqual(JSON.parse(expectedResponse));
+
+    expect(response.body.orders[0]).toHaveProperty('finishAt');
   });
 });
 
@@ -91,7 +93,8 @@ describe('Like a consumer, when visit POST "/orders"', () => {
           quantity: 1
         }
       ],
-      services: []
+      services: [],
+      hoursLeft: 8
     };
 
     const response = await request
@@ -146,7 +149,8 @@ describe('Like a consumer, when visit POST "/orders"', () => {
         lon: 70.567448
       },
       products,
-      services
+      services,
+      hoursLeft: 8
     };
 
     const response = await request

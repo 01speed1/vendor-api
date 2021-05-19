@@ -1,6 +1,8 @@
 const {
   offerMock,
   orderMock,
+  productMock,
+  serviceMock,
   productOfferedMock,
   serviceOfferedMock
 } = require('../../../test/mocks/models');
@@ -24,7 +26,11 @@ beforeEach(async () => {
 
 describe('Like a business, when visit POST "/offers"', () => {
   it('should create an offer on the database', async () => {
-    const { _id: orderId, products } = await orderMock.createFake();
+    const { _id: productId } = await productMock.createFake();
+
+    const { _id: orderId, products } = await orderMock.createFake({
+      products: [productId]
+    });
 
     const body = {
       businessId: businessIdStub,
@@ -50,7 +56,11 @@ describe('Like a business, when visit POST "/offers"', () => {
   });
 
   it('should create a product offered by every product', async () => {
-    const { _id: orderId, products } = await orderMock.createFake();
+    const { _id: productId } = await productMock.createFake();
+
+    const { _id: orderId, products } = await orderMock.createFake({
+      products: [productId]
+    });
 
     const body = {
       businessId: businessIdStub,
@@ -76,7 +86,11 @@ describe('Like a business, when visit POST "/offers"', () => {
   });
 
   it('should create a service offered by every service', async () => {
-    const { _id: orderId, services } = await orderMock.createFake();
+    const { _id: serviceId } = await serviceMock.createFake();
+
+    const { _id: orderId, services } = await orderMock.createFake({
+      services: [serviceId]
+    });
 
     const body = {
       businessId: businessIdStub,

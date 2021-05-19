@@ -8,11 +8,13 @@ const generateFakeData = Model => {
   });
 };
 
-const createFake = (Model, additionalParameters) => {
-  return Model.create({
+const createFake = async (Model, additionalParameters) => {
+  const { _id } = await Model.create({
     ...generateFakeData(Model),
     ...additionalParameters
   });
+
+  return await Model.findById(_id).lean({ virtuals: true });
 };
 
 module.exports = Model => {

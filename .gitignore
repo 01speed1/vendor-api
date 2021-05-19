@@ -6,3 +6,4 @@ globalConfig.json
 .DS_Store
 .DS_Store?
 /logs/
+/mongodb-binaries

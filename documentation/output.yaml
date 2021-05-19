@@ -610,6 +610,7 @@ paths:
                     createdAt: '2021-05-13T03:46:36.248Z'
                     modifiedAt: '2021-05-13T03:46:36.248Z'
                     consumerId: 609c98e5234dca002bfd4171
+                    hoursLeft: 8
                     location:
                       lat: 40.82223286
                       lon: -96.7982002
@@ -628,6 +629,7 @@ paths:
                     createdAt: '2021-05-13T03:46:36.248Z'
                     modifiedAt: '2021-05-13T03:46:36.248Z'
                     consumerId: 609c98e5234dca002bfd4171
+                    hoursLeft: 8
                     location:
                       lat: 40.82223286
                       lon: -96.7982002
@@ -677,6 +679,9 @@ paths:
                     additionalDescription:
                       type: string
                       example: Casa con una tienda
+                hoursLeft:
+                  type: string
+                  example: 8
                 products:
                   type: array
                   items:

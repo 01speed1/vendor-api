@@ -13,6 +13,7 @@ const createSchema = Joi.object({
     apartament: Joi.number(),
     additionalDescription: Joi.string()
   }).required(),
+  hoursLeft: Joi.number().required(),
   products: Joi.array().items(
     Joi.object({
       subcategoryId: Joi.string().required(),

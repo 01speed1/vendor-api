@@ -1,6 +1,19 @@
 const offerRepository = require('./offer.repository');
 const offerServices = require('./offer.services');
 
+const getAll = async (request, response) => {
+  try {
+    const offers = await offerRepository.getAll().lean();
+    
+    response.json({ offers});
+    
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+    
+  }
+
+}
+
 const create = async (request, response) => {
   try {
     const { body } = request;
@@ -15,10 +28,13 @@ const create = async (request, response) => {
       servicesList: servicesOffered
     });
 
-    response.json({ message: 'offer created' });
+    response.json({ message: 'Offer created' });
   } catch (error) {
     response.status(500).send({ message: error.message });
   }
 };
 
-module.exports = { create };
+module.exports = { 
+  getAll,
+  create 
+};

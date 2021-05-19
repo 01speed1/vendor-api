@@ -4,4 +4,11 @@ const create = ({ businessId, orderId }) => {
   return offerModel.create({ businessId, orderId });
 };
 
-module.exports = { create };
+const getAll = () => {
+  return offerModel.find();
+};
+
+module.exports = { 
+  create,
+  getAll
+};

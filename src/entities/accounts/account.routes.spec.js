@@ -237,4 +237,19 @@ describe('Like a logged account, when I visit "/api/accounts/permissions"', () =
 
     expect(response.body).toEqual(expectedResponse);
   });
+
+  describe('when the user does not send the auth  toke', () => {
+    it('should return the guest permissions', async () => {
+      const expectedResponse = {
+        roles: ['GUEST'],
+        permissions: []
+      };
+
+      const response = await request
+        .get('/api/accounts/permissions')
+        .expect(200);
+
+      expect(response.body).toEqual(expectedResponse);
+    });
+  });
 });

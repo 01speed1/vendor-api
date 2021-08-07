@@ -1,7 +1,8 @@
 const ROLES = {
   consumer: 'CONSUMER',
   business: 'BUSINESS',
-  carrier: 'CARRIER'
+  carrier: 'CARRIER',
+  guest: 'GUEST'
 };
 
 const PERMISSIONS = {

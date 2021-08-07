@@ -10,6 +10,7 @@ const apiMiddlewares = require('../../middlewares/api/getAccountIds.middlewares'
 
 router.get(
   '/permissions',
+  authMiddleware.validateGuestPermissions,
   authMiddleware.validateJWT,
   apiMiddlewares.getRolesByLoggedAccount,
   accountController.permissions

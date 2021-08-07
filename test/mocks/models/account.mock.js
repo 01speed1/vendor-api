@@ -1,6 +1,7 @@
 const consumerMock = require('./consumer.mock');
 const businessMock = require('./business.mock');
 const carrierMock = require('./carrier.mock');
+const rolesPermissionMock = require('./rolesPermission.mock');
 
 const accountModel = require('../../../src/db/models/account.model');
 const fakeGoose = require('../../../libs/fakeGoose');
@@ -10,7 +11,7 @@ const faker = require('faker');
 const fakeModel = fakeGoose(accountModel);
 
 const registerFake = params => {
-  const fakePassword = faker.finance.bitcoinAddress();
+  let fakePassword = params.password || faker.finance.bitcoinAddress();
 
   const fakeData = fakeModel.generateFakeData();
 
@@ -37,7 +38,15 @@ const registerFake = params => {
     ]);
   };
 
-  return { saveFake, fakePassword, createFakeModels };
+  const createFakeRolePermissions = accountId =>
+    rolesPermissionMock.createFakeNewAccount(accountId);
+
+  return {
+    saveFake,
+    fakePassword,
+    createFakeModels,
+    createFakeRolePermissions
+  };
 };
 
 module.exports = { ...fakeModel, registerFake };

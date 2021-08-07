@@ -6,7 +6,7 @@ const accountExist = async (request, response, next) => {
   try {
     const { email, password } = request.body;
 
-    const foundAccount = await accountRepository.foundByEmail(email);
+    const foundAccount = await accountRepository.findByEmail(email);
 
     if (!foundAccount) throw new Error('Incorrect email or password');
 

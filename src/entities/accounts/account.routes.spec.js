@@ -5,8 +5,12 @@ const {
   carrierMock
 } = require('../../../test/mocks/models/');
 
+const { accountHelper } = require('../../../test/helpers');
+
 const { apiServerConnection } = require('../../../test/jest.helpers');
 const request = apiServerConnection();
+
+let createdAccountMock, token;
 
 describe('Like a user, when I visit "/api/accounts/signup"', () => {
   it('should create account', async () => {
@@ -92,6 +96,16 @@ describe('Like a user, when I visit "/api/accounts/signup"', () => {
 });
 
 describe('Like a current user, when I visit "/api/accounts/login"', () => {
+  beforeEach(async () => {
+    const {
+      token: tokenLogged,
+      account
+    } = await accountHelper.generateFakeLoginData({ email: 'before@each.com' });
+
+    token = tokenLogged;
+    createdAccountMock = account;
+  });
+
   it('should validate my credentials', async () => {
     await accountMock.createFake({ email: 'goka@skate.com' });
 
@@ -178,5 +192,49 @@ describe('Like a current user, when I visit "/api/accounts/login"', () => {
 
       expect(response.body).toEqual({ message: 'Incorrect email or password' });
     });
+  });
+});
+
+describe('Like a logged account, when I visit "/api/accounts/permissions"', () => {
+  it('should return the permissions', async () => {
+    const accountData = {
+      firstName: 'Elsa',
+      lastName: 'Bañonsito'
+    };
+
+    const {
+      token: tokenLogged,
+      account
+    } = await accountHelper.generateFakeLoginData(accountData);
+
+    token = tokenLogged;
+    createdAccountMock = account;
+
+    const expectedResponse = {
+      firstName: accountData.firstName,
+      lastName: accountData.lastName,
+      roles: ['CONSUMER', 'CARRIER', 'BUSINESS'],
+      permissions: [
+        'CONSUMERREAD',
+        'CONSUMERWRITE',
+        'CONSUMERUPDATE',
+        'CONSUMERDELETE',
+        'CARRIERREAD',
+        'CARRIERWRITE',
+        'CARRIERUPDATE',
+        'CARRIERDELETE',
+        'BUSINESSREAD',
+        'BUSINESSWRITE',
+        'BUSINESSUPDATE',
+        'BUSINESSDELETE'
+      ]
+    };
+
+    const response = await request
+      .get('/api/accounts/permissions')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(response.body).toEqual(expectedResponse);
   });
 });

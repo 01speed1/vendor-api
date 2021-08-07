@@ -68,11 +68,14 @@ const register = ({
   });
 };
 
-const foundByEmail = email => accountModel.findOne({ email });
+const findByEmail = email => accountModel.findOne({ email });
+
+const findById = id => accountModel.findById(id);
 
 module.exports = {
   create,
   update,
   register,
-  foundByEmail
+  findByEmail,
+  findById
 };

@@ -1,35 +1,47 @@
-const { accountMock, consumerMock } = require('../mocks/models/');
+const { accountMock } = require('../mocks/models/');
 
 const { apiServerConnection } = require('../jest.helpers');
 const request = apiServerConnection();
 
-const generateFakeLoginData = async () => {
-  let createdAccount = await accountMock.model.create({
-    email: 'skatin@mail.com',
-    password: 'bloblu',
-    lastName: 'MyPresident',
-    firstName: 'Skatin'
+const generateFakeLoginData = async (params = {}) => {
+  const {
+    email = 'test@test.com',
+    password = '123456789',
+    lastName = 'elsa',
+    firstName = 'Skatin'
+  } = params;
+
+  const {
+    saveFake,
+    fakePassword,
+    createFakeModels,
+    createFakeRolePermissions
+  } = accountMock.registerFake({
+    email,
+    password,
+    lastName,
+    firstName
   });
 
-  await consumerMock.model.create({
-    accountId: createdAccount._id
-  });
+  const createdAccount = await saveFake();
+  const { _id: accountId, email: accountEmail } = createdAccount;
 
-  const { saveFake, fakePassword, createFakeModels } = accountMock.registerFake(
-    {
-      email: 'fake@man.com'
-    }
-  );
-
-  const { _id: accountId, email } = await saveFake();
+  const rolesPermission = await createFakeRolePermissions(accountId);
 
   const [consumer, business, carrier] = await createFakeModels(accountId);
 
   const { body } = await request
     .post('/api/accounts/login')
-    .send({ email, password: fakePassword });
+    .send({ email: accountEmail, password: fakePassword });
 
-  return { token: body.token, consumer, business, carrier };
+  return {
+    token: body.token,
+    consumer,
+    business,
+    carrier,
+    account: createdAccount,
+    rolesPermission
+  };
 };
 
 module.exports = { generateFakeLoginData };

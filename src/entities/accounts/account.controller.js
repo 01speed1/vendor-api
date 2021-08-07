@@ -1,7 +1,10 @@
+const JWT = require('../../../libs/auth/JWT');
+
 const accountRepository = require('./account.repository');
 const accountServices = require('./account.services');
 
-const JWT = require('../../../libs/auth/JWT');
+const rolesPermissionsRepository = require('../rolesPermissions/rolesPermissions.repository');
+const rolesPermissionsServices = require('../rolesPermissions/rolesPermission.services');
 
 const signUp = async (request, response) => {
   try {
@@ -10,6 +13,8 @@ const signUp = async (request, response) => {
     const createdAccount = await accountRepository.register(signUpParams);
 
     await accountServices.createRoles(createdAccount._id);
+
+    await rolesPermissionsServices.createNewAccount(createdAccount._id);
 
     response.json({
       message: 'account created'
@@ -29,7 +34,32 @@ const logIn = async (request, response) => {
   }
 };
 
+const permissions = async (request, response) => {
+  try {
+    const { accountId } = request.account;
+
+    const { firstName, lastName } = await accountRepository.findById(accountId);
+
+    const rolesPermissions = await rolesPermissionsRepository.findAllByAccountId(
+      accountId
+    );
+
+    const roles = rolesPermissionsServices.listRoles(rolesPermissions);
+
+    const permissions = rolesPermissionsServices.listPermissions(
+      rolesPermissions
+    );
+
+    const payload = { firstName, lastName, roles, permissions };
+
+    response.status(200).json(payload);
+  } catch (err) {
+    response.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   signUp,
-  logIn
+  logIn,
+  permissions
 };

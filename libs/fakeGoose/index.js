@@ -22,7 +22,7 @@ module.exports = Model => {
     createFake: (additionalParameters = {}) => {
       return createFake(Model, additionalParameters);
     },
-    generateFakeData: () => generateFakeData(Model),
+    generateFakeData: params => ({ ...generateFakeData(Model), ...params }),
     model: Model
   };
 };

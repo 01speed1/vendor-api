@@ -247,7 +247,7 @@ describe('Like a logged account, when I visit "/api/accounts/permissions"', () =
 
       const response = await request
         .get('/api/accounts/permissions')
-        .expect(200);
+        .expect(251);
 
       expect(response.body).toEqual(expectedResponse);
     });

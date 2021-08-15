@@ -7,7 +7,7 @@ const validateGuestPermissions = (request, response, next) => {
     return next();
   }
 
-  return response.json({
+  return response.status(251).json({
     roles: ['GUEST'],
     permissions: []
   });

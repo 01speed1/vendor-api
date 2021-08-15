@@ -3,7 +3,6 @@ tags:
 
 paths:
   /offers:
-
     get:
       summary: Endpoint to get all offers in the app
       tags:
@@ -13,8 +12,8 @@ paths:
           description: 'Return all offers created'
           content:
             'application/json':
-              example: 
-                offers: 
+              example:
+                offers:
                   - _id: '60a4058bdb53ca0388f20367'
                     state: 'pending'
                     createdAt: '2021-05-18T15:47:04.381Z'
@@ -22,8 +21,7 @@ paths:
                     orderId: '60a4058b1c2dea038827b839'
                     businessId: '60a4058b1c2dea038827b838'
                     __v: 0
-                
-              
+
                   - _id: '60a4058bdb53ca0388f20368'
                     state: 'pending'
                     createdAt: '2021-05-18T05:20:49.366Z'
@@ -31,7 +29,7 @@ paths:
                     orderId: '60a4058b1c2dea038827b83b'
                     businessId: '60a4058b1c2dea038827b83a'
                     __v: 0
-        
+
     post:
       security:
         - bearerAuth: []

@@ -85,3 +85,41 @@ paths:
             'application/json':
               example:
                 error: '"email" is required'
+  /accounts/permissions:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get roles by account type
+      tags:
+        - Accounts
+      responses:
+        200:
+          description: Return the roles and permissions for auth user
+          content:
+            'application/json':
+              example:
+                firstName: 'Alfred'
+                lastName: 'Itou'
+                roles: ['CONSUMER', 'CARRIER', 'BUSINESS']
+                permissions:
+                  [
+                    'CONSUMERREAD',
+                    'CONSUMERWRITE',
+                    'CONSUMERUPDATE',
+                    'CONSUMERDELETE',
+                    'CARRIERREAD',
+                    'CARRIERWRITE',
+                    'CARRIERUPDATE',
+                    'CARRIERDELETE',
+                    'BUSINESSREAD',
+                    'BUSINESSWRITE',
+                    'BUSINESSUPDATE',
+                    'BUSINESSDELETE'
+                  ]
+        251:
+          description: Return the roles and permissions for gest, Response without auth
+          content:
+            'application/json':
+              example:
+                roles: ['GUEST']
+                permissions: []

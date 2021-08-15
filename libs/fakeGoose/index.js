@@ -14,7 +14,7 @@ const createFake = async (Model, additionalParameters) => {
     ...additionalParameters
   });
 
-  return await Model.findById(_id).lean({ virtuals: true });
+  return Model.findById(_id).lean({ virtuals: true });
 };
 
 module.exports = Model => {

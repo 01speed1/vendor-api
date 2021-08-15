@@ -9,14 +9,15 @@ describe('#create', () => {
 
       const responseToken = JWT.create(payload);
 
-      expect(responseToken).toEqual(expect.any(String));
+      expect(responseToken).toEqual(expect.any(Object));
+      expect(Object.keys(responseToken)).toEqual(['token', 'expirationAt']);
     });
 
     describe('when payload does not exist', () => {
       it('should create a token', () => {
         const responseToken = JWT.create();
 
-        expect(responseToken).toEqual(expect.any(String));
+        expect(responseToken).toEqual(expect.any(Object));
       });
     });
   });

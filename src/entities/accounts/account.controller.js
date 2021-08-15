@@ -25,9 +25,9 @@ const signUp = async (request, response) => {
 
 const logIn = async (request, response) => {
   try {
-    const token = JWT.create(request.account);
+    const { token, expirationAt } = JWT.create(request.account);
 
-    response.status(200).json({ token });
+    response.status(200).json({ token, expirationAt });
   } catch (err) {
     response.status(500).json({ error: err.message });
   }

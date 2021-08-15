@@ -250,6 +250,7 @@ paths:
               example:
                 token: >-
                   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                expirationAt: '2021-08-15T22:51:35.367Z'
         '400':
           description: Required param
           content:

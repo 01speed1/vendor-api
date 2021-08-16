@@ -3,7 +3,6 @@ const JWT = require('../../../libs/auth/JWT');
 const accountRepository = require('./account.repository');
 const accountServices = require('./account.services');
 
-const rolesPermissionsRepository = require('../rolesPermissions/rolesPermissions.repository');
 const rolesPermissionsServices = require('../rolesPermissions/rolesPermission.services');
 
 const signUp = async (request, response) => {
@@ -26,9 +25,9 @@ const signUp = async (request, response) => {
 
 const logIn = async (request, response) => {
   try {
-    const token = JWT.create(request.account);
+    const { token, expirationAt } = JWT.create(request.account);
 
-    response.status(200).json({ token });
+    response.status(200).json({ token, expirationAt });
   } catch (err) {
     response.status(500).json({ error: err.message });
   }
@@ -40,14 +39,11 @@ const permissions = async (request, response) => {
 
     const { firstName, lastName } = await accountRepository.findById(accountId);
 
-    const rolesPermissions = await rolesPermissionsRepository.findAllByAccountId(
+    const {
+      roles,
+      permissions
+    } = await rolesPermissionsServices.sortRolesPermissionByAccountId(
       accountId
-    );
-
-    const roles = rolesPermissionsServices.listRoles(rolesPermissions);
-
-    const permissions = rolesPermissionsServices.listPermissions(
-      rolesPermissions
     );
 
     const payload = { firstName, lastName, roles, permissions };

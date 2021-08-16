@@ -22,6 +22,14 @@ beforeEach(async () => {
   consumerIdStub = consumer._id;
 });
 
+describe('Like a guest, when visit GET "/orders"', () => {
+  it('should return the orders without sensible data', async () => {
+    await orderMock.createFake();
+
+    await request.get('/api/orders').expect(251);
+  });
+});
+
 describe('Like a consumer, when visit GET "/orders"', () => {
   it('should return all orders', async () => {
     const order1 = await orderMock.createFake({
@@ -52,7 +60,9 @@ describe('Like a consumer, when visit GET "/orders"', () => {
       }
     });
 
-    const response = await request.get('/api/orders');
+    const response = await request
+      .get('/api/orders')
+      .set('Authorization', `Bearer ${token}`);
 
     const expectedResponse = JSON.stringify({
       orders: [order1, order2]

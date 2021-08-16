@@ -20,8 +20,8 @@ const create = ({
   });
 };
 
-const getAll = () => {
-  return orderModel.find().lean({ virtuals: true });
+const getAll = ({ ignoredKeys = {} }) => {
+  return orderModel.find({}).lean({ virtuals: true }).select(ignoredKeys);
 };
 
 const getByConsumerId = consumerId => {

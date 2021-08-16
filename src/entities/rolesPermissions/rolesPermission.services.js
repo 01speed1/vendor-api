@@ -40,4 +40,22 @@ const listRoles = rolePermissions => {
   return rolePermissions.map(rolePermission => rolePermission.role.name).flat();
 };
 
-module.exports = { createNewAccount, listPermissions, listRoles };
+const sortRolesPermissionByAccountId = accountId => {
+  const buildRolesAndPermissions = foundRolesPermissions => {
+    const roles = listRoles(foundRolesPermissions);
+    const permissions = listPermissions(foundRolesPermissions);
+
+    return { roles, permissions };
+  };
+
+  return rolesPermissionsRepository
+    .findAllByAccountId(accountId)
+    .then(buildRolesAndPermissions);
+};
+
+module.exports = {
+  createNewAccount,
+  listPermissions,
+  listRoles,
+  sortRolesPermissionByAccountId
+};

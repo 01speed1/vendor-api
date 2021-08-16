@@ -15,7 +15,8 @@ const validateGuestPermissions = (request, response, next) => {
 
 const validateJWT = jwt({
   secret: AUTH_SECRET,
-  algorithms: ['sha1', 'RS256', 'HS256']
+  algorithms: ['sha1', 'RS256', 'HS256'],
+  credentialsRequired: false
 });
 
 module.exports = { validateJWT, validateGuestPermissions };

@@ -154,6 +154,7 @@ describe('Like a current user, when I visit "/api/accounts/login"', () => {
       .expect(200);
 
     expect(response.body).toHaveProperty('token');
+    expect(response.body).toHaveProperty('expirationAt');
   });
 
   describe('When account does not exist', () => {

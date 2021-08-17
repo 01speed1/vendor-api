@@ -30,6 +30,7 @@
     "mongoose-beautiful-unique-validation": "^7.1.1",
     "mongoose-dummy": "^1.0.8",
     "mongoose-lean-virtuals": "^0.8.0",
+    "mongoose-paginate-v2": "^1.4.2",
     "morgan": "^1.10.0",
     "node-geocoder": "^3.27.0",
     "passport": "^0.4.1",

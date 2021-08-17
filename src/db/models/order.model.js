@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const mongooseLeanVirtuals = require('mongoose-lean-virtuals');
+const mongoosePaginate = require('mongoose-paginate-v2');
 var { DateTime } = require('luxon');
 
 const Schema = mongoose.Schema;
@@ -32,6 +33,7 @@ var orderSchema = Schema({
 });
 
 orderSchema.plugin(mongooseLeanVirtuals);
+orderSchema.plugin(mongoosePaginate);
 
 orderSchema.virtual('finishAt').get(function () {
   const { hoursLeft, createdAt } = this;

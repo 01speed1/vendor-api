@@ -10,7 +10,11 @@ describe('#create', () => {
       const responseToken = JWT.create(payload);
 
       expect(responseToken).toEqual(expect.any(Object));
-      expect(Object.keys(responseToken)).toEqual(['token', 'expirationAt']);
+      expect(Object.keys(responseToken)).toEqual([
+        'token',
+        'expirationDate',
+        'expiredAt'
+      ]);
     });
 
     describe('when payload does not exist', () => {

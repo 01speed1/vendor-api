@@ -3,9 +3,22 @@ const orderServices = require('./order.services');
 
 const getAll = async (request, response) => {
   try {
-    const orders = await orderRepository.getAll({});
+    const { query: paginationOptions } = request;
 
-    response.json({ orders });
+    const PaginatedOrdersRaw = await orderRepository.paginateOrders({
+      paginationOptions
+    });
+
+    const foundOrders = await orderRepository.getManyByIds(
+      PaginatedOrdersRaw.orders
+    );
+
+    const paginatedOrders = {
+      ...PaginatedOrdersRaw,
+      orders: foundOrders
+    };
+
+    return response.json(paginatedOrders);
   } catch (error) {
     response.status(500).json({ error: error.message });
   }

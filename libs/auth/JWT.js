@@ -5,7 +5,10 @@ const { AUTH_SECRET } = process.env;
 
 const create = (payload = {}) => {
   const currentDate = DateTime.now();
-  const expirationDate = currentDate.plus(60 * 60 * 24);
+
+  const expirationExtension = 60 * 60 * 24;
+
+  const expirationDate = currentDate.plus(expirationExtension);
 
   const updatedPayload = {
     timestamp: currentDate.toMillis(),
@@ -15,7 +18,11 @@ const create = (payload = {}) => {
 
   const token = jwt.sign(updatedPayload, AUTH_SECRET);
 
-  return { token, expirationAt: expirationDate.toJSDate() };
+  return {
+    token,
+    expirationDate: expirationDate.toJSDate(),
+    expiredAt: expirationExtension
+  };
 };
 
 module.exports = { create };

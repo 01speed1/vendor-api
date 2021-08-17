@@ -18,11 +18,23 @@ const getAllGuest = async (request, response, next) => {
   }
 
   try {
-    const orders = await orderRepository.getAll({
-      ignoredKeys
+    const { query: paginationOptions } = request;
+
+    const PaginatedOrdersRaw = await orderRepository.paginateOrders({
+      paginationOptions
     });
 
-    return response.status(251).json({ orders });
+    const foundOrders = await orderRepository.getManyByIds(
+      PaginatedOrdersRaw.orders,
+      { ignoredKeys }
+    );
+
+    const paginatedOrders = {
+      ...PaginatedOrdersRaw,
+      orders: foundOrders
+    };
+
+    return response.status(251).json(paginatedOrders);
   } catch (error) {
     console.log(error);
     response.status(500).json({ message: error.message });

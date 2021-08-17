@@ -1,5 +1,7 @@
 const orderModel = require('../../db/models/order.model');
 
+const customLabels = { docs: 'orders' };
+
 const create = ({
   consumerId,
   location,
@@ -20,8 +22,32 @@ const create = ({
   });
 };
 
-const getAll = ({ ignoredKeys = {} }) => {
-  return orderModel.find({}).lean({ virtuals: true }).select(ignoredKeys);
+const paginateOrders = ({ paginationOptions = {} }) => {
+  return orderModel
+    .paginate(
+      {},
+      {
+        ...paginationOptions,
+        select: '_id',
+        customLabels
+      }
+    )
+    .then(paginatedOrders => {
+      const filteredOrders = paginatedOrders.orders.map(order => order['_id']);
+
+      return { ...paginatedOrders, orders: filteredOrders };
+    });
+};
+
+const getManyByIds = (ids = [], options = {}) => {
+  const { ignoredKeys = {} } = options;
+
+  return orderModel
+    .find()
+    .where('_id')
+    .in(ids)
+    .lean({ virtuals: true })
+    .select(ignoredKeys);
 };
 
 const getByConsumerId = consumerId => {
@@ -42,7 +68,8 @@ const getConsumerOrder = ({ consumerId, _id }) => {
 
 module.exports = {
   create,
-  getAll,
   getConsumerOrder,
-  getByConsumerId
+  getByConsumerId,
+  getManyByIds,
+  paginateOrders
 };

@@ -65,7 +65,17 @@ describe('Like a consumer, when visit GET "/orders"', () => {
       .set('Authorization', `Bearer ${token}`);
 
     const expectedResponse = JSON.stringify({
-      orders: [order1, order2]
+      orders: [order1, order2],
+      hasNextPage: false,
+      hasPrevPage: false,
+      limit: 10,
+      nextPage: null,
+      offset: 0,
+      page: 1,
+      pagingCounter: 1,
+      prevPage: null,
+      totalDocs: 2,
+      totalPages: 1
     });
 
     expect(response.body).toEqual(JSON.parse(expectedResponse));

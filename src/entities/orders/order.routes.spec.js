@@ -62,7 +62,10 @@ describe('Like a guest, when visit GET "/orders"', () => {
 
     const {
       body: { orders }
-    } = await request.get('/api/orders').expect(251);
+    } = await request
+      .get('/api/orders')
+      .set('Authorization', `Bearer `)
+      .expect(251);
 
     const products = orders[0].products;
     const services = orders[0].services;
@@ -114,6 +117,12 @@ describe('Like a guest, when visit GET "/orders"', () => {
         .expect(251);
 
       expect(response.body.orders.length).toBe(1);
+    });
+  });
+
+  describe('When the bearer is empty', () => {
+    it('should return code 251', async () => {
+      await request.get('/api/orders').expect(251);
     });
   });
 });

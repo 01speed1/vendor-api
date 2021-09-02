@@ -2,7 +2,7 @@ const { celebrate, Joi, Segments } = require('celebrate');
 
 const { isEmptyProductsOrServiceOffered } = require('../../utils/validations');
 
-const createSchema = Joi.object({
+const createSchema = {
   businessId: Joi.string().required(),
   orderId: Joi.string().required(),
   productsOffered: Joi.array().items(
@@ -18,10 +18,12 @@ const createSchema = Joi.object({
       price: Joi.number()
     })
   )
-}).custom(isEmptyProductsOrServiceOffered);
+};
 
 const createValidation = celebrate({
-  [Segments.BODY]: createSchema
+  [Segments.BODY]: Joi.object(createSchema).custom(
+    isEmptyProductsOrServiceOffered
+  )
 });
 
-module.exports = { createValidation };
+module.exports = { createSchema, createValidation };

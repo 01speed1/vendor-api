@@ -9,7 +9,9 @@ const create = ({
   status,
   products,
   services,
-  hoursLeft
+  hoursLeft,
+  createdAt,
+  finishedAt
 }) => {
   return orderModel.create({
     consumerId,
@@ -18,25 +20,20 @@ const create = ({
     status,
     products,
     services,
-    hoursLeft
+    hoursLeft,
+    createdAt,
+    finishedAt
   });
 };
 
-const paginateOrders = ({ paginationOptions = {} }) => {
-  return orderModel
-    .paginate(
-      {},
-      {
-        ...paginationOptions,
-        select: '_id',
-        customLabels
-      }
-    )
-    .then(paginatedOrders => {
-      const filteredOrders = paginatedOrders.orders.map(order => order['_id']);
-
-      return { ...paginatedOrders, orders: filteredOrders };
-    });
+const paginateOrders = ({ queryOptions = {}, paginationOptions = {} }) => {
+  return orderModel.paginate(queryOptions, {
+    ...paginationOptions,
+    customLabels,
+    lean: true,
+    populate: ['products', 'services'],
+    leanWithId: false
+  });
 };
 
 const getManyByIds = (ids = [], options = {}) => {

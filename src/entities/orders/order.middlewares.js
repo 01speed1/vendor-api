@@ -1,15 +1,28 @@
 const orderRepository = require('./order.repository');
+const orderServices = require('./order.services');
 
 const ignoredKeys = {
   ['__v']: 0,
   consumerId: 0,
   destinyAddress: {
     neighborhood: 0,
-    apartament: 0,
+    apartment: 0,
     additionalDescription: 0
   },
   status: 0,
   modifiedAt: 0
+};
+
+const selectKeys = {
+  _id: 1,
+  destinyAddress: {
+    address: 1
+  },
+  products: 1,
+  services: 1,
+  hoursLeft: 1,
+  finishedAt: 1,
+  createdAt: 1
 };
 
 const getAllGuest = async (request, response, next) => {
@@ -18,26 +31,18 @@ const getAllGuest = async (request, response, next) => {
   }
 
   try {
-    const { query: paginationOptions } = request;
+    const { query, pagination: paginationOptions } = request;
 
-    const PaginatedOrdersRaw = await orderRepository.paginateOrders({
-      paginationOptions
+    const queryOptions = orderServices.buildQueryOptions(query);
+
+    const paginatedOrders = await orderRepository.paginateOrders({
+      queryOptions,
+      paginationOptions: { ...paginationOptions, select: selectKeys }
     });
-
-    const foundOrders = await orderRepository.getManyByIds(
-      PaginatedOrdersRaw.orders,
-      { ignoredKeys }
-    );
-
-    const paginatedOrders = {
-      ...PaginatedOrdersRaw,
-      orders: foundOrders
-    };
 
     return response.status(251).json(paginatedOrders);
   } catch (error) {
-    console.log(error);
-    response.status(500).json({ message: error.message });
+    response.status(500).json({ message: error.message, error });
   }
 };
 

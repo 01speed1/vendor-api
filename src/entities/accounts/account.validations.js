@@ -1,29 +1,30 @@
 const { celebrate, Joi, Segments } = require('celebrate');
 
-const signupSchema = Joi.object({
+const signupSchema = {
   email: Joi.string().email().required(),
-  // TODO validate format
   identificationPhone: Joi.string().required(),
   password: Joi.string().required(),
   validatePassword: Joi.ref('password'),
   firstName: Joi.string().required(),
   lastName: Joi.string().required()
-}).with('password', 'validatePassword');
+};
 
 const signUpValidation = celebrate({
-  [Segments.BODY]: signupSchema
+  [Segments.BODY]: Joi.object(signupSchema).with('password', 'validatePassword')
 });
 
-const loginSchema = Joi.object({
+const loginSchema = {
   email: Joi.string().email().required(),
   password: Joi.string().required()
-});
+};
 
 const logInValidation = celebrate({
-  [Segments.BODY]: loginSchema
+  [Segments.BODY]: Joi.object(loginSchema)
 });
 
 module.exports = {
+  signupSchema,
+  loginSchema,
   signUpValidation,
   logInValidation
 };

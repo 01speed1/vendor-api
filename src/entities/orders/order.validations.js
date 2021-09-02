@@ -2,15 +2,17 @@ const { celebrate, Joi, Segments } = require('celebrate');
 
 const { isEmptyProductsOrService } = require('../../utils/validations');
 
-const createSchema = Joi.object({
+const { PRIORITIES } = require('./order.constants');
+
+const createSchema = {
   location: Joi.object({
-      lat: Joi.number().required(),
-      lon: Joi.number().required()
+    lat: Joi.number().required(),
+    lon: Joi.number().required()
   }).required(),
   destinyAddress: Joi.object({
     address: Joi.string().required(),
     neighborhood: Joi.string().required(),
-    apartament: Joi.number(),
+    apartment: Joi.number(),
     additionalDescription: Joi.string()
   }).required(),
   hoursLeft: Joi.number().required(),
@@ -30,10 +32,25 @@ const createSchema = Joi.object({
       price: Joi.number()
     })
   )
-}).custom(isEmptyProductsOrService);
+};
 
 const createValidation = celebrate({
-  [Segments.BODY]: createSchema
+  [Segments.BODY]: Joi.object(createSchema).custom(isEmptyProductsOrService)
 });
 
-module.exports = { createValidation };
+const filterSchema = {
+  priority: Joi.array().items(
+    Joi.string().valid(PRIORITIES.LOW, PRIORITIES.MEDIUM, PRIORITIES.HIGH)
+  )
+};
+
+const filterValidation = celebrate({
+  [Segments.QUERY]: Joi.object(filterSchema)
+});
+
+module.exports = {
+  createSchema,
+  filterSchema,
+  createValidation,
+  filterValidation
+};

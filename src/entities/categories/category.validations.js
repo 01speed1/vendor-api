@@ -1,13 +1,14 @@
 const { celebrate, Joi, Segments } = require('celebrate');
 
-const createSchema = Joi.object({
+const createSchema = {
   name: Joi.string().required()
-});
+};
 
 const createValidation = celebrate({
-  [Segments.BODY]: createSchema
+  [Segments.BODY]: Joi.object(createSchema)
 });
 
 module.exports = {
+  createSchema,
   createValidation
 };

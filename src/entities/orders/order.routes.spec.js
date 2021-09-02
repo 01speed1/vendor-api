@@ -1,10 +1,13 @@
-const { orderMock } = require('../../../test/mocks/models/');
+const { DateTime } = require('luxon');
+const {
+  orderMock,
+  productMock,
+  serviceMock,
+  categoryMock,
+  subcategoryMock
+} = require('../../../test/mocks/models/');
 
 const { apiServerConnection } = require('../../../test/jest.helpers');
-const productModel = require('../../db/models/product.model');
-const serviceModel = require('../../db/models/service.model');
-const categoryModel = require('../../db/models/category.model');
-const subCategoryModel = require('../../db/models/subcategory.model');
 
 const { accountHelper } = require('../../../test/helpers');
 
@@ -24,15 +27,112 @@ beforeEach(async () => {
 
 describe('Like a guest, when visit GET "/orders"', () => {
   it('should return the orders without sensible data', async () => {
-    await orderMock.createFake();
+    const { _id: productId } = await productMock.createFake();
+    const { _id: serviceId } = await serviceMock.createFake();
 
-    await request.get('/api/orders').expect(251);
+    await orderMock.createFake({
+      products: [productId],
+      services: [serviceId]
+    });
+
+    const response = await request.get('/api/orders').expect(251);
+
+    const {
+      body: { orders }
+    } = response;
+
+    const order = orders[0];
+
+    expect(order).not.toHaveProperty('consumerId');
+    expect(order.destinyAddress).not.toHaveProperty('neighborhood');
+    expect(order.destinyAddress).not.toHaveProperty('apartment');
+    expect(order.destinyAddress).not.toHaveProperty('additionalDescription');
+    expect(order).not.toHaveProperty('status');
+    expect(order).not.toHaveProperty('modifiedAt');
+  });
+
+  it('should return product or service like objects', async () => {
+    const product1 = await productMock.createFake();
+    const service1 = await serviceMock.createFake();
+
+    await orderMock.createFake({
+      products: [product1._id],
+      services: [service1._id]
+    });
+
+    const {
+      body: { orders }
+    } = await request
+      .get('/api/orders')
+      .set('Authorization', `Bearer `)
+      .expect(251);
+
+    const products = orders[0].products;
+    const services = orders[0].services;
+
+    expect(products[0]).toEqual(expect.any(Object));
+    expect(services[0]).toEqual(expect.any(Object));
+  });
+
+  describe('When the user needs filter by priority', () => {
+    it('should return the orders with the filter by high priority', async () => {
+      const now = DateTime.local().plus({ minutes: 10 });
+
+      const product1 = await productMock.createFake();
+
+      await orderMock.createFake({
+        products: [product1._id],
+        createdAt: now,
+        finishedAt: now.plus({ hours: 1 })
+      });
+
+      await orderMock.createFake({ products: [product1._id] });
+
+      const response = await request
+        .get(`/api/orders?priority[]=high`)
+        .expect(251);
+
+      expect(response.body.orders.length).toBe(1);
+    });
+
+    it('should return the orders with the filter by all priorities', async () => {
+      const now = DateTime.local().plus({ minutes: 10 });
+
+      const product1 = await productMock.createFake();
+
+      await orderMock.createFake({
+        products: [product1._id],
+        createdAt: now,
+        finishedAt: now.plus({ hours: 10 })
+      });
+
+      await orderMock.createFake({ products: [product1._id] });
+
+      const priorityParams = ['low', 'medium', 'high'];
+
+      const response = await request
+        .get(
+          `/api/orders?&priority[]=${priorityParams[0]}&priority[]=${priorityParams[1]}&priority[]=${priorityParams[2]}`
+        )
+        .expect(251);
+
+      expect(response.body.orders.length).toBe(1);
+    });
+  });
+
+  describe('When the bearer is empty', () => {
+    it('should return code 251', async () => {
+      await request.get('/api/orders').expect(251);
+    });
   });
 });
 
 describe('Like a consumer, when visit GET "/orders"', () => {
   it('should return all orders', async () => {
-    const order1 = await orderMock.createFake({
+    const { _id: productId } = await productMock.createFake();
+    const { _id: serviceId } = await serviceMock.createFake();
+
+    await orderMock.createFake({
       consumerId: consumerIdStub,
       destinyAddress: {
         address: 'Calle 9 #10-93',
@@ -43,54 +143,91 @@ describe('Like a consumer, when visit GET "/orders"', () => {
       location: {
         lat: 40.564574,
         lon: 70.567448
-      }
+      },
+      products: [productId, serviceId],
+      services: [productId, serviceId]
     });
 
-    const order2 = await orderMock.createFake({
-      consumerId: consumerIdStub,
-      destinyAddress: {
-        address: 'Calle 9 #10-93',
-        neighborhood: 'Las Delicias',
-        apartament: 306,
-        additionalDestination: 'Casa con una tienda'
-      },
-      location: {
-        lat: 40.564574,
-        lon: 70.567448
-      }
+    await orderMock.createFake({
+      products: [productId, serviceId],
+      services: [productId, serviceId]
     });
 
     const response = await request
       .get('/api/orders')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
 
-    const expectedResponse = JSON.stringify({
-      orders: [order1, order2],
-      hasNextPage: false,
-      hasPrevPage: false,
-      limit: 10,
-      nextPage: null,
-      offset: 0,
-      page: 1,
-      pagingCounter: 1,
-      prevPage: null,
-      totalDocs: 2,
-      totalPages: 1
+    expect(response.body.orders.length).toEqual(2);
+
+    expect(response.body).toHaveProperty('hasNextPage');
+    expect(response.body).toHaveProperty('hasPrevPage');
+    expect(response.body).toHaveProperty('limit');
+    expect(response.body).toHaveProperty('nextPage');
+    expect(response.body).toHaveProperty('offset');
+    expect(response.body).toHaveProperty('page');
+    expect(response.body).toHaveProperty('pagingCounter');
+    expect(response.body).toHaveProperty('prevPage');
+    expect(response.body).toHaveProperty('totalDocs');
+    expect(response.body).toHaveProperty('totalPages');
+
+    expect(response.body.orders[0]).toHaveProperty('finishedAt');
+  });
+
+  it('should return product or service like objects', async () => {
+    const product1 = await productMock.createFake();
+    const service1 = await serviceMock.createFake();
+
+    await orderMock.createFake({
+      products: [product1._id],
+      services: [service1._id]
     });
 
-    expect(response.body).toEqual(JSON.parse(expectedResponse));
+    const {
+      body: { orders }
+    } = await request
+      .get('/api/orders')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
 
-    expect(response.body.orders[0]).toHaveProperty('finishAt');
+    const products = orders[0].products;
+    const services = orders[0].services;
+
+    expect(products[0]).toEqual(expect.any(Object));
+    expect(services[0]).toEqual(expect.any(Object));
+  });
+
+  describe('When the user needs filter by priority', () => {
+    it('should return the orders with the filter by high priority', async () => {
+      const now = DateTime.local().plus({ minutes: 10 });
+
+      const product1 = await productMock.createFake();
+
+      await orderMock.createFake({
+        products: [product1._id],
+        createdAt: now,
+        finishedAt: now.plus({ hours: 1 })
+      });
+
+      await orderMock.createFake({ products: [product1._id] });
+
+      const response = await request
+        .get(`/api/orders?priority[]=high`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200);
+
+      expect(response.body.orders.length).toBe(1);
+    });
   });
 });
 
 describe('Like a consumer, when visit POST "/orders"', () => {
   it('should create an order in the database', async () => {
-    const { _id: categoryId } = await categoryModel.create({
+    const { _id: categoryId } = await categoryMock.createFake({
       name: 'blinblon'
     });
 
-    const { _id: subcategoryId } = await subCategoryModel.create({
+    const { _id: subcategoryId } = await subcategoryMock.createFake({
       categoryId,
       name: 'ndfsb bliuvo UwU'
     });
@@ -99,7 +236,7 @@ describe('Like a consumer, when visit POST "/orders"', () => {
       destinyAddress: {
         address: 'Calle 9 #10-93',
         neighborhood: 'Las Delicias',
-        apartament: 306,
+        apartment: 306,
         additionalDescription: 'Casa con una tienda'
       },
       location: {
@@ -131,11 +268,11 @@ describe('Like a consumer, when visit POST "/orders"', () => {
   });
 
   it('should create product and services in the database', async () => {
-    const { _id: categoryId } = await categoryModel.create({
+    const { _id: categoryId } = await categoryMock.createFake({
       name: 'blinblon'
     });
 
-    const { _id: subcategoryId } = await subCategoryModel.create({
+    const { _id: subcategoryId } = await subcategoryMock.createFake({
       categoryId,
       name: 'ndfsb bliuvo UwU'
     });
@@ -161,7 +298,7 @@ describe('Like a consumer, when visit POST "/orders"', () => {
       destinyAddress: {
         address: 'Calle 9 #10-93',
         neighborhood: 'Las Delicias',
-        apartament: 306,
+        apartment: 306,
         additionalDescription: 'Casa con una tienda'
       },
       location: {
@@ -177,7 +314,7 @@ describe('Like a consumer, when visit POST "/orders"', () => {
       .post('/api/orders')
       .set('Authorization', `Bearer ${token}`)
       .send(body);
-    expect(await productModel.countDocuments()).toEqual(1);
-    expect(await serviceModel.countDocuments()).toEqual(1);
+    expect(await productMock.model.countDocuments()).toEqual(1);
+    expect(await serviceMock.model.countDocuments()).toEqual(1);
   });
 });

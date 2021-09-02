@@ -1,6 +1,20 @@
 tags:
   - name: Orders
 
+components:
+  parameters:
+    orders:
+      priority:
+        name: priority
+        in: query
+        description: priority of time left to finish the orders
+        required: false
+        schema:
+          type: array
+          example: ['high', 'medium', 'low']
+          items:
+            type: string
+
 paths:
   /orders:
     get:
@@ -9,7 +23,53 @@ paths:
       summary: Endpoint to get all orders
       tags:
         - Orders
+      parameters:
+        - '$ref': '#/components/parameters/pagination/limit'
+        - '$ref': '#/components/parameters/pagination/page'
+        - '$ref': '#/components/parameters/pagination/offset'
+        - '$ref': '#/components/parameters/orders/priority'
+
       responses:
+        251:
+          description: 'Return paginated orders with public data'
+          content:
+            application/json:
+              example:
+                orders:
+                  - _id: 61301cae73715006df0ef1fb
+                    products:
+                      - _id: 61301cae73715006df0ef1f9
+                        quantity: 10
+                        createdAt: '2021-09-01T15:39:48.077Z'
+                        modifiedAt: '2021-09-01T23:39:35.014Z'
+                        name: Ursula93
+                        price: 35
+                        subcategoryId: 61301caef2876006dfbd65a7
+                        __v: 0
+                    services:
+                      - _id: 61301cae73715006df0ef1fa
+                        createdAt: '2021-09-01T15:21:05.849Z'
+                        modifiedAt: '2021-09-01T20:56:17.216Z'
+                        name: Myriam.Jaskolski
+                        price: 46
+                        description: Maude_Schamberger21
+                        subcategoryId: 61301caef2876006dfbd65a8
+                        __v: 0
+                    createdAt: '2021-09-01T19:41:11.275Z'
+                    hoursLeft: 19
+                    finishedAt: '2021-09-01T21:53:24.163Z'
+                    destinyAddress:
+                      address: Baby_Hoppe
+                totalDocs: 1
+                offset: 0
+                limit: 10
+                totalPages: 1
+                page: 1
+                pagingCounter: 1
+                hasPrevPage: false
+                hasNextPage: false
+                prevPage: null
+                nextPage: null
         200:
           description: 'Return the list of orders'
 
@@ -17,43 +77,84 @@ paths:
             application/json:
               example:
                 orders:
-                  - _id: 609ca15403b442018f735d67
-                    status: pending
+                  - _id: 613029d0ae148326fd77db91
+                    status: Muriel_Ernser
                     products:
-                      - 609ca15403b442018f735d66
-                    services: []
-                    createdAt: '2021-05-13T03:46:36.248Z'
-                    modifiedAt: '2021-05-13T03:46:36.248Z'
-                    consumerId: 609c98e5234dca002bfd4171
-                    hoursLeft: 8
-                    location:
-                      lat: 40.82223286
-                      lon: -96.7982002
-                    destinyAddress:
-                      address: Cra89A #83d-21
-                      neighborhood: Los cerezos
-                      apartament: 306
-                      additionalDescription: Casa verde esquinera
-                    __v: 0
-                  - _id: 609ca1be03b442018f735d6a
-                    status: pending
-                    products:
-                      - 609ca1be03b442018f735d68
+                      - _id: 613029d0ae148326fd77db8f
+                        quantity: 59
+                        createdAt: '2021-09-01T22:39:22.348Z'
+                        modifiedAt: '2021-09-01T17:48:13.620Z'
+                        name: Bertram.Fisher
+                        price: 49
+                        subcategoryId: 613029d0db85e526fdf675a2
+                        __v: 0
                     services:
-                      - 609ca1be03b442018f735d69
-                    createdAt: '2021-05-13T03:46:36.248Z'
-                    modifiedAt: '2021-05-13T03:46:36.248Z'
-                    consumerId: 609c98e5234dca002bfd4171
-                    hoursLeft: 8
+                      - _id: 613029d0ae148326fd77db90
+                        createdAt: '2021-09-01T22:58:37.484Z'
+                        modifiedAt: '2021-09-01T04:17:11.352Z'
+                        name: Stephania.Hammes35
+                        price: 61
+                        description: Jany.Prohaska
+                        subcategoryId: 613029d0db85e526fdf675a3
+                        __v: 0
+                    createdAt: '2021-09-02T00:55:49.794Z'
+                    modifiedAt: '2021-09-01T07:08:32.414Z'
+                    hoursLeft: 19
+                    consumerId: 613029d0ae148326fd77db8c
+                    finishedAt: '2021-09-01T08:29:22.500Z'
                     location:
-                      lat: 40.82223286
-                      lon: -96.7982002
+                      lat: 40.564574
+                      lon: 70.567448
+                    deliverDetails: Daniela88
                     destinyAddress:
-                      address: Cra89A #83d-21
-                      neighborhood: Los cerezos
-                      apartament: 306
-                      additionalDescription: Casa verde esquinera
+                      address: 'Calle 9 #10-93'
+                      neighborhood: Las Delicias
                     __v: 0
+                  - _id: 613029d0ae148326fd77db92
+                    status: Nicola_Wolf66
+                    products:
+                      - _id: 613029d0ae148326fd77db8f
+                        quantity: 59
+                        createdAt: '2021-09-01T22:39:22.348Z'
+                        modifiedAt: '2021-09-01T17:48:13.620Z'
+                        name: Bertram.Fisher
+                        price: 49
+                        subcategoryId: 613029d0db85e526fdf675a2
+                        __v: 0
+                    services:
+                      - _id: 613029d0ae148326fd77db90
+                        createdAt: '2021-09-01T22:58:37.484Z'
+                        modifiedAt: '2021-09-01T04:17:11.352Z'
+                        name: Stephania.Hammes35
+                        price: 61
+                        description: Jany.Prohaska
+                        subcategoryId: 613029d0db85e526fdf675a3
+                        __v: 0
+                    createdAt: '2021-09-01T12:02:42.846Z'
+                    modifiedAt: '2021-09-01T18:04:05.670Z'
+                    hoursLeft: 12
+                    consumerId: 613029d0db85e526fdf675ab
+                    finishedAt: '2021-09-01T16:31:19.285Z'
+                    location:
+                      lat: 65
+                      lon: 37
+                    deliverDetails: Jennings.Parker
+                    destinyAddress:
+                      address: Margarete.McLaughlin
+                      apartment: 48
+                      neighborhood: Jeanette_Braun82
+                      additionalDescription: Anthony_Fay30
+                    __v: 0
+                totalDocs: 2
+                offset: 0
+                limit: 10
+                totalPages: 1
+                page: 1
+                pagingCounter: 1
+                hasPrevPage: false
+                hasNextPage: false
+                prevPage:
+                nextPage:
 
     post:
       security:

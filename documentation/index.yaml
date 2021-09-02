@@ -11,7 +11,7 @@ info:
     url: https://opensource.org/licenses/MIT
 
 servers:
-  - description: LocalHost
+  - description: Localhost
     url: http://localhost:5000/api
   - description: EC2 Test instance
     url: http://3.84.108.148/api
@@ -22,3 +22,23 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  parameters:
+    pagination:
+      page:
+        name: page
+        in: query
+        description: number page
+        required: false
+        format: int32
+      limit:
+        name: limit
+        in: query
+        description: limit of items per page
+        required: false
+        format: int32
+      offset:
+        name: offset
+        in: query
+        description: offset of page
+        required: false
+        format: int32

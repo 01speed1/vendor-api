@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const mongooseLeanVirtuals = require('mongoose-lean-virtuals');
 const mongoosePaginate = require('mongoose-paginate-v2');
+
 var { DateTime } = require('luxon');
 
 const Schema = mongoose.Schema;
@@ -8,7 +8,6 @@ const OID = Schema.Types.ObjectId;
 
 var orderSchema = Schema({
   consumerId: { type: OID, ref: 'Consumer', required: true },
-  // TODO this should be an object or json location object
   location: {
     lat: { type: Number, required: true },
     lon: { type: Number, required: true }
@@ -16,7 +15,7 @@ var orderSchema = Schema({
   destinyAddress: {
     address: { type: String, required: true },
     neighborhood: { type: String, required: true },
-    apartament: { type: Number },
+    apartment: { type: Number },
     additionalDescription: { type: String }
   },
   status: {
@@ -24,25 +23,15 @@ var orderSchema = Schema({
     required: true,
     default: 'pending'
   },
-  hoursLeft: { type: Number, required: true },
+  hoursLeft: { type: Number, required: true, max: 24 },
   products: [{ type: OID, ref: 'Product' }],
   services: [{ type: OID, ref: 'Service' }],
   deliverDetails: String,
+  finishedAt: { type: Date },
   createdAt: { type: Date, default: Date.now() },
   modifiedAt: { type: Date, default: Date.now() }
 });
 
-orderSchema.plugin(mongooseLeanVirtuals);
 orderSchema.plugin(mongoosePaginate);
-
-orderSchema.virtual('finishAt').get(function () {
-  const { hoursLeft, createdAt } = this;
-
-  return DateTime.fromISO(createdAt.toJSON())
-    .plus({
-      hours: hoursLeft
-    })
-    .toISO();
-});
 
 module.exports = mongoose.model('Order', orderSchema);

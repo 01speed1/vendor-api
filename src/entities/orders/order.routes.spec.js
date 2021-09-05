@@ -317,4 +317,93 @@ describe('Like a consumer, when visit POST "/orders"', () => {
     expect(await productMock.model.countDocuments()).toEqual(1);
     expect(await serviceMock.model.countDocuments()).toEqual(1);
   });
+
+  describe(' When dont send neighborhood', () => {
+    it('should return an error', async () =>{
+
+      const { _id: categoryId } = await categoryMock.createFake({
+        name: 'blinblon'
+      });
+  
+      const { _id: subcategoryId } = await subcategoryMock.createFake({
+        categoryId,
+        name: 'ndfsb bliuvo UwU'
+      });
+
+      const body = {
+        destinyAddress: {
+          address: 'Calle 9 #10-93',
+          apartment: 306,
+          additionalDescription: 'Casa con una tienda'
+        },
+        location: {
+          lat: 40.564574,
+          lon: 70.567448
+        },
+        products: [
+          {
+            subcategoryId: subcategoryId,
+            name: 'Product name',
+            quantity: 1
+          }
+        ],
+        services: [],
+        hoursLeft: 8
+      };
+
+      const response = await request
+      .post('/api/orders')
+      .set('Authorization', `Bearer ${token}`)
+      .send(body)
+      .expect(400);
+      
+      expect(response.body.validation.body.message).toEqual('"destinyAddress.neighborhood" is required' );
+
+    })
+  });
+
+  describe(' When dont send product name', () => {
+    it('should return an error', async () =>{
+
+      const { _id: categoryId } = await categoryMock.createFake({
+        name: 'blinblon'
+      });
+  
+      const { _id: subcategoryId } = await subcategoryMock.createFake({
+        categoryId,
+        name: 'ndfsb bliuvo UwU'
+      });
+
+      const body = {
+        destinyAddress: {
+          address: 'Calle 9 #10-93',
+          neighborhood: 'Las Delicias',
+          apartment: 306,
+          additionalDescription: 'Casa con una tienda'
+        },
+        location: {
+          lat: 40.564574,
+          lon: 70.567448
+        },
+        products: [
+          {
+            subcategoryId: subcategoryId,
+            quantity: 1
+          }
+        ],
+        services: [],
+        hoursLeft: 8
+      };
+
+      const response = await request
+      .post('/api/orders')
+      .set('Authorization', `Bearer ${token}`)
+      .send(body)
+      .expect(400);
+      
+      expect(response.body.validation.body.message).toEqual('"products[0].name" is required' );
+
+    })
+  });
+
 });

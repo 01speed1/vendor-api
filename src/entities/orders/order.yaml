@@ -198,8 +198,12 @@ paths:
                 products:
                   type: array
                   items:
+                    required: [name]
                     type: object
                     properties:
+                      name:
+                        type: string
+                        example: Super donas el guini
                       subcategoryId:
                         type: string
                         example: 2435rrf345f43rf234t

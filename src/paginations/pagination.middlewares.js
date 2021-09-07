@@ -7,7 +7,7 @@ const groupPaginationParams = (request, _, next) => {
 
   for (const name of PAGINATION_PARAMS_NAMES) {
     if (Object.hasOwnProperty.call(request.query, name)) {
-      delete request.query[key];
+      delete request.query[name];
     }
   }
 

@@ -74,6 +74,17 @@ describe('Like a guest, when visit GET "/orders"', () => {
     expect(services[0]).toEqual(expect.any(Object));
   });
 
+  it('should permit pagination query params', async () => {
+    await orderMock.createFake();
+
+    const response = await request
+      .get('/api/orders?limit=10&page=1')
+      .set('Authorization', ``)
+      .expect(251);
+
+    expect(response.body).toHaveProperty('orders');
+  });
+
   describe('When the user needs filter by priority', () => {
     it('should return the orders with the filter by high priority', async () => {
       const now = DateTime.local().plus({ minutes: 10 });
@@ -319,12 +330,11 @@ describe('Like a consumer, when visit POST "/orders"', () => {
   });
 
   describe(' When dont send neighborhood', () => {
-    it('should return an error', async () =>{
-
+    it('should return an error', async () => {
       const { _id: categoryId } = await categoryMock.createFake({
         name: 'blinblon'
       });
-  
+
       const { _id: subcategoryId } = await subcategoryMock.createFake({
         categoryId,
         name: 'ndfsb bliuvo UwU'
@@ -352,23 +362,23 @@ describe('Like a consumer, when visit POST "/orders"', () => {
       };
 
       const response = await request
-      .post('/api/orders')
-      .set('Authorization', `Bearer ${token}`)
-      .send(body)
-      .expect(400);
-      
-      expect(response.body.validation.body.message).toEqual('"destinyAddress.neighborhood" is required' );
+        .post('/api/orders')
+        .set('Authorization', `Bearer ${token}`)
+        .send(body)
+        .expect(400);
 
-    })
+      expect(response.body.validation.body.message).toEqual(
+        '"destinyAddress.neighborhood" is required'
+      );
+    });
   });
 
   describe(' When dont send product name', () => {
-    it('should return an error', async () =>{
-
+    it('should return an error', async () => {
       const { _id: categoryId } = await categoryMock.createFake({
         name: 'blinblon'
       });
-  
+
       const { _id: subcategoryId } = await subcategoryMock.createFake({
         categoryId,
         name: 'ndfsb bliuvo UwU'
@@ -396,14 +406,14 @@ describe('Like a consumer, when visit POST "/orders"', () => {
       };
 
       const response = await request
-      .post('/api/orders')
-      .set('Authorization', `Bearer ${token}`)
-      .send(body)
-      .expect(400);
-      
-      expect(response.body.validation.body.message).toEqual('"products[0].name" is required' );
+        .post('/api/orders')
+        .set('Authorization', `Bearer ${token}`)
+        .send(body)
+        .expect(400);
 
-    })
+      expect(response.body.validation.body.message).toEqual(
+        '"products[0].name" is required'
+      );
+    });
   });
-
 });

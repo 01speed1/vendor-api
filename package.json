@@ -24,7 +24,7 @@
     "glob": "^7.1.6",
     "helmet": "^4.4.1",
     "joi": "^17.4.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "luxon": "^1.27.0",
     "mongoose": "^5.12.2",
     "mongoose-beautiful-unique-validation": "^7.1.1",
